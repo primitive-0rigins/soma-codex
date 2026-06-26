@@ -51,6 +51,8 @@ thinking; Mosaic and Tendril are the working prototype repos.
 - Invariants, state machines, threat boundaries, and test obligations
 - Careful distinction between functional terms and consciousness claims
 
+Additional project notes: [docs/project-notes.md](docs/project-notes.md)
+
 ---
 
 ## Repository Map
