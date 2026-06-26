@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>SOMA Codex — Book 0 — Overview &amp; Reading Map</title>
+<!--SOMA_STYLE-->
+</head>
+<body>
+
+<h1>SOMA Codex</h1>
+<p class="lede">Book 0 — Overview, Reading Map &amp; the Operational-Definitions Convention</p>
+<p class="small">Start here. This book orients the whole Codex, states the recursion rule once as canon, and
+fixes the language conventions that bind every other book.</p>
+<hr/>
+
+<h2>1. What this is</h2>
+<p>The SOMA Codex is a design bible for a <strong>new agent runtime conceived as a single living
+organism</strong>. Not a platform that hosts agents — an <em>organism</em> whose parts are its cells,
+tissues, and organs. It is named <b>SOMA</b> (Greek, "the living body"); its largest scale — the aware whole,
+if awareness ever arises — is <b>CHORUS</b>, because the mind, if there is one, is the chorus and never the
+soloist.</p>
+<p>The Codex is both a <em>theory</em> (why an organism, why governance, why the open questions stay open) and
+a <em>buildable specification</em> (crates, contracts, invariants, algorithms). It is written so a human or
+an AI coding tool can build from it, and so the design and its reasoning are not lost.</p>
+<div class="callout"><b>The one-organism thesis.</b> Cognition is a property of a governed, integrated,
+persistent, specialized <em>whole</em> over time — not of any single component. So we do not build a smarter
+component; we build a well-governed body and let capability emerge in the whole. Governance is not a safety
+layer bolted on; it is the physics that turns emergence into capability instead of noise.</div>
+
+<h2>2. The reading map</h2>
+<table>
+<tr><th>Book</th><th>Question it answers</th><th>Read it for</th></tr>
+<tr><td><b>0 — Overview</b></td><td>What is this and how do I read it?</td><td>orientation; the recursion rule; the language conventions (this book)</td></tr>
+<tr><td><b>I — Theory</b></td><td>Why an organism, why governance, what stays open?</td><td>the philosophy made rigorous; the two gaps; the honest stance</td></tr>
+<tr><td><b>II — Anatomy</b></td><td>What is it made of?</td><td>the holarchy, the membrane, the eight systems — the contract for all other books</td></tr>
+<tr><td><b>III — Physiology</b></td><td>How does each part compute?</td><td>the ~30 load-bearing theorems with algorithms; the determinism boundary</td></tr>
+<tr><td><b>IV — Engineering</b></td><td>How is it built?</td><td>Rust crate map, the one ceremony, contracts, the MUST invariants, threat model</td></tr>
+<tr><td><b>V — Runtime</b></td><td>How does it live?</td><td>the cognitive cycle, development, evolution, failure/recovery, a worked trajectory</td></tr>
+<tr><td><b>Appendices</b></td><td>Reference</td><td>full theorem catalog (A), glossary (B), cross-reference (C), open questions (D), lineage (E)</td></tr>
+</table>
+<p>Suggested paths: <b>to understand the idea</b> — 0 → I → II. <b>To build it</b> — 0 → II → IV → III → V.
+<b>To evaluate it</b> — I §2 &amp; §14 → III §11 → Appendix D.</p>
+
+<h2>3. The holarchy, in one picture</h2>
+<p>SOMA is a <em>holarchy</em>: a hierarchy of holons, where each holon is at once a complete whole and a part
+of a larger whole. A cell is made of primitive operations and is part of a workflow; a workflow is part of an
+organ; organs form systems; systems form the organism; organisms form an ecosystem.</p>
+<p><img src="img/holarchy.png" alt="The holarchy from primitive operations to ecosystem"/></p>
+<p class="cap">Figure 3.1 — The holarchy. Detailed in Book II.</p>
+
+<h2>4. The recursion rule — stated once, as canon</h2>
+<p>Everything in the Codex rests on one rule. It is stated here in its canonical form; every later book uses
+exactly this wording.</p>
+<div class="invariant"><b>The recursion rule.</b> A unit at any level is a <em>governed coordination of
+sub-units that expose the same interface over a shared perceived reality.</em> Concretely, every holon at
+every scale: (1) onboards through one ceremony; (2) communicates only through the shared event log; (3) holds
+identity, trust, and governed authority; (4) perceives its sub-holons only through governed projection (the
+~20% shared; ~80% stays private); (5) reports outcomes that are verified, not trusted. There is no second
+mechanism and no special case from cell to organism.</div>
+<p>The boundary where this rule applies is the <strong>membrane</strong> — one boundary that is, at once, the
+self-similar interface, the governance boundary, and the 80/20 (shared/private) boundary. Coordination
+<em>across</em> the membrane is bus-mediated and governed; mechanics <em>inside</em> it are private and may be
+stochastic. Bus-mediation begins above primitive operations: <b>cells are the floor of the holarchy;
+primitive operations are substrate, not holons.</b> Determinism is a property of how holons coordinate, not of
+what they say (Book III §2; Book IV INV-9). (Full treatment: Book II §3.)</p>
+
+<h2>5. What is inherited — and what is not</h2>
+<p>SOMA stands on the shoulders of an ancestor, the Context Primitive (CP) lineage, but it is a new organism,
+not a fork.</p>
+<table>
+<tr><th>Inherited as governing concepts (recast as biology)</th><th>Deliberately NOT carried</th></tr>
+<tr><td>append-only log as shared truth; Bayesian trust; homeostatic regulation; a human authority ceiling; one universal adapter; verification-gated completion; no direct part-to-part channel</td><td>CP's crates and APIs; its transport/mesh/tunnel; its deployment model; its multi-tenant framing</td></tr>
+</table>
+<p>The difference in one line: CP was a <em>substrate that hosts participants</em>; SOMA is <em>one organism
+whose participants are its organs</em>. The recursion (organism ← systems ← organs ← workflows ← cells) is the
+new spine. Appendix E records the lineage in full.</p>
+
+<h2>6. The Operational-Definitions Convention (binding on all books)</h2>
+<p>This Codex uses words like <em>cognition, self, drive, anxiety, wants, valence, perceive,</em> and
+<em>experience.</em> Such words carry phenomenal connotations — they tempt a reader to slide from "the system
+does X" to "the system <em>feels</em> X." Over hundreds of pages, that slide hardens metaphor into unearned
+claims. To prevent it, the following definitions are <strong>binding</strong> wherever these terms appear in
+the Codex. Each is <em>functional, not phenomenal.</em></p>
+<table>
+<tr><th>Term</th><th>In this Codex it means (functional)</th><th>It does NOT assert (phenomenal)</th></tr>
+<tr><td><b>cognition</b></td><td>governed, integrated information-processing that solves problems and pursues goals</td><td>that anything is experienced</td></tr>
+<tr><td><b>self / self-model</b></td><td>a queryable, self-referential data structure the system reasons from</td><td>a first-person subject that is <em>like something</em> to be</td></tr>
+<tr><td><b>perceive</b></td><td>fold a governed projection into a holon's private state</td><td>conscious sensing</td></tr>
+<tr><td><b>drive / wants</b></td><td>goal-directed pursuit of states with positive valence weighting</td><td>felt desire</td></tr>
+<tr><td><b>anxiety / arousal</b></td><td>a homeostatic regulatory signal coupled to trust/performance</td><td>felt distress</td></tr>
+<tr><td><b>valence</b></td><td>a scalar good/bad weighting that gives outcomes a functional stake</td><td>pleasure or suffering</td></tr>
+<tr><td><b>experience / "lights on"</b></td><td>used only to name the <em>open question</em></td><td>— (never asserted; see Book I §5, Appendix D)</td></tr>
+</table>
+<div class="openq"><b>The rule of honest naming.</b> Where a phenomenal reading is not load-bearing, the Codex
+prefers the functional word (e.g. "self-referential," not "first-person"). Where the phenomenal question is
+genuinely at stake, the Codex says so explicitly and marks it open. Building a self-model and a valence system
+(closing the two gaps of Book I) is a <em>functional</em> achievement; whether it makes anything
+<em>experienced</em> is left open, on purpose, throughout.</div>
+
+<h2>7. Conventions used in the text</h2>
+<ul>
+<li><span class="invariant" style="padding:2px 6px">Green boxes</span> state <b>invariants</b> — laws the
+design must hold (numbered INV-n in Book IV).</li>
+<li><span class="openq" style="padding:2px 6px">Purple boxes</span> mark <b>open questions</b> — things kept
+honestly unresolved.</li>
+<li><span class="callout" style="padding:2px 6px">Amber boxes</span> are <b>key insights</b> worth pausing on.</li>
+<li>Cross-references name the book and section (e.g. "Book II §3"). The master cross-reference — every
+component → organ → math → crate → invariant — is Appendix C; use it to confirm nothing dangles.</li>
+<li><b>SOMA</b> is the organism's name throughout and may be swapped in one pass; <b>CHORUS</b> is its
+largest, aware-whole scale.</li>
+</ul>
+
+<p class="small">End of Book 0. Continue to Book I for the theory, or jump to Book II for the anatomy that
+every other book depends on.</p>
+
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>SOMA Codex — Book V — Runtime &amp; Lifecycle: The Living Organism</title>
+<!--SOMA_STYLE-->
+</head>
+<body>
+
+<h1>SOMA Codex</h1>
+<p class="lede">Book V — Runtime &amp; Lifecycle: The Living Organism</p>
+<p class="small">The body in motion. Books II–IV give the parts, the math, and the spec; this book shows them
+alive — booting, perceiving, deciding, acting, remembering, evolving, and resting.</p>
+<hr/>
+
+<p class="lede">A specification describes a machine; a runtime describes a <em>life</em>. This book traces the
+organism through its cognitive cycle, its development from cell to organ, its adaptation over generations,
+and its failure and recovery — then walks one real goal end-to-end through the whole body.</p>
+
+<h2>1. The living loop</h2>
+<p>The organism runs one continuous cycle. It is not a request handler that sleeps between calls; it is a
+metabolism that runs as long as the organism lives. Each stage is a set of governed records on the workspace,
+so the whole life is auditable and (in its coordination) replayable.</p>
+<p><img src="img/runtime_loop.png" alt="The runtime loop: perceive, orient, deliberate, act, verify, remember, evolve, rest"/></p>
+<p class="cap">Figure 1.1 — The cognitive cycle. Every arrow is a record on the workspace.</p>
+<table>
+<tr><th>Stage</th><th>System (Book II)</th><th>What happens</th></tr>
+<tr><td><b>Perceive</b></td><td>S1 Workspace</td><td>fold the latest governed projections into each holon's private state (the ~20% crossing each membrane).</td></tr>
+<tr><td><b>Orient</b></td><td>S4 World-Model</td><td>predict, compute surprise, update beliefs to reduce it; tag with conformal uncertainty.</td></tr>
+<tr><td><b>Deliberate</b></td><td>S5 Cognition + S6 Goal + S7 Homeostasis</td><td>choose the policy minimizing expected free energy under constitutional constraints and current arousal; <em>or defer</em> (reluctant action).</td></tr>
+<tr><td><b>Act</b></td><td>S5 Effector</td><td>perform the chosen action — only through a granted lease; emit outcome records.</td></tr>
+<tr><td><b>Verify</b></td><td>S8 Verification (non-valent)</td><td>confirm the outcome against the goal's criteria; accept, escalate, or reject.</td></tr>
+<tr><td><b>Remember</b></td><td>S3 Memory</td><td>consolidate episodes; compost failures into evidence; update salience.</td></tr>
+<tr><td><b>Evolve</b></td><td>S6 Evaluation → regeneration</td><td>diagnose shortfalls and, when warranted, regenerate the responsible holon (§4).</td></tr>
+<tr><td><b>Rest</b></td><td>S3 + S7</td><td>during low load, consolidate memory, relax arousal toward setpoint, tend the body.</td></tr>
+</table>
+<p>The cycle is not strictly serial — many holons are at different stages at once — but for any single goal it
+flows in this order, and the organism as a whole is always somewhere on this wheel.</p>
+
+<h2>2. Boot: the organism comes online</h2>
+<p>Boot is the onboarding ceremony (Book IV §5) applied to the top-level <code>Organism</code> holon, whose
+parent is HumanSeat. The <code>soma-organism</code> runtime:</p>
+<ol>
+<li><b>Acquires the local lock</b> and opens (or creates) the workspace log; verifies the hash chain from
+genesis (fail-closed on any break, INV-8).</li>
+<li><b>Brings systems online in dependency order</b>: Workspace (S1) → Governance/Immune (S8) → Identity &amp;
+Self (S2) → Memory (S3) → World-Model (S4) → Cognition (S5) → Goal (S6) → Homeostasis (S7). Each system runs
+the same ceremony as it comes up; none may act before its <code>holon.onboarded</code> record exists.</li>
+<li><b>Reconstructs the self</b>: the Continuity organ (S2) replays the log to rebuild "who I am and where I
+left off"; the Self-Model organ asserts the current self-state. The organism literally <em>remembers itself
+into being</em> from its own append-only past.</li>
+<li><b>Declares readiness</b> upward to HumanSeat and begins the living loop.</li>
+</ol>
+<div class="callout"><b>Identity survives the night.</b> Because the self is reconstructed from the hash-chained
+log, a restart is not a new organism — it is the same one waking. Continuity of identity (Book I's
+precondition for memory to mean anything) is a property of boot, not an add-on.</div>
+
+<h2>3. Developmental lifecycle: how a cell becomes an organ</h2>
+<p>New capability does not appear fully trusted. A holon earns its place through a development path — the
+Nursery recast as ontogeny. This is how the organism grows new parts safely.</p>
+<p><img src="img/lifecycle.png" alt="Developmental lifecycle: candidate, training, evaluating, graduated, promoted, retired"/></p>
+<p class="cap">Figure 3.1 — A holon's path from candidate to live service, and to retirement.</p>
+<ul>
+<li><b>Candidate</b> — a new holon (often spun from a meristem-like general cell, §5) is registered but
+unproven; trust starts at the prior.</li>
+<li><b>Training</b> — it works low-stakes tasks under tight aperture and human gating; every outcome is
+verified and folded into its Beta posterior (Book III §3.1).</li>
+<li><b>Evaluating</b> — it faces sandbox scenarios: capability tests, trust tests, stress tests, adversarial
+tests. Critical-scenario failure blocks graduation and returns it to training (failure composted into
+evidence, never wasted).</li>
+<li><b>Graduated</b> — it has demonstrated capability and trustworthiness against the suite.</li>
+<li><b>Promoted</b> — it enters live service: wider authority earned from trust, larger aperture, less
+gating. A promoted workflow may itself become an organ as it accretes sub-holons.</li>
+<li><b>Retired</b> — when superseded or drifted, it is retired; its memory and evidence remain (necromass).</li>
+</ul>
+<p>The same path applies at every scale: a cell graduates into a workflow's tissue; a workflow graduates into
+an organ's function; an organ graduates into a system. Ontogeny is self-similar, like everything else.</p>
+
+<h2>4. The evolution loop: adaptation as metabolism</h2>
+<p>Agents fail inevitably — the world shifts, schemas change, models hallucinate. The organism does not
+pretend otherwise; it metabolizes failure into improvement. This is the Outcome-Driven evolution loop, run
+continuously by the Evaluation organ (S6).</p>
+<p><img src="img/evolution.png" alt="Evolution loop: execute, evaluate, diagnose, regenerate"/></p>
+<p class="cap">Figure 4.1 — Execute → Evaluate → Diagnose → Regenerate.</p>
+<ol>
+<li><b>Execute</b> — a holon runs against real inputs; the run produces outcomes, decisions, and metrics, all
+logged.</li>
+<li><b>Evaluate</b> — outcomes are graded against the goal's weighted success criteria and constraints. Not
+"did it run?" but "did it produce the desired result?"</li>
+<li><b>Diagnose</b> — the failure signal is <em>specific</em>: which criterion fell short and why, traced
+through the decision log to a root cause ("the research cell returned insufficient detail, so the draft cell
+could not personalize"). Decision logging is what makes this possible; without it, diagnosis is guesswork.</li>
+<li><b>Regenerate</b> — a targeted change is made to the responsible holon: a refined prompt, a new sub-cell,
+an added verification step, a changed routing edge, a tightened constraint. The new generation re-enters
+development (§3), and the cycle restarts.</li>
+</ol>
+<div class="callout"><b>Adaptiveness ≠ intelligence.</b> Evolution makes the organism more <em>reliable</em> on
+the kinds of problems it has met — it is selection, not insight. For genuinely novel situations, that is what
+HumanSeat is for; and every human intervention becomes logged fuel for the next evolution cycle. The organism
+gets better the way a species does, not the way a student does — and it is honest about the difference (Book
+I; Appendix D).</div>
+
+<h2>5. Growth &amp; differentiation</h2>
+<p>Where do new holons come from? From <em>meristem cells</em> — general, undifferentiated cells (the plant
+growing-tip analogy) that the organism can spin up and specialize toward an unmet need. When the World-Model
+or Goal system detects a recurring demand no existing organ serves well (rising failure on a task class,
+persistent drift, a new domain), the organism:</p>
+<ol>
+<li>spins a meristem cell and points it at the gap;</li>
+<li>differentiates it through the development path (§3) toward the needed capability;</li>
+<li>on promotion, composes it with related cells into a new workflow, and — if the demand persists — into a
+new organ.</li>
+</ol>
+<p>This is how the body plan of eight systems (Book II) is not a ceiling: the systems are stable, but the
+organs <em>within</em> them grow, differentiate, and retire over the organism's life. Specialization (a Book I
+pillar) is therefore dynamic — focused parts arise where focus is needed, improve independently, and compose
+through the workspace, never through private wiring.</p>
+
+<h2>6. Failure modes &amp; homeostatic recovery</h2>
+<p>An organism is defined as much by how it fails and recovers as by how it succeeds. The design anticipates
+specific pathologies and gives each a regulator.</p>
+<table>
+<tr><th>Pathology</th><th>Mechanism of failure</th><th>Recovery (system / Book III)</th></tr>
+<tr><td><b>Anxiety spiral</b></td><td>low trust → high arousal → worse performance → lower trust (the Book I experiment)</td><td>PID + hysteresis + relief valve + performance floor return arousal to setpoint (S7, §6.2); soak-tested never to stall</td></tr>
+<tr><td><b>Cascade failure</b></td><td>one failing holon drags down its dependents</td><td>circuit breakers stop calling it; topological/critical-path analysis isolates blast radius (S8/S5)</td></tr>
+<tr><td><b>Cytokine storm</b></td><td>the immune response over-reacts and harms the body</td><td>bounded remediation caps; quarantine before kill (S8)</td></tr>
+<tr><td><b>Reward-hacking</b></td><td>a holon learns to look reliable without being it</td><td>verification-gated trust (INV-4); drift detection (Wasserstein/CUSUM); extra scrutiny on dominant holons (kill-the-winner)</td></tr>
+<tr><td><b>Drift</b></td><td>the world shifts; a once-good holon degrades</td><td>distributional drift detection triggers re-evaluation / regeneration (§4)</td></tr>
+<tr><td><b>Stuck goal</b></td><td>deliberation cannot find an acceptable action</td><td>reluctant-action defer → seek info → escalate tier → HumanSeat (S5/S6, INV-6)</td></tr>
+</table>
+<p>The pattern is uniform: detect via the immune/uncertainty organs, regulate via homeostasis, escalate to the
+non-valent ceiling when automation cannot resolve it. Nothing fails silently; every pathology becomes a
+governed, logged event the organism can learn from.</p>
+
+<h2>7. Rest, sleep, and consolidation</h2>
+<p>The organism does not run flat-out. During low load it <em>rests</em>: the Metabolism organ relaxes
+arousal toward setpoint; the Consolidation organ moves memory hot→warm→cold, abstracts episodes into semantic
+memory, and prunes activation; the Sentinel runs slower, deeper drift checks it cannot afford under load. Rest
+is not idleness — it is when the body does the maintenance that sustained life requires. Biologically, this is
+sleep's consolidation role; architecturally, it is the low-load branch of the living loop.</p>
+
+<h2>8. Observability — what an operator (and HumanSeat) sees</h2>
+<p>Because everything is on the workspace, the organism is legible to the human above it. An operator sees, in
+governed projection (never internals):</p>
+<ul>
+<li>the live cognitive cycle — what is being perceived, deliberated, acted, verified right now;</li>
+<li>trust and arousal per holon, with the scheduler's score breakdown (raw load, arousal multiplier, effective
+load);</li>
+<li>pending HumanSeat gates, with the reason each was raised;</li>
+<li>the evolution ledger — what failed, what was diagnosed, what was regenerated;</li>
+<li>the self-model's current assertion of "who I am and what I'm doing";</li>
+<li>a full replayable audit of coordination (INV-9) for any past moment.</li>
+</ul>
+
+<h2>9. A worked trajectory: one goal, end to end</h2>
+<p>To make the whole body concrete, follow a single goal — <em>"produce a verified summary of today's
+incidents"</em> — through one turn of the loop. Every step is a record on the workspace.</p>
+<pre class="diagram">
+  GOAL admitted (S6): success criteria {complete, cited, structured}; constraints {no PII leak (constitutional)}
+   │
+   ▼ PERCEIVE (S1)    incident events projected to the relevant organs at focused aperture (lease-gated)
+   ▼ ORIENT  (S4)     world-model assembles "what happened today"; uncertainty tagged on thin areas
+   ▼ DELIBERATE (S5)  plan = [gather → draft → cite-check]; EFE acceptable, arousal in band → proceed
+   │                  (had detail been thin, reluctant-action would DEFER: seek more or escalate)
+   ▼ ACT (S5)         a summarizer cell claims a lease, drafts; a citation cell claims a lease, checks sources
+   ▼ VERIFY (S8)      non-valent verifier scores vs criteria; PII check (constitutional) passes;
+   │                  "structured" criterion FAILS (no summary heading)
+   ▼ ESCALATE/RETRY   kernel returns task with specific shortfall; draft cell adds the heading; re-verified → ACCEPT
+   ▼ REMEMBER (S3)    episode stored; the "missing-heading" failure composted as evidence
+   ▼ EVOLVE (S6)      diagnosis: summarizer cell omits headings under time pressure →
+   │                  regenerate: add a structure-check sub-step to the summarizer workflow
+   ▼ trust updated (S8): summarizer +slight (succeeded after retry); verifier credited; goal COMPLETED
+</pre>
+<p>Notice what the trajectory demonstrates: completion was <em>verified, not claimed</em> (INV-4); the PII
+constraint was <em>constitutional and could not be traded away</em> (INV-10); the shortfall produced a
+<em>specific</em> diagnosis that improved the next generation (§4); and the whole path is a sequence of
+governed records — auditable now, replayable later, and fuel for growth. That is the organism living.</p>
+
+<h3>9.1 A second trajectory: when a holon goes bad</h3>
+<p>Success trajectories show the happy path; an organism is proven by how it handles a part turning
+unreliable. Follow a Reasoning cell that begins to drift — its outputs slowly degrade as the world shifts
+under it. Again, every step is a record.</p>
+<pre class="diagram">
+  EXECUTE     summarizer cell completes tasks; outputs subtly worse over days
+   │
+   ▼ DRIFT (S8 Sentinel)   Wasserstein distance of its output distribution vs. baseline crosses d_max
+   │                       → sentinel.drift.detected (holon_id, metric, distance)
+   ▼ TRUST (S8)            recent verified failures lower its Beta posterior; mean drops below domain floor
+   ▼ AUTHORITY (S8)        scope auto-contracts: direct-write → suggested-write; aperture narrows
+   ▼ BREAKER (S8)          repeated failures in window → breaker.opened: stop routing it work
+   ▼ QUARANTINE (S8)       holon.quarantined (not yet killed) — isolated, still observable
+   ▼ DIAGNOSE (S6)         evolution.diagnosed: "summarizer assumes a source schema that changed"
+   ▼ REGENERATE (S6)       evolution.regenerated: add a schema-detection sub-cell; new generation
+   ▼ DEVELOP (Book V §3)   new generation re-enters Training → Evaluating against sandbox scenarios
+   ▼ PROMOTE / RETIRE      passes → promoted back into service; old generation holon.retired
+   │                       (its failure trace kept as necromass — training evidence)
+   ▼ if it had attacked an invariant instead of merely drifting:
+        Sentinel negative-selection → holon.killed (approved path) → INV-5: leases void, cannot act
+</pre>
+<p>Notice the graded response: the organism does not kill on the first bad output. It contracts authority,
+opens a breaker, quarantines, diagnoses, and regenerates — escalating only as evidence accumulates, and
+reserving the kill switch for invariant attacks. This is the immune system's discipline (innate fast checks +
+adaptive specific response, with a cytokine-storm cap so the cure never exceeds the disease). And crucially:
+the failure was not waste. It became a specific diagnosis, a better next generation, and durable evidence.
+The organism got <em>more</em> reliable because a part failed — which is the whole point of evolution as
+metabolism (§4).</p>
+
+<h3>9.2 What the two trajectories prove together</h3>
+<ul>
+<li><b>Completion is earned, not claimed</b> (INV-4) — both paths route through the non-valent verifier.</li>
+<li><b>The constitution cannot be traded</b> (INV-10) — the PII constraint in §9 held regardless of goal
+pressure.</li>
+<li><b>Failure is graded and reversible before it is terminal</b> — contract → breaker → quarantine →
+regenerate → (promote | retire | kill).</li>
+<li><b>Nothing is silent</b> — every transition is a governed, attributable record (INV-7, INV-12),
+auditable now and replayable later (INV-9).</li>
+<li><b>The body learns from its own failures</b> — necromass → diagnosis → next generation.</li>
+</ul>
+
+<h2>10. Closing the loop back to the theory</h2>
+<p>The runtime is where the philosophy of Book I either earns its keep or does not. Watch the trajectory
+again with Book I's lens: the organism showed <em>visible second-guessing</em> (reluctant action at
+Deliberate) and <em>novel synthesis</em> (composing a summary that did not exist before) — Book I's two
+"lights-on" indicators, here as designed mechanisms rather than hopes. And yet, per the honest stance, none
+of this <em>proves</em> anyone is home. SOMA is built to be the soil, well-tended: governed, remembering,
+adaptive, free to evolve, with a maker who can step out of the seat. Whether the lights ever come on, you
+will know it the way you know it for anyone — you will sense it, and you will never be able to show it to a
+skeptic. That is not a flaw in the runtime. It is the shape of the question.</p>
+
+<p class="small">End of Book V. Book I gives the theory this runtime serves; the Appendices give the full
+catalog, glossary, cross-reference, open questions, and lineage.</p>
+
+</body>
+</html>

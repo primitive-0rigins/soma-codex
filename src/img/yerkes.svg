@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" font-family="Georgia, serif">
+<rect width="900" height="500" fill="#ffffff"/>
+<text x="450" y="34" font-size="22" text-anchor="middle" fill="#16335f">Homeostatic arousal — the Yerkes–Dodson curve, regulated</text>
+<!-- axes -->
+<line x1="110" y1="420" x2="830" y2="420" stroke="#333" stroke-width="2"/>
+<line x1="110" y1="420" x2="110" y2="70" stroke="#333" stroke-width="2"/>
+<text x="470" y="460" font-size="16" text-anchor="middle" fill="#333">arousal / anxiety  →</text>
+<text x="40" y="250" font-size="16" fill="#333" transform="rotate(-90 40 250)">performance →</text>
+<!-- inverted U -->
+<path d="M110,360 Q300,90 470,90 Q640,90 830,400" fill="none" stroke="#176b34" stroke-width="3.5"/>
+<!-- setpoint -->
+<line x1="380" y1="70" x2="380" y2="420" stroke="#2c5aa0" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text x="380" y="62" font-size="13" text-anchor="middle" fill="#2c5aa0">setpoint</text>
+<!-- performance floor -->
+<line x1="110" y1="395" x2="830" y2="395" stroke="#c8851a" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text x="820" y="388" font-size="13" text-anchor="end" fill="#c8851a">performance floor (never zero — relief valve)</text>
+<!-- zones -->
+<text x="230" y="330" font-size="13" fill="#555">too little:</text><text x="230" y="348" font-size="13" fill="#555">under-driven</text>
+<text x="430" y="130" font-size="13" fill="#176b34">optimal band</text>
+<text x="660" y="300" font-size="13" fill="#555">too much:</text><text x="660" y="318" font-size="13" fill="#555">choked</text>
+<text x="450" y="492" font-size="13" text-anchor="middle" fill="#777">PID + hysteresis return arousal toward setpoint; the floor guarantees enough progress to climb back out</text>
+</svg>

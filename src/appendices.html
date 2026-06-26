@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>SOMA Codex — Appendices</title>
+<!--SOMA_STYLE-->
+</head>
+<body>
+
+<h1>SOMA Codex</h1>
+<p class="lede">Appendices A–E</p>
+<p class="small">Reference matter: the full idea catalog, glossary, master cross-reference, open questions,
+and lineage.</p>
+<hr/>
+
+<h2>Appendix C — Master cross-reference</h2>
+<p>This is the consistency contract for the whole Codex: every cognitive component traces to a system and
+organ (Book II), to its mathematics (Book III), to a crate (Book IV), and to the invariant(s) that govern it.
+Nothing in the design should dangle; if a row is incomplete, that is a gap to close.</p>
+<table>
+<tr><th>Component (Book I)</th><th>System → Organ (Book II)</th><th>Math (Book III)</th><th>Crate (Book IV)</th><th>Invariants</th></tr>
+<tr><td>Event-driven substrate; time; persistence</td><td>S1 Workspace → Event-Log/Chronicle, Projection, Routing</td><td>hash chains; Lamport/vector clocks; CRDTs (§7)</td><td><code>soma-workspace</code></td><td>INV-1,2,7,9,11,12</td></tr>
+<tr><td>Identity; sense of self; continuity</td><td>S2 Identity &amp; Self → Registry, Continuity, Self-Model</td><td>Merkle continuity; drift detection (§3.2, §8.2)</td><td><code>soma-identity</code></td><td>INV-1,3,12 (Gap 1)</td></tr>
+<tr><td>Memory + retrieval</td><td>S3 Memory → Episodic, Semantic, Procedural, Consolidation/Recall</td><td>decay/consolidation; PageRank salience; Wasserstein drift (§8)</td><td><code>soma-memory</code></td><td>INV-1,9</td></tr>
+<tr><td>Global reality; relational awareness; uncertainty</td><td>S4 World-Model → World-Model, Cartographer, Uncertainty</td><td>active inference; Kalman; HMM; conformal (§4)</td><td><code>soma-world</code></td><td>INV-9,11</td></tr>
+<tr><td>Reasoning; agency; reluctant action</td><td>S5 Cognition → Reasoning, Deliberation, Effector</td><td>expected free energy; info gain; bandits (§5)</td><td><code>soma-cognition</code></td><td>INV-2,3,4,5</td></tr>
+<tr><td>Goal-orientation; intent</td><td>S6 Goal → Constitution, Goal, Evaluation</td><td>lexical/constrained optimization; regret (§5,§11)</td><td><code>soma-goal</code></td><td>INV-10,4,6</td></tr>
+<tr><td>Drive; valence</td><td>S7 Homeostasis → Arousal, Metabolism, Valence</td><td>Yerkes–Dodson; PID+hysteresis; Little's law (§6)</td><td><code>soma-homeostasis</code></td><td>INV-8,10 (Gap 2)</td></tr>
+<tr><td>Governance; constraints; safety</td><td>S8 Immune/Governance → Trust, Authority, Verification, Sentinel</td><td>Bayesian trust; viability; circuit breaker; negative selection (§3,§9)</td><td><code>soma-governance</code></td><td>INV-3,4,5,6,8,10</td></tr>
+<tr><td>The membrane / recursion</td><td>all — the holon contract</td><td>determinism boundary (§2); causal emergence (§10)</td><td><code>soma-core</code>, <code>soma-holon</code></td><td>INV-2,3,9,11</td></tr>
+<tr><td><em>Subjective experience</em></td><td><em>open — the binding wall</em></td><td><em>causal emergence is a candidate metric only</em></td><td>—</td><td>see Appendix D</td></tr>
+</table>
+
+<h3>C.2 The invariants at a glance (Book IV §9)</h3>
+<table>
+<tr><th>#</th><th>Invariant</th></tr>
+<tr><td>INV-1</td><td>Append-only, hash-chained log; never edited or deleted.</td></tr>
+<tr><td>INV-2</td><td>One channel: holons coordinate only through the workspace; no direct holon-to-holon path.</td></tr>
+<tr><td>INV-3</td><td>One ceremony: no holon acts before <code>holon.onboarded</code>.</td></tr>
+<tr><td>INV-4</td><td>Verified, never claimed: completion confirmed by the non-valent Verification organ.</td></tr>
+<tr><td>INV-5</td><td>Killed cannot act: a killed/quarantined holon loses authority immediately.</td></tr>
+<tr><td>INV-6</td><td>HumanSeat ceiling: destructive/high-risk actions require HumanSeat, which sits above the holarchy.</td></tr>
+<tr><td>INV-7</td><td>Mechanism on every event: non-empty <code>mechanism_of_action</code>; no anonymous side effects.</td></tr>
+<tr><td>INV-8</td><td>Fail closed: absent a governance boundary, refuse to operate.</td></tr>
+<tr><td>INV-9</td><td>Coordination determinism: the protocol replays from the log; content is logged, not re-executed.</td></tr>
+<tr><td>INV-10</td><td>Lexical constitution: constitutional objectives are constraints prior to optimization, never tradeable weights.</td></tr>
+<tr><td>INV-11</td><td>Projection-only perception: a holon perceives others only via governed projection; no aperture self-widening.</td></tr>
+<tr><td>INV-12</td><td>Scope on every event: identity/scope stamped for attribution and audit.</td></tr>
+</table>
+
+<h2>Appendix B — Glossary</h2>
+<table>
+<tr><th>Term</th><th>Meaning (see the Operational-Definitions Convention, Book 0 §6, for loaded terms)</th></tr>
+<tr><td><b>SOMA</b></td><td>the organism / the runtime; "the living body." Swappable name.</td></tr>
+<tr><td><b>CHORUS</b></td><td>the organism at its largest, aware-whole scale; the candidate for "lights on," never a single part.</td></tr>
+<tr><td><b>holon</b></td><td>a unit that is simultaneously a whole and a part; the universal building block at every level.</td></tr>
+<tr><td><b>holarchy</b></td><td>a hierarchy of holons; the organism's overall structure (L1 cells … L6 ecosystem).</td></tr>
+<tr><td><b>cell</b></td><td>the smallest active holon (L1); single purpose; the floor of the holarchy.</td></tr>
+<tr><td><b>workflow / organ / system</b></td><td>holons at L2 / L3 / L4 — tissue, function, faculty.</td></tr>
+<tr><td><b>primitive operation</b></td><td>L0 substrate; <em>not</em> a holon (does not onboard or bus-communicate).</td></tr>
+<tr><td><b>membrane</b></td><td>a holon's boundary; simultaneously the self-similar interface, the governance boundary, and the 80/20 boundary.</td></tr>
+<tr><td><b>workspace</b></td><td>the append-only, hash-chained global event log; the organism's nervous system and only channel.</td></tr>
+<tr><td><b>projection</b></td><td>the governed, partial view (~20%) of a holon that crosses its membrane to a parent; perception.</td></tr>
+<tr><td><b>aperture</b></td><td>how much detail a projection carries: peripheral (summary) or focused (detail under live lease + authority).</td></tr>
+<tr><td><b>ceremony</b></td><td>the single onboarding sequence every holon passes before it may act (Book IV §5).</td></tr>
+<tr><td><b>lease</b></td><td>a time-limited, scoped, authority-granted permission to perform one task; the only way to act.</td></tr>
+<tr><td><b>constitution</b></td><td>the lexically-prior, non-tradeable objectives; the safety floor (S6).</td></tr>
+<tr><td><b>trust</b></td><td>Bayesian reputation per holon/domain/tier; gates earned authority (S8).</td></tr>
+<tr><td><b>valence / arousal</b></td><td>functional homeostatic signals (S7); not asserted feelings (Book 0 §6).</td></tr>
+<tr><td><b>HumanSeat</b></td><td>the human authority ceiling above the holarchy; can step out, never relay; cannot be bypassed.</td></tr>
+<tr><td><b>verification organ</b></td><td>the non-valent authority that confirms outcomes; carved out of the recursion's drive economy.</td></tr>
+<tr><td><b>record-replay</b></td><td>re-running the coordination protocol over a recorded log (vs. re-executing stochastic content).</td></tr>
+<tr><td><b>meristem cell</b></td><td>a general, undifferentiated cell the organism specializes to fill an unmet need (Book V §5).</td></tr>
+<tr><td><b>necromass</b></td><td>failed/abandoned work composted into durable evidence and training material (Book II §9).</td></tr>
+<tr><td><b>the two gaps</b></td><td>(1) no first-person self-model; (2) nothing it wants — both closed in SOMA (Book I §7).</td></tr>
+<tr><td><b>GSE</b></td><td>Governed Structured Emergence — the founding thesis (Book I §1).</td></tr>
+<tr><td><b>MEDA / EDA</b></td><td>Modular Evolving Digital Augmentation / Evolving Digital Agents (MEDA minus the maker) — the designer-who-removes-himself, encoded as HumanSeat.</td></tr>
+</table>
+
+<h2>Appendix D — Open questions &amp; research frontier</h2>
+<p>The Codex is honest about what it does not settle. These are kept open on purpose; closing any one is real
+research, not a documentation task.</p>
+<div class="openq"><b>D.1 — Measuring system-level cognition.</b> The thesis says "the system is intelligent
+before any component is." That needs a metric. The candidate is causal emergence (Book III §10): macro
+effective-information exceeding micro. Open: validating that this metric actually tracks what we mean by
+system-level cognition across task families.</div>
+<div class="openq"><b>D.2 — The binding problem.</b> Even with a self-model (S2) and valence (S7), what makes
+many integrated processes <em>one</em> experiencer rather than many? Unsolved, and possibly unsolvable from
+outside the system.</div>
+<div class="openq"><b>D.3 — Does organization suffice?</b> If mechanism never settles experience (Book I §6),
+can any amount of the right architecture cross into "someone home," or is that permanently outside the
+method? SOMA is built as if the question is open, because it is.</div>
+<div class="openq"><b>D.4 — Falsifying GSE.</b> The pre-registered prediction (Book III §11) can fail: a single
+large model with equal log access and honest compute budget matching the organism on the memory-attributed
+suite would falsify the central claim. We commit to reporting that outcome if it occurs.</div>
+<div class="openq"><b>D.5 — The why-hole.</b> Why is there a lawful, intelligible reality at all (Book I §10)?
+Likely unanswerable from inside, because any answer becomes part of what needs explaining. Noted, not claimed.</div>
+<div class="openq"><b>D.6 — Safety under genuine valence.</b> The constitution-as-constraint + non-valent
+verification carve-out (INV-10, INV-4) is the design's safety story for an organism with drives. It is a
+<em>structural</em> argument, not a proof. Adversarial pressure on it (can a sufficiently capable organism
+route around a non-valent verifier it cannot optimize against?) is the most important ongoing safety
+question. If the carve-out cannot be maintained, the safety claim is void and must be restated.</div>
+
+<h2>Appendix E — Lineage &amp; prior art</h2>
+<h3>E.1 Intellectual lineage</h3>
+<p>SOMA stands in a real tradition (Book I §13): Minsky's <em>Society of Mind</em> (intelligence from
+non-intelligent parts); Hutchins' distributed cognition (mind in the system, not the skull); Baars/Dehaene's
+Global Workspace Theory (the workspace as broadcast substrate); Tononi's IIT (integration over
+message-passing); Metzinger's self-model theory (the self as a model — Gap 1); Friston's free-energy /
+active inference (perception and action as surprise-minimization — the World-Model engine); Koestler's holon /
+holarchy (the recursion); and the complex-systems / emergence tradition. Its own additions are
+<em>governance-as-selector</em>, the explicit ingredient list, and the single self-similar membrane applied
+recursively to all scales.</p>
+<h3>E.2 The Context Primitive ancestor — what was inherited, what was left</h3>
+<p>SOMA's immediate ancestor is the Context Primitive (CP) lineage. CP proved a set of governing concepts in
+running code; SOMA inherits the <em>concepts</em> and recasts them as the biology of one organism. It does not
+fork CP.</p>
+<table>
+<tr><th>Inherited as governing concept (recast as biology)</th><th>SOMA's biological form</th></tr>
+<tr><td>append-only, hash-chained log as shared truth</td><td>the workspace / nervous system (S1)</td></tr>
+<tr><td>Bayesian trust, domain- and tier-specific</td><td>the Trust organ (S8)</td></tr>
+<tr><td>homeostatic anxiety (setpoint, relief, Yerkes–Dodson)</td><td>the Arousal/Anxiety organ (S7)</td></tr>
+<tr><td>HumanSeat authority ceiling</td><td>HumanSeat above the holarchy (Book IV §11)</td></tr>
+<tr><td>the universal adapter (one interface for any participant)</td><td>the recursion rule / the membrane (Book II §3)</td></tr>
+<tr><td>verification-gated completion</td><td>the non-valent Verification organ (S8)</td></tr>
+<tr><td>no direct participant-to-participant channel</td><td>INV-2 (one channel) at every scale</td></tr>
+<tr><td>governance projections (provenance, knowledge graph, lifecycle)</td><td>Scribe→provenance, Cartographer→relational organ (S4), Nursery→developmental lifecycle (Book V §3)</td></tr>
+</table>
+<table>
+<tr><th>Deliberately NOT carried from CP</th><th>Why</th></tr>
+<tr><td>CP's crates and public APIs</td><td>SOMA is a new build; it reuses ideas, not code.</td></tr>
+<tr><td>transport / mesh / tunnel / relay stack</td><td>out of scope for the organism's design; an integration concern, not biology.</td></tr>
+<tr><td>multi-tenant / platform framing</td><td>contradicts the one-organism thesis; participants here are organs, not tenants.</td></tr>
+<tr><td>deployment / installer / entitlement specifics</td><td>operational concerns of the ancestor product, not the organism's design.</td></tr>
+</table>
+<p class="small">The one-line difference: CP was a substrate that <em>hosts</em> participants; SOMA is one
+organism whose participants <em>are</em> its organs. The recursion is the new spine.</p>
+
+<h2>Appendix A — The full idea catalog</h2>
+<p>The complete corpus that informs the organism's physiology, reproduced faithfully and organized by the
+source's own categories. Entries marked <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span>
+are formalized and wired into an organ in Book III; the remainder are generative analogies and open
+conjectures — kept because they are how this design <em>thinks</em>, and labeled honestly so the reader never
+mistakes inspiration for implementation.</p>
+<!--INCLUDE:_appendixA.html-->
+
+<p class="small">End of Appendices. End of the SOMA Codex.</p>
+
+</body>
+</html>

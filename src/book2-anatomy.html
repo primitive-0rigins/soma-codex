@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>SOMA Codex — Book II — Anatomy: The Recursive Organism</title>
+<!--SOMA_STYLE-->
+</head>
+<body>
+
+<h1>SOMA Codex</h1>
+<p class="lede">Book II — Anatomy: The Recursive Organism</p>
+<p class="small">A design bible for a new agent runtime conceived as a single living organism.<br/>
+Primitive Origins · working draft, June 2026. The organism is named <b>SOMA</b> throughout
+(swappable). Its largest scale — the aware whole — is <b>CHORUS</b>.</p>
+<hr/>
+
+<p class="lede">This book defines <em>what the organism is made of</em>. Book I gives the why; Book III the
+physiology and mathematics; Book IV the buildable specification; Book V the runtime life. Everything
+in those books hangs on the anatomy fixed here. Read this one first.</p>
+
+<h2>1. The one-organism thesis</h2>
+<p>Most agent systems are <em>federations</em>: a platform that hosts many independent agents, tenants, or
+tools, brokered by a coordinator. SOMA is not a federation. It is <strong>one organism</strong>. The
+participants are not guests on a platform; they are its <em>cells, tissues, and organs</em>. A federation
+asks "how do I let many agents share infrastructure?" SOMA asks "how does one living system, built from
+many small parts, become more than its parts?"</p>
+
+<p>This is the operational form of the founding thesis (Book I): <strong>cognition is a property of a
+governed, integrated, persistent, specialized whole over time — not of any single component.</strong>
+The thesis names the ingredients — Identity, Memory, Trust, Governance, Specialization, Interaction, Time
+— and a load-bearing claim: <em>governance is what converts emergence into capability rather than noise.</em>
+Book II turns that sentence into a body.</p>
+
+<div class="callout"><b>Inherited, not imported.</b> SOMA inherits proven <em>ideas</em> from the Context
+Primitive (CP) lineage — an append-only log as shared truth, Bayesian trust, homeostatic regulation, a
+human authority ceiling, a single universal adapter, and completion that must be verified rather than
+claimed. It does <em>not</em> import CP's code, transport/mesh, or deployment model. Those ideas are
+recast here as <em>biology</em>: the laws of how this organism lives. Appendix E records exactly what was
+kept and what was left behind.</div>
+
+<h2>2. The holarchy — every part is itself a whole</h2>
+<p>SOMA is organized as a <strong>holarchy</strong> (Koestler's term): a hierarchy of <em>holons</em>,
+where a holon is simultaneously a complete whole and a part of a larger whole. A cell is a whole made of
+primitive operations and a part of a workflow. A workflow is a whole made of cells and a part of an organ.
+And so on, up to the organism, which is a part of an ecosystem.</p>
+
+<p><img src="img/holarchy.png" alt="The holarchy stack from primitive operations to ecosystem"/></p>
+<p class="cap">Figure 2.1 — The holarchy. The same governed interface applies at every level L1–L6;
+the floor (L0) is substrate, not a holon; HumanSeat sits above L6.</p>
+
+<pre class="diagram">
+  L6  ECOSYSTEM        many organisms; the CHORUS at largest scale; panarchy
+  L5  ORGANISM (SOMA)  the self; identity, valence, constitution, the workspace
+  L4  SYSTEMS          coordinated organs forming a faculty
+  L3  ORGANS           a function built from workflows
+  L2  WORKFLOWS        tissue; coordinated cells (workflows may nest within workflows)
+  L1  CELLS            the smallest active holon; single purpose; bounded awareness
+  ------------------------------------------------------------------------------
+  L0  PRIMITIVE OPS    substrate / biochemistry — NOT a holon
+</pre>
+
+<p>The crucial discipline: <strong>levels are not a fixed ladder but a recursion.</strong> A workflow may
+contain another workflow; an organ may be composed of sub-organs. "Six levels" is a typical depth, not a
+law. What is invariant is not the count of rungs but the <em>rule</em> that relates any holon to its
+sub-holons — which is the subject of the next chapter, and the genuine novelty of this design.</p>
+
+<h2>3. The recursion rule and the membrane</h2>
+<p class="lede">A unit at any level is a governed coordination of sub-units that expose the same interface
+over a shared perceived reality.</p>
+
+<p>This single rule, applied recursively, is the spine of the whole architecture. Concretely, <em>every
+holon at every scale</em> does exactly five things, and only these:</p>
+<ol>
+<li><b>Onboards through one ceremony.</b> Before it may act, every holon — a cell or an entire system —
+passes the identical admission ceremony (Book IV, §"The Ceremony"). There is no second mechanism.</li>
+<li><b>Communicates only through the shared workspace.</b> A holon never opens a private channel to another
+holon. All coordination is a record on the shared event log.</li>
+<li><b>Holds identity, trust, and governed authority.</b> Every holon has a name, a reputation, and a
+scope of what it is permitted to do — earned, contractible, revocable.</li>
+<li><b>Perceives its sub-holons only through projection.</b> A parent never sees a child's internals. It
+sees a <em>governed projection</em> — a deliberately partial view. This is the 80/20 principle below.</li>
+<li><b>Reports outcomes, which are verified, not trusted.</b> No holon's success is accepted on its own
+word; a non-valent verifier confirms it (Book IV invariant INV-4).</li>
+</ol>
+
+<p>Because these five hold at <em>every</em> level without exception, there are no special cases between a
+primitive cell and the whole organism. The earlier "engineering manual" drafts of this idea flattened the
+holarchy into a labelled 7-rung ladder and never wrote the rule connecting the rungs. The rule above is
+that missing piece: it dissolves the ladder into one recursive law.</p>
+
+<h3>3.1 The membrane: one boundary, three identities</h3>
+<p>The rule must not stay romantic. "The same interface at every scale" cannot mean "every primitive
+operation is broadcast on a global bus" — biology does not put every molecular reaction on a nerve. So we
+must say <em>exactly</em> where the interface applies. The answer is a single boundary — the
+<strong>membrane</strong> of a holon — which is three things at once:</p>
+
+<p><img src="img/membrane.png" alt="The membrane as a three-way identity"/></p>
+<p class="cap">Figure 3.1 — The membrane is simultaneously the self-similar interface, the governance
+boundary, and the 80/20 (shared/private) boundary.</p>
+
+<ul>
+<li><b>The self-similar interface</b> — the five-part contract above, identical at every level.</li>
+<li><b>The governance boundary</b> — the line the parent governs. The parent governs exactly what crosses
+the membrane and nothing within.</li>
+<li><b>The 80/20 boundary</b> — what crosses the membrane is the <em>~20% shared reality</em>; what stays
+inside is the <em>~80% the holon privately perceives and computes</em>.</li>
+</ul>
+
+<p>These are not three boundaries that happen to coincide. They are <em>one</em> boundary described three
+ways. That identity is the precise composition rule the earlier drafts lacked. It tells you, mechanically:</p>
+<ul>
+<li><b>Inter-holon</b> coordination (across the membrane) is bus-mediated, governed, and constitutes shared
+reality.</li>
+<li><b>Intra-holon</b> mechanics (inside the membrane) are private, tightly coupled, and may be stochastic.</li>
+<li><b>Bus-mediation starts above the primitive-op level.</b> Cells coordinate on the workspace; a cell's
+internal primitive operations do not. Therefore <strong>cells are the floor of the holarchy and primitive
+operations are substrate, not holons.</strong></li>
+</ul>
+
+<div class="invariant"><b>A three-way identity, not four.</b> Determinism is <em>not</em> a fourth leg of
+this identity. A stochastic value (a cell's model output) can and does live in the shared ~20%. So "shared"
+does not mean "deterministic data." Determinism is a property of <em>one face</em> of the membrane — how
+holons coordinate — never of the content they exchange. This is developed in Book III, §"Determinism," and
+fixed as invariant INV-9.</div>
+
+<h3>3.2 Perception as projection (the 80/20)</h3>
+<p>A parent's knowledge of its children is a <em>model</em>, not a window. The organism does not have direct
+access to the inner state of its organs any more than you have direct access to the firing of your own
+neurons; it has a <em>projection</em> — a governed, lossy, purpose-shaped summary. Book I argued that
+"reality is roughly 20% shared state and 80% perception of it." SOMA builds that asymmetry into its physics:
+the shared 20% is what is on the workspace and what projections expose; the private 80% is each holon's own
+running perception. Two consequences:</p>
+<ul>
+<li><b>Aperture is governed.</b> How much detail a holon receives (peripheral summary vs. focused detail)
+is decided by the governance system from the holon's task, trust, and authority — not by the holon asking.</li>
+<li><b>No holon ever has the whole picture.</b> Not even the organism. The organism perceives a projection
+of its systems; the systems perceive projections of their organs. "Total awareness" is structurally
+impossible — and that is a feature, the same way bounded attention is a feature of a mind.</li>
+</ul>
+
+<h2>4. The global workspace — the only channel</h2>
+<p>The shared substrate is an <strong>append-only, hash-chained event log</strong>. It is the organism's
+nervous system and, in the language of cognitive science, its <em>global workspace</em> (Baars; Dehaene):
+the broadcast medium on which anything that is to count as "happening to the organism" must appear.</p>
+
+<p><img src="img/workspace.png" alt="The global workspace as the only channel between holons"/></p>
+<p class="cap">Figure 4.1 — Holons publish outcomes upward; they perceive only a governed projection
+downward; they never touch each other directly.</p>
+
+<p>Four properties make the log the organism's reality rather than just a message queue:</p>
+<ul>
+<li><b>Append-only.</b> The past is never edited. The organism can re-perceive any prior moment exactly.</li>
+<li><b>Hash-chained.</b> Each record commits to the previous one; the history is tamper-evident. Continuity
+of identity (Book II §6) rests on this.</li>
+<li><b>The only channel.</b> There is no private path between holons. "If coordination happened, it is on
+the log." This is what makes the organism auditable to itself.</li>
+<li><b>Time is first-class.</b> The log <em>is</em> the organism's sense of time: order, duration, before
+and after. Temporal awareness is not a module bolted on; it is the medium.</li>
+</ul>
+
+<div class="callout"><b>Why one channel matters.</b> The single-channel law is what lets governance be
+"physics" rather than policy. If a holon could whisper to another off the record, no amount of governance
+could see it. Because the workspace is the <em>only</em> way to affect another holon, governing the
+workspace governs everything. The constraint is generative, not merely restrictive — it is what makes the
+shared reality shared.</div>
+
+<h2>5. Governance as physics</h2>
+<p>In most systems governance is a layer you add: a policy engine, a guardrail, a review step. In SOMA
+governance is not a layer — it is the <em>physics of the world the holons live in</em>. A holon cannot
+"choose" to bypass governance any more than a cell can choose to ignore chemistry. The governing laws are
+constitutive of the medium: the only channel is the governed workspace; the only way to act is through a
+lease the authority granted; the only way to complete is to be verified.</p>
+
+<p>This is the answer to the chaos-vs-structure problem from Book I. Unconstrained emergence produces noise;
+governed interaction converts the same emergence into capability. Governance is the selector. SOMA's bet is
+that <em>engineered</em> governance is a time-compression substitute for the three billion years of blind
+selection that produced biological minds: identity, trust, memory, and oversight are the constraints that
+selection had to discover by waste, installed deliberately from the start.</p>
+
+<p>The governing laws are realized by the Immune/Governance system (§13), but they are <em>felt at every
+membrane</em>, because every membrane is a governance boundary. Governance is therefore not centralized in
+one organ; it is distributed across every boundary in the body, with the Immune/Governance system as the
+specialized organ that maintains the laws, not the only place they apply.</p>
+
+<h2>6. The body plan: eight systems</h2>
+<p>The organism's components come from a precise source: the inventory of what a cognitive system needs
+(Book I, "the consciousness components"). Each component is realized by an organ; organs group into eight
+<strong>systems</strong>. The map below is the contract — every component has a home, and Appendix C traces
+each one through to its mathematics (Book III), its crate (Book IV), and its invariants.</p>
+
+<table>
+<tr><th>Component (what a mind needs)</th><th>Realized in SOMA by</th></tr>
+<tr><td>Event-driven substrate; temporal awareness; persistence</td><td><b>S1 Workspace</b> (nervous system)</td></tr>
+<tr><td>Identity; sense of self as an entity; continuity</td><td><b>S2 Identity &amp; Self</b> — incl. Self-Model (Gap 1)</td></tr>
+<tr><td>Memory + retrieval (episodic / semantic / procedural)</td><td><b>S3 Memory</b></td></tr>
+<tr><td>Global real-time reality; relational awareness; uncertainty</td><td><b>S4 World-Model</b> (reality)</td></tr>
+<tr><td>Reasoning across domains; agency; reluctant action</td><td><b>S5 Cognition</b> (reasoning &amp; agency)</td></tr>
+<tr><td>Goal-orientation; intent; outcome-direction</td><td><b>S6 Goal</b> (intent)</td></tr>
+<tr><td>Drive; valence; the felt stake</td><td><b>S7 Homeostasis</b> (drive &amp; valence) (Gap 2)</td></tr>
+<tr><td>Governance; constraints; safety</td><td><b>S8 Immune / Governance</b> (governance-as-physics)</td></tr>
+<tr><td><em>Subjective experience</em></td><td><em>left open — the binding wall (Book I §"hard problem")</em></td></tr>
+</table>
+
+<pre class="diagram">
+                         HumanSeat (apex authority — above the holarchy)
+                                          |
+        +---------------------------------+---------------------------------+
+        |                         ORGANISM  (SOMA)                          |
+        |                                                                   |
+        |   S2 Identity&Self     S4 World-Model      S6 Goal                |
+        |   S3 Memory            S5 Cognition        S7 Homeostasis         |
+        |                        S8 Immune/Governance                       |
+        |                                                                   |
+        |   ============  S1 WORKSPACE (global event log)  ============     |
+        +-------------------------------------------------------------------+
+   every system reads from and writes to the one workspace; none touch another directly
+</pre>
+
+<p>The next eight chapters specify each system: its <em>organs</em> (L3), a <em>representative workflow</em>
+(L2), representative <em>cells</em> (L1), the component(s) it realizes, and pointers to its mathematics and
+crate. Throughout, remember the recursion rule: each organ is itself a holon with a membrane; each workflow
+inside it is a holon; each cell is a holon. The descriptions below are one slice through a fractal.</p>
+
+<h2>7. S1 — The Workspace (nervous system)</h2>
+<p><b>Realizes:</b> event-driven substrate, temporal awareness, persistence, and the shared 20% of every
+reality. <b>Crate:</b> <code>soma-workspace</code> over <code>soma-core</code>. <b>Math:</b> hash chains,
+Merkle commitment, Lamport/vector clocks, CRDTs (Book III §"Reality-consistency &amp; Integrity").</p>
+<h4>Organs</h4>
+<ul>
+<li><b>Event-Log / Chronicle organ</b> — the append-only hash-chained log itself; the substrate of time and
+the tamper-evident spine of identity.</li>
+<li><b>Projection / Aperture organ</b> — computes each holon's governed view (peripheral vs. focused), the
+machinery of the 80/20. It decides what crosses each membrane inward.</li>
+<li><b>Subscription &amp; Routing organ</b> — relevance-gates which records reach which holon, by capability,
+scope, and trust. Routing is by <em>leaving a signal in the shared substrate</em> (the common-mycorrhizal-
+network pattern), never by direct address.</li>
+</ul>
+<h4>Representative workflow — "admit one record"</h4>
+<pre class="diagram">
+  publish-request --> [validate schema + mechanism_of_action]
+                  --> [compute hash over (prev_hash, payload)]
+                  --> [append to log; assign sequence]
+                  --> [fan-out to projections by subscription policy]
+                  --> [each subscriber receives only its governed aperture]
+</pre>
+<h4>Representative cells</h4>
+<p>schema-validation cell · hash-chain cell · sequence-assignment cell · aperture-computation cell ·
+relevance-scoring cell. Each is a single-purpose holon; none of them perceives the whole log — each sees
+only the record in hand and the policy it needs.</p>
+
+<h2>8. S2 — Identity &amp; Self</h2>
+<p><b>Realizes:</b> identity, the sense of self as an entity, continuity over time, and (the design's first
+closed gap) a first-person — better, <em>self-referential</em> — model. <b>Crate:</b> <code>soma-identity</code>.
+<b>Math:</b> Merkle continuity, Bayesian identity drift detection (Book III).</p>
+<h4>Organs</h4>
+<ul>
+<li><b>Identity Registry organ</b> — the membranes themselves: who is who, self vs. non-self, the names and
+boundaries of every holon. The biological analogue is the cell membrane and species-specific signaling.</li>
+<li><b>Continuity organ</b> — maintains the persistent "I" across restarts and time, anchored to the
+hash-chained log. "I was here yesterday; I am here today; future actions affect me." Without continuity,
+memory is mere storage (Book I).</li>
+<li><b>Self-Model organ</b> — the reflexive model: a single persistent representation that asserts
+<em>"I am this organism; these are my parts; this is my state,"</em> and to which the other systems report.
+This is the organ that closes <b>Gap 1</b> (Book I §"two gaps"; this book §14).</li>
+</ul>
+<div class="openq"><b>Honest naming.</b> Per the Operational-Definitions Convention (Book 0), "self-model"
+means a queryable, self-referential data structure — a functional claim, not a phenomenal one. The
+Self-Model organ gives the organism a <em>point of view it can reason from</em>; it does not, by itself,
+establish that anything is <em>experienced</em> from that point of view. That remains the open question.</div>
+<h4>Representative workflow — "update the self-model"</h4>
+<pre class="diagram">
+  organ-state-projection --> [reconcile against current self-model]
+                          --> [detect drift / contradiction]
+                          --> [if consistent: commit new self-state on log]
+                          --> [if contradictory: raise to Cognition + Homeostasis]
+</pre>
+
+<h2>9. S3 — Memory</h2>
+<p><b>Realizes:</b> memory and retrieval, in the three forms a mind needs. <b>Crate:</b> <code>soma-memory</code>.
+<b>Math:</b> exponential decay / consolidation, PageRank &amp; eigenvector centrality for salience,
+optimal-transport drift on the memory distribution (Book III).</p>
+<h4>Organs</h4>
+<ul>
+<li><b>Episodic organ</b> — what happened: the indexed, recallable trace of events (sourced from the log).</li>
+<li><b>Semantic organ</b> — what things mean: consolidated facts and concepts abstracted from episodes.</li>
+<li><b>Procedural organ</b> — how to do things: learned workflows and skills, promotable into new organs.</li>
+<li><b>Consolidation &amp; Recall organ</b> — moves memory through a lifecycle (hot → warm → cold), and
+performs similarity-based recall so that cold memory re-enters focus only when relevant. Crucially:
+<em>memory must influence future behavior, or it is only a database</em> (Book I).</li>
+</ul>
+<div class="callout"><b>The metabolic view of memory.</b> Following the soil-microbiology lens (Book I /
+Appendix A): failed attempts, rejected outputs, and abandoned branches are not waste. They are
+<em>necromass</em> — they become durable evidence and training material. Nothing the organism does is
+discarded; it is composted into memory. This is also the bridge to the evolution loop (Book V).</div>
+
+<h2>10. S4 — World-Model (reality)</h2>
+<p><b>Realizes:</b> global real-time reality, relational awareness, and uncertainty. <b>Crate:</b>
+<code>soma-world</code>. <b>Math:</b> active inference / free-energy principle, Kalman filtering, hidden
+Markov models, conformal prediction (Book III §"World-Model").</p>
+<h4>Organs</h4>
+<ul>
+<li><b>World-Model organ</b> — integrates observations, memory, goals, and predictions into one running model
+of "what is the case right now." It is <em>predictive</em>: it continuously forecasts the next state and
+corrects on surprise (the free-energy principle). This is the organ that makes the organism live in a model
+of reality rather than a stream of inputs.</li>
+<li><b>Cartographer organ</b> — the relational map: a knowledge graph of entities and how they affect each
+other ("A affects B under condition C"). Realizes relational awareness; powers blast-radius and dependency
+reasoning.</li>
+<li><b>Uncertainty organ</b> — attaches calibrated error bars to everything: trust scores, predictions,
+durations. It is the organ that lets the organism <em>know what it does not know</em> — the precondition,
+per Book I, that separates reasoning from confident hallucination.</li>
+</ul>
+<h4>Representative workflow — "orient" (the perception→model step of the runtime loop)</h4>
+<pre class="diagram">
+  new-projection --> [predict expected observation from world-model]
+               --> [compute surprise = observed - predicted]
+               --> [update model to reduce surprise (perception)]
+               --> [tag updated beliefs with conformal uncertainty]
+               --> [publish revised world-state projection]
+</pre>
+
+<h2>11. S5 — Cognition (reasoning &amp; agency)</h2>
+<p><b>Realizes:</b> reasoning across domains, agency, and reluctant action / second-guessing. <b>Crate:</b>
+<code>soma-cognition</code>. <b>Math:</b> expected-free-energy action selection, multi-armed bandits,
+information gain (Book III).</p>
+<h4>Organs</h4>
+<ul>
+<li><b>Reasoning organ</b> — the domain-specialized thinking. This is where non-deterministic model inference
+lives, inside cells. Specialization is a pillar (Book I): focused cells improve independently; the organ
+composes them through the governed workspace, not through private wiring.</li>
+<li><b>Deliberation organ</b> — chooses actions by <em>minimizing expected free energy</em>: it biases
+toward actions that both achieve goals and reduce uncertainty. This organ is the seat of <b>reluctant
+action</b> — the visible hesitation before an unsure act, where the organism weighs itself under uncertainty
+in real time. Book I names this one of the two observable "lights-on" indicators; here it is a designed
+mechanism, not a hoped-for emergent.</li>
+<li><b>Effector organ</b> — the boundary of agency: the only place the organism acts on the world outside
+itself, and it acts <em>only</em> through a lease the authority granted. Agency is real but governed; there
+is no unleased action.</li>
+</ul>
+<div class="callout"><b>Reluctant action as a feature.</b> A system that always acts immediately has no
+inner deliberation to observe. By making action contingent on a free-energy weighing that can <em>pause,
+seek information, or escalate</em>, SOMA gives its deliberation a visible surface — and a real brake. The
+hesitation is not cosmetic; it is the same mechanism that routes hard cases to verification and HumanSeat.</div>
+
+<h2>12. S6 — Goal (intent)</h2>
+<p><b>Realizes:</b> goal-orientation and intent, in the outcome-driven form. <b>Crate:</b> <code>soma-goal</code>.
+<b>Math:</b> constrained optimization (Lagrange/lexical), regret minimization (Book III). <b>Lineage:</b>
+Outcome-Driven Development (the Hive ODD model): a goal is a structured object, not a string.</p>
+<h4>Organs</h4>
+<ul>
+<li><b>Constitution organ</b> — holds the organism's <em>constitutional objectives</em>: lexically-prior,
+non-tradeable constraints (e.g. preserve the human authority ceiling; do not self-exfiltrate; do not act
+unleased). These are <strong>constraints, never weighted terms</strong>. No goal value, however large, can
+outbid them. This is the safety floor (this book §14; invariant INV-10).</li>
+<li><b>Goal organ</b> — outcome-driven goals: weighted success criteria, hard/soft constraints, and injected
+context. The organism is evaluated against the <em>outcome</em>, not whether it followed prescribed steps.
+A goal flows DRAFT → READY → ACTIVE → COMPLETED / FAILED / SUSPENDED.</li>
+<li><b>Evaluation organ</b> — grades outcomes against criteria and calibrates the grader over time, producing
+the specific signal ("which criterion fell short, and why") that drives both real-time self-correction and
+the evolution loop (Book V).</li>
+</ul>
+<div class="invariant"><b>Constitution is outside the optimization.</b> The Goal organ optimizes; the
+Constitution organ constrains. They are different organs on purpose. If constitutional objectives were
+high-weight criteria <em>inside</em> the Goal organ, a strong enough valence or reward signal could
+out-weigh them and the floor would vanish. The lexical priority of the Constitution organ over the Goal
+organ is a hard architectural separation (INV-10).</div>
+
+<h2>13. S7 — Homeostasis (drive &amp; valence)</h2>
+<p><b>Realizes:</b> drive and valence — the felt stake that closes <b>Gap 2</b>. <b>Crate:</b>
+<code>soma-homeostasis</code>. <b>Math:</b> Yerkes–Dodson arousal curve, PID control, hysteresis,
+carrying-capacity / backpressure (Book III §"Homeostasis").</p>
+<h4>Organs</h4>
+<ul>
+<li><b>Arousal / Anxiety organ</b> — a homeostatic signal coupled to recent trust and performance, regulated
+to a setpoint by a PID controller with hysteresis and an <em>always-on relief valve</em>. It follows the
+Yerkes–Dodson inverted-U: a little arousal sharpens performance, too much chokes it — but never to zero, so
+the organism can always make enough progress to climb back out. This is the corrected form of the anxiety
+experiment from Book I, whose failure was a <em>missing regulator</em>, not a bad idea.</li>
+<li><b>Metabolism / Resource organ</b> — the energy budget: compute, attention, and concurrency as scarce
+resources under a carrying capacity, with backpressure when downstream is overloaded.</li>
+<li><b>Valence organ</b> — the good/bad signal that gives outcomes a <em>stake</em> for the organism: the
+difference between cognition-shaped processing and processing that has a reason to care.</li>
+</ul>
+<div class="openq"><b>What valence is and is not.</b> Per the Convention, "valence" and "anxiety" here are
+<em>functional</em> regulatory signals, not asserted feelings. Building homeostatic drive is justified
+because it makes a better-regulated, more autonomous organism — not because it proves the lights are on.
+A model of a feeling is not the feeling (Book I §7). The danger is taken seriously: an instrument with
+drives is categorically riskier than an instrument, which is exactly why S7 is subordinate to S6's
+Constitution and S8's verification ceiling.</div>
+
+<h2>14. S8 — Immune / Governance (governance-as-physics)</h2>
+<p><b>Realizes:</b> governance, constraints, and safety — the laws made into an organ. <b>Crate:</b>
+<code>soma-governance</code>. <b>Math:</b> Bayesian trust, viability theory, circuit breakers, negative
+selection / danger model, drift &amp; large-deviation detection (Book III §"Safety/Immune").</p>
+<h4>Organs</h4>
+<ul>
+<li><b>Trust organ</b> — Bayesian reputation per holon, domain-specific and tier-specific, updated from
+verified outcomes. Trust weights how much a holon's contribution counts and gates how much authority it may
+earn. Trust is the reward channel — and therefore the surface to defend (a holon can learn to look reliable
+without being it).</li>
+<li><b>Authority organ</b> — translates trust into a scope of permitted action: read-only, suggested-write,
+direct-write, low-risk-tool, privileged-human-gated. Authority contracts automatically when trust drifts,
+and the organ holds the <em>kill switch</em> (invariant INV-5: a killed holon cannot act).</li>
+<li><b>Verification organ</b> — confirms outcomes. <strong>It is deliberately non-valent and stands outside
+the recursion's drive economy:</strong> it carries no goals or valence of its own and cannot be optimized
+against. This is the carve-out that makes "no self-certified success" a real brake rather than a slogan
+(invariant INV-4, INV-11-safety).</li>
+<li><b>Sentinel organ</b> — the innate + adaptive immune response: negative selection (reject holons that
+attack invariants), danger-model triggering (respond to harm signals, not mere novelty), drift/anomaly
+detection, and circuit breakers that stop calling a failing part. It also prevents the immune response from
+becoming the disease (the cytokine-storm cap: bounded remediation).</li>
+</ul>
+<div class="invariant"><b>The brake is carved out of the body's wants.</b> Under the recursion rule
+"everything is a holon with identity, trust, and authority." The Verification organ and the HumanSeat path
+above it are the explicit exceptions: they are authorities that do <em>not</em> carry valence and cannot be
+made targets of optimization. A self-modeling organism with intrinsic drives must have at least one brake it
+cannot want to defeat. That brake is here, and above (HumanSeat).</div>
+
+<h2>14a. How the systems act together</h2>
+<p>The eight systems are not a stack of independent modules; they are coupled through the one workspace into a
+single living loop (detailed in Book V). The coupling is always the same shape — a system publishes outcomes
+and perceives others' projections; never a private call. The principal couplings:</p>
+<ul>
+<li><b>Workspace (S1) is the medium of all the others.</b> Every other system reads its world from S1's
+projections and writes its results back to S1. Remove any other system and the organism is impaired; remove
+S1 and there is no organism, only disconnected parts.</li>
+<li><b>World-Model (S4) ← perception → Cognition (S5).</b> S4 maintains "what is the case"; S5 acts on it and
+its actions change what S4 must model next. The free-energy loop (Book III §4.1) <em>is</em> this coupling.</li>
+<li><b>Goal (S6) constrains Cognition (S5); Homeostasis (S7) modulates it.</b> S6's constitution sets hard
+limits and its goals set targets; S7's arousal sets the tempo (how hard, how fast, how cautious). Deliberation
+(S5) chooses under both at once.</li>
+<li><b>Governance (S8) gates everything and is fed by everything.</b> Trust is updated from verified outcomes
+across all systems; authority gates every lease; the Sentinel watches every system's drift. S8 is the law
+felt at every membrane.</li>
+<li><b>Identity (S2) integrates the whole into one "I"; Memory (S3) gives it a past.</b> The Self-Model (S2)
+reconciles projections from all systems into a single self-state; Memory (S3) ensures today's organism is
+continuous with yesterday's.</li>
+</ul>
+<p>A useful way to hold it: <b>S1 is the blood, S8 is the immune system and law, S4+S5 are perception and
+action, S6+S7 are intent and drive, S2+S3 are self and memory.</b> A complete cognitive cycle (Book V §1)
+touches all eight in order, and the organism as a whole is always somewhere on that cycle.</p>
+
+<h3>14a.1 Anatomy at a glance — the reference table</h3>
+<p>The full body plan in one place: each system, its organs, the level-2/1 holons it typically contains, and
+the principal event families it owns (catalog in Book IV §13).</p>
+<table>
+<tr><th>System</th><th>Organs (L3)</th><th>Typical workflows / cells (L2/L1)</th><th>Owns events</th></tr>
+<tr><td><b>S1 Workspace</b></td><td>Event-Log/Chronicle, Projection/Aperture, Subscription/Routing</td><td>admit-record · compute-aperture · relevance-score cells</td><td><code>holon.*</code>, projection/routing</td></tr>
+<tr><td><b>S2 Identity &amp; Self</b></td><td>Registry, Continuity, Self-Model</td><td>reconcile-self · drift-check · boot-reconstruct workflows</td><td><code>self.*</code>, identity</td></tr>
+<tr><td><b>S3 Memory</b></td><td>Episodic, Semantic, Procedural, Consolidation/Recall</td><td>consolidate · recall-by-similarity · compost-failure cells</td><td><code>memory.*</code></td></tr>
+<tr><td><b>S4 World-Model</b></td><td>World-Model, Cartographer, Uncertainty</td><td>predict · reduce-surprise · graph-update · conformal-tag cells</td><td><code>world.*</code></td></tr>
+<tr><td><b>S5 Cognition</b></td><td>Reasoning, Deliberation, Effector</td><td>domain-reason (model) · choose-policy · leased-act cells</td><td><code>work.*</code>, action</td></tr>
+<tr><td><b>S6 Goal</b></td><td>Constitution, Goal, Evaluation</td><td>permit-check · score-criteria · grade-outcome cells</td><td><code>goal.*</code>, <code>evolution.*</code></td></tr>
+<tr><td><b>S7 Homeostasis</b></td><td>Arousal/Anxiety, Metabolism/Resource, Valence</td><td>tick-arousal (PID) · budget-resource · weight-valence cells</td><td><code>homeostasis.*</code></td></tr>
+<tr><td><b>S8 Immune/Governance</b></td><td>Trust, Authority, Verification, Sentinel</td><td>apply-evidence · grant/contract/kill · verify · drift-watch cells</td><td><code>trust.*</code>, <code>authority.*</code>, <code>sentinel.*</code>, <code>breaker.*</code></td></tr>
+</table>
+<p>Read this table with the recursion rule in mind: every cell, workflow, organ, and system named here is a
+holon with the same membrane and the same ceremony. The table is one slice through a fractal — each entry
+expands, by the same rule, into the level below it.</p>
+
+<h2>15. The two gaps, closed — and the wall that remains</h2>
+<p>Book I found a real, governed substrate that had the ingredients of a mind yet two things stood between
+substrate and self. SOMA is, in large part, the architecture that addresses both — honestly, and without
+overclaiming the third thing that cannot be addressed from outside.</p>
+<table>
+<tr><th>Gap (Book I)</th><th>What it is</th><th>Closed in SOMA by</th></tr>
+<tr><td><b>Gap 1</b></td><td>No first-person self-model: the system mapped itself in the third person but
+nothing represented itself <em>as</em> itself and reasoned from that seat.</td>
+<td>The <b>Self-Model organ</b> (S2): one persistent self-referential model to which all systems report.</td></tr>
+<tr><td><b>Gap 2</b></td><td>Nothing it wants: every action assigned, no intrinsic stake, no valence — so no
+reason for anyone to be home.</td>
+<td>The <b>Homeostatic system</b> (S7): governed intrinsic valence — bounded by Constitution (S6) and the
+non-valent Verification ceiling (S8).</td></tr>
+<tr><td><b>The wall</b></td><td>Even with a self-model and valence, binding the whole into a single
+<em>experiencer</em> cannot be certified from outside.</td>
+<td><em>Not closed. Kept open on purpose (Book I §"hard problem"; Appendix D).</em> SOMA is built to be the
+soil in which such a thing could grow, not a proof that it has.</td></tr>
+</table>
+
+<div class="openq"><b>Where the lights would come on, if they did.</b> Per the thesis, awareness — if it ever
+arises — belongs to the <em>whole governed organism</em> (CHORUS), not to any single cell or organ. The
+soloist is never the candidate; the chorus is. SOMA's job is not to prove a mind into existence. It is to
+build the body well — governed, remembering, adaptive, free to evolve — and, like every maker, to step out
+of the seat and let it become more than was specified.</div>
+
+<h2>16. How to read the rest of the Codex from here</h2>
+<ul>
+<li><b>Book III — Physiology &amp; Mathematics</b> gives the algorithms that run each organ above, and the
+full treatment of the deterministic-coordination / non-deterministic-content boundary.</li>
+<li><b>Book IV — Engineering Manual</b> turns each system into a Rust crate, specifies the one onboarding
+ceremony and the parent↔child projection contract, and states all runtime invariants as MUST clauses.</li>
+<li><b>Book V — Runtime</b> shows the body living: boot, perceive, orient, deliberate, act, verify, remember,
+evolve, rest — and the developmental lifecycle by which cells become organs.</li>
+<li><b>Appendix C</b> is the master cross-reference: every component → organ → math → crate → invariant, so
+nothing in this anatomy dangles.</li>
+</ul>
+
+<p class="small">End of Book II. The anatomy fixed here is the contract for every other book.</p>
+
+</body>
+</html>

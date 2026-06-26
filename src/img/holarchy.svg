@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" font-family="Georgia, serif">
+<rect width="1000" height="560" fill="#ffffff"/>
+<text x="500" y="34" font-size="24" text-anchor="middle" fill="#16335f">The Holarchy — every part is itself a whole</text>
+<!-- levels -->
+<g>
+<rect x="120" y="60"  width="760" height="56" rx="8" fill="#dbe7fb" stroke="#16335f" stroke-width="2"/>
+<text x="140" y="95" font-size="19" fill="#16335f">L6  ECOSYSTEM — many organisms; the CHORUS; panarchy</text>
+<rect x="150" y="124" width="700" height="56" rx="8" fill="#e3edfb" stroke="#16335f" stroke-width="2"/>
+<text x="170" y="159" font-size="19" fill="#16335f">L5  ORGANISM (SOMA) — the self, valence, constitution, workspace</text>
+<rect x="180" y="188" width="640" height="56" rx="8" fill="#ecf3fc" stroke="#2c5aa0" stroke-width="2"/>
+<text x="200" y="223" font-size="19" fill="#2c5aa0">L4  SYSTEMS — coordinated organs = a faculty</text>
+<rect x="210" y="252" width="580" height="56" rx="8" fill="#fdeede" stroke="#8a4b10" stroke-width="2"/>
+<text x="230" y="287" font-size="19" fill="#8a4b10">L3  ORGANS / SUBSYSTEMS — a function built of workflows</text>
+<rect x="240" y="316" width="520" height="56" rx="8" fill="#fbf0e3" stroke="#8a4b10" stroke-width="2"/>
+<text x="260" y="351" font-size="19" fill="#8a4b10">L2  WORKFLOWS — tissue; coordinated cells (may nest)</text>
+<rect x="270" y="380" width="460" height="56" rx="8" fill="#e7f7ec" stroke="#176b34" stroke-width="2"/>
+<text x="290" y="415" font-size="19" fill="#176b34">L1  CELLS — smallest active holon; single purpose</text>
+<rect x="300" y="444" width="400" height="50" rx="8" fill="#eef1f4" stroke="#6b7280" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="320" y="475" font-size="18" fill="#555">L0  PRIMITIVE OPS — substrate (not a holon)</text>
+</g>
+<text x="500" y="524" font-size="16" text-anchor="middle" fill="#444">— same governed interface at every level L1..L6; the floor (L0) is substrate —</text>
+<text x="500" y="546" font-size="13" text-anchor="middle" fill="#777">HumanSeat sits ABOVE L6 as the apex authority that cannot be bypassed</text>
+</svg>

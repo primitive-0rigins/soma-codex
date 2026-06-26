@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="420" font-family="Georgia, serif">
+<rect width="1000" height="420" fill="#ffffff"/>
+<text x="500" y="32" font-size="23" text-anchor="middle" fill="#16335f">The Global Workspace — the only channel</text>
+<rect x="120" y="170" width="760" height="70" rx="10" fill="#16335f"/>
+<text x="500" y="205" font-size="19" text-anchor="middle" fill="#fff">append-only, hash-chained event log  (the nervous system)</text>
+<text x="500" y="228" font-size="13" text-anchor="middle" fill="#cdd9ee">broadcast substrate · shared truth · global workspace</text>
+<g font-size="14">
+<rect x="150" y="70" width="150" height="56" rx="8" fill="#e7f7ec" stroke="#176b34" stroke-width="2"/><text x="225" y="103" text-anchor="middle" fill="#176b34">holon A</text>
+<rect x="425" y="70" width="150" height="56" rx="8" fill="#e7f7ec" stroke="#176b34" stroke-width="2"/><text x="500" y="103" text-anchor="middle" fill="#176b34">holon B</text>
+<rect x="700" y="70" width="150" height="56" rx="8" fill="#e7f7ec" stroke="#176b34" stroke-width="2"/><text x="775" y="103" text-anchor="middle" fill="#176b34">holon C</text>
+</g>
+<g stroke-width="2"><line x1="225" y1="126" x2="225" y2="170" stroke="#176b34" marker-end="url(#a)"/>
+<line x1="500" y1="126" x2="500" y2="170" stroke="#176b34" marker-end="url(#a)"/>
+<line x1="775" y1="126" x2="775" y2="170" stroke="#176b34" marker-end="url(#a)"/></g>
+<g font-size="14">
+<rect x="150" y="300" width="150" height="56" rx="8" fill="#ecf3fc" stroke="#2c5aa0" stroke-width="2"/><text x="225" y="333" text-anchor="middle" fill="#2c5aa0">projection</text>
+<rect x="425" y="300" width="150" height="56" rx="8" fill="#ecf3fc" stroke="#2c5aa0" stroke-width="2"/><text x="500" y="333" text-anchor="middle" fill="#2c5aa0">projection</text>
+<rect x="700" y="300" width="150" height="56" rx="8" fill="#ecf3fc" stroke="#2c5aa0" stroke-width="2"/><text x="775" y="333" text-anchor="middle" fill="#2c5aa0">projection</text>
+</g>
+<g stroke-width="2"><line x1="225" y1="240" x2="225" y2="300" stroke="#2c5aa0" marker-end="url(#a)"/>
+<line x1="500" y1="240" x2="500" y2="300" stroke="#2c5aa0" marker-end="url(#a)"/>
+<line x1="775" y1="240" x2="775" y2="300" stroke="#2c5aa0" marker-end="url(#a)"/></g>
+<defs><marker id="a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2c5aa0"/></marker></defs>
+<text x="500" y="392" font-size="14" text-anchor="middle" fill="#444">holons publish outcomes upward; perceive only a governed projection downward — never each other directly</text>
+</svg>

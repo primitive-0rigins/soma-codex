@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="320" font-family="Georgia, serif">
+<rect width="900" height="320" fill="#ffffff"/>
+<text x="450" y="32" font-size="21" text-anchor="middle" fill="#16335f">The evolution loop — adaptation as metabolism</text>
+<g font-size="15" text-anchor="middle">
+<rect x="80"  y="120" width="150" height="60" rx="9" fill="#e7f7ec" stroke="#176b34" stroke-width="2"/><text x="155" y="148" fill="#176b34">EXECUTE</text><text x="155" y="167" font-size="11" fill="#555">run against reality</text>
+<rect x="290" y="120" width="150" height="60" rx="9" fill="#eef6f0" stroke="#1f7a44" stroke-width="2"/><text x="365" y="148" fill="#1f7a44">EVALUATE</text><text x="365" y="167" font-size="11" fill="#555">vs success criteria</text>
+<rect x="500" y="120" width="150" height="60" rx="9" fill="#fdeede" stroke="#8a4b10" stroke-width="2"/><text x="575" y="148" fill="#8a4b10">DIAGNOSE</text><text x="575" y="167" font-size="11" fill="#555">which criterion, why</text>
+<rect x="710" y="120" width="150" height="60" rx="9" fill="#ecf3fc" stroke="#2c5aa0" stroke-width="2"/><text x="785" y="148" fill="#2c5aa0">REGENERATE</text><text x="785" y="167" font-size="11" fill="#555">targeted change</text>
+</g>
+<g stroke="#9aa6b6" stroke-width="2" fill="none" marker-end="url(#m)">
+<line x1="230" y1="150" x2="290" y2="150"/><line x1="440" y1="150" x2="500" y2="150"/><line x1="650" y1="150" x2="710" y2="150"/>
+<path d="M785,180 Q785,250 450,250 Q155,250 155,180"/></g>
+<defs><marker id="m" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#777"/></marker></defs>
+<text x="450" y="272" font-size="12.5" text-anchor="middle" fill="#777">decision logging makes diagnosis specific; each cycle hardens the next generation</text>
+</svg>

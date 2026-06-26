@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="430" font-family="Georgia, serif">
+<rect width="900" height="430" fill="#ffffff"/>
+<text x="450" y="32" font-size="22" text-anchor="middle" fill="#16335f">Active inference — perceive or act to reduce surprise</text>
+<rect x="330" y="70" width="240" height="60" rx="10" fill="#ecf3fc" stroke="#2c5aa0" stroke-width="2"/>
+<text x="450" y="98" font-size="16" text-anchor="middle" fill="#2c5aa0">World-Model</text>
+<text x="450" y="118" font-size="13" text-anchor="middle" fill="#555">predicts next observation</text>
+<rect x="120" y="230" width="240" height="64" rx="10" fill="#e7f7ec" stroke="#176b34" stroke-width="2"/>
+<text x="240" y="258" font-size="15" text-anchor="middle" fill="#176b34">PERCEIVE</text>
+<text x="240" y="278" font-size="12.5" text-anchor="middle" fill="#555">update beliefs to fit obs.</text>
+<rect x="540" y="230" width="240" height="64" rx="10" fill="#fdeede" stroke="#8a4b10" stroke-width="2"/>
+<text x="660" y="258" font-size="15" text-anchor="middle" fill="#8a4b10">ACT (reluctant)</text>
+<text x="660" y="278" font-size="12.5" text-anchor="middle" fill="#555">change obs. to fit beliefs</text>
+<text x="450" y="195" font-size="15" text-anchor="middle" fill="#b03030">surprise = observed − predicted</text>
+<g stroke-width="2" fill="none">
+<path d="M360,110 Q240,150 240,230" stroke="#2c5aa0" marker-end="url(#m)"/>
+<path d="M540,110 Q660,150 660,230" stroke="#2c5aa0" marker-end="url(#m)"/>
+<path d="M360,262 Q450,330 540,262" stroke="#888" marker-end="url(#m)"/>
+</g>
+<defs><marker id="m" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#666"/></marker></defs>
+<text x="450" y="360" font-size="13.5" text-anchor="middle" fill="#555">choose the move (perceive or act) that minimizes EXPECTED free energy</text>
+<text x="450" y="382" font-size="13" text-anchor="middle" fill="#777">"reluctant action": when expected surprise is high, seek information or escalate instead of acting</text>
+</svg>

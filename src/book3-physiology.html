@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>SOMA Codex — Book III — Physiology &amp; Mathematics</title>
+<!--SOMA_STYLE-->
+</head>
+<body>
+
+<h1>SOMA Codex</h1>
+<p class="lede">Book III — Physiology &amp; Mathematics</p>
+<p class="small">The algorithms that run the organs. What Book II names and Book IV builds, this book makes
+compute.</p>
+<hr/>
+
+<p class="lede">An anatomy without physiology is a corpse. This book gives the working mathematics of each
+organ: how trust updates, how the world-model predicts, how arousal self-regulates, how shared reality stays
+consistent, how the immune system decides. It is organized by system, not as a flat list, so each result is
+shown <em>doing a job</em>.</p>
+
+<h2>1. Triage: what is load-bearing, what is inspiration</h2>
+<p>The source material (Appendix A) collects ~200 mathematical and biological ideas. Most are
+<em>generative analogies</em> — real and useful for thinking, but not yet wired into an organ. A document
+that pretended to formalize all of them would be padding, and worse, would manufacture rigor where there is
+none. So this book draws a hard line:</p>
+<ul>
+<li><b>Load-bearing (this book, ~30):</b> results that actually run an organ in the buildable spec. Each gets
+a statement, an algorithm, and its organ integration. Proof <em>sketches</em> appear only where honestly
+warranted; nothing here claims a proof it does not have.</li>
+<li><b>Reference / conjectural (Appendix A, the rest):</b> kept close to how they were written, labeled as
+inspiration or open conjecture, with the organ they might one day serve. Being explicit about
+proven-vs-conjectured is itself the discipline — the same move as turning a "theorem" into a falsifiable
+prediction (Book I).</li>
+</ul>
+
+<h2>2. The determinism boundary (formal)</h2>
+<p>Everything below respects one rule, stated in Book IV as INV-9 and made precise here.</p>
+<div class="invariant"><b>Determinism is a property of coordination, not of content.</b> Let the log be a
+sequence of records L = ⟨r₀, r₁, …, rₙ⟩. The governing functions — ordering, governance G, trust update T,
+projection Π, policy P — are <em>pure functions of L</em>: replaying L recomputes them identically. The
+content of a Reasoning cell's output (S5) is a sample from a stochastic model; it is an <em>element of L</em>
+(recorded), not a function of earlier L (re-derivable). Thus the organism is replayable by
+<em>record-replay</em>, never by <em>re-execution</em>.</div>
+<p class="eq">G, T, Π, P : L → state &nbsp;&nbsp;(deterministic) &nbsp;&nbsp;|&nbsp;&nbsp; cell-output : context → sample (stochastic, logged)</p>
+<p>Consequence for the math: every algorithm in this book that updates governing state is written as a
+<em>fold over recorded events</em>. It never calls a model; it consumes the recorded result of one. This is
+what makes audit, debugging, and the evolution loop (Book V) possible without bit-exact re-simulation of
+thought.</p>
+
+<h2>3. Trust &amp; reputation — the Immune/Governance system (S8)</h2>
+
+<h3>3.1 Bayesian trust (Beta–Bernoulli posterior)</h3>
+<p><b>Statement.</b> Model a holon's reliability in a domain as a probability θ with a Beta(α, β) prior.
+Each verified outcome updates the posterior: success → α+1, failure → β+1. The point estimate is the
+posterior mean; uncertainty is its variance.</p>
+<p class="eq">θ̂ = α / (α + β) &nbsp;&nbsp;·&nbsp;&nbsp; Var = αβ / [(α+β)²(α+β+1)]</p>
+<pre>fn update_trust(prior: Beta, outcome: VerifiedOutcome) -&gt; Beta {
+    match outcome { Success =&gt; Beta{ a: prior.a + w, b: prior.b },
+                    Failure =&gt; Beta{ a: prior.a, b: prior.b + w } }   // w = evidence weight
+}
+fn trust(b: Beta) -&gt; (f64, f64) { (b.a/(b.a+b.b), variance(b)) }      // mean, uncertainty</pre>
+<p><b>In SOMA.</b> The Trust organ keeps a Beta posterior per (holon, domain, tier), updated only from
+<em>verified</em> outcomes (INV-4) folded from the log (INV-9). The mean drives authority; the variance
+feeds exploration (§3.3) and the Uncertainty organ (§4.3). Trust is domain-specific because a holon may be
+reliable at code review and not at planning.</p>
+
+<h3>3.2 Tamper-evident trust store (Merkle commitment)</h3>
+<p><b>Statement.</b> Hash each holon's trust record into a leaf; combine pairwise to a single Merkle root.
+A snapshot commits to the root, not the blob. Any record's membership is provable in O(log n); any tampering
+changes the root.</p>
+<pre>root = fold_pairwise(hash, sorted(leaves));  // leaf_i = H(holon_i, beta_i)
+proof(i) = sibling hashes along the path i→root            // O(log n)</pre>
+<p><b>In SOMA.</b> Trust persistence is Merkle-rooted so the organism can prove its own reputation history
+without trusting a mutable store — the integrity of self-knowledge. Ties to INV-1 and the Continuity organ
+(S2).</p>
+
+<h3>3.3 Thompson sampling (trust-aware routing without starving newcomers)</h3>
+<p><b>Statement.</b> To choose among holons for a task, sample θ̃ᵢ ~ Beta(αᵢ, βᵢ) for each and pick the max.
+This explores in proportion to the probability a holon is best — balancing exploitation of proven holons
+against giving uncertain ones a chance.</p>
+<pre>fn route(candidates: &amp;[Beta]) -&gt; usize {
+    candidates.iter().map(sample_beta).enumerate()
+              .max_by(|a,b| a.1.total_cmp(&amp;b.1)).unwrap_index()   // (illustrative)
+}</pre>
+<p><b>In SOMA.</b> Routing (S1) uses Thompson sampling so a new cell is not permanently starved by an
+incumbent — the "kill-the-winner" counterweight (Appendix A) that preserves diversity. The sampling seed is
+inside the routing holon's private 80%; the <em>decision</em> it produces is logged, keeping INV-9 intact
+(replay reads the decision, not the seed).</p>
+
+<h2>4. The World-Model system (S4)</h2>
+
+<h3>4.1 Active inference / the free-energy principle</h3>
+<p><b>Statement.</b> An adaptive system minimizes <em>variational free energy</em> F — an upper bound on
+surprise — either by updating beliefs to match observations (perception) or by acting to make observations
+match beliefs (action). Action selection minimizes <em>expected</em> free energy G(π) over policies π,
+which decomposes into a goal-seeking term and an uncertainty-reducing term.</p>
+<p class="eq">F = E<sub>q</sub>[log q(s) − log p(s,o)] &nbsp;&nbsp;·&nbsp;&nbsp; π* = argmin<sub>π</sub> G(π) = argmin<sub>π</sub> [ −(pragmatic value) − (epistemic value) ]</p>
+<p><img src="img/active_inference.png" alt="active inference perceive/act loop"/></p>
+<p class="cap">Figure 4.1 — Perceive or act, whichever reduces expected surprise.</p>
+<pre>fn orient(world: &amp;mut Model, obs: Obs) {           // perception step
+    let pred = world.predict();
+    let surprise = divergence(obs, pred);
+    world.update_to_reduce(surprise);              // free-energy descent
+}
+fn choose(world: &amp;Model, policies: &amp;[Policy]) -&gt; Policy {
+    policies.iter().min_by_key(|p| expected_free_energy(world, p))   // pragmatic + epistemic
+}</pre>
+<p><b>In SOMA.</b> This is the engine of the World-Model organ and the Deliberation organ (S5). The epistemic
+term is what makes the organism <em>curious</em> (seek information that reduces uncertainty); the pragmatic
+term is what makes it <em>goal-directed</em>. The choice to seek information instead of act <em>is</em>
+reluctant action (§5.2). It unifies perception, action, and the world-model under one objective.</p>
+
+<h3>4.2 Kalman filter &amp; HMMs (smoothing noisy self-knowledge)</h3>
+<p><b>Statement (Kalman).</b> For a linear-Gaussian state, the optimal estimate combines prediction and noisy
+measurement, weighted by the Kalman gain K = Σ⁻ Hᵀ (HΣ⁻Hᵀ+R)⁻¹.</p>
+<p><b>Statement (HMM).</b> Visible signals hint at hidden state; the forward algorithm computes the posterior
+over hidden states given observations.</p>
+<pre>x̂ = x⁻ + K·(z − H·x⁻);  Σ = (I − K·H)·Σ⁻      // Kalman update
+// HMM forward: αₜ(j) = bⱼ(oₜ) · Σᵢ αₜ₋₁(i)·aᵢⱼ</pre>
+<p><b>In SOMA.</b> The World-Model organ uses Kalman-style smoothing for continuous self-signals (load,
+latency, progress) and an HMM to infer a holon's hidden mode (healthy / overloaded / drifting / silent) from
+its heartbeat and outcomes — the basis for the Sentinel organ's early warnings (§7).</p>
+
+<h3>4.3 Conformal prediction (honest error bars)</h3>
+<p><b>Statement.</b> Given a calibration set of past errors, a conformal predictor wraps any point estimate
+in a set guaranteed (under exchangeability) to contain the truth with probability 1−ε.</p>
+<pre>q = quantile(calibration_errors, 1 - eps);    // conformal radius
+interval = (point - q, point + q);            // coverage ≥ 1 - eps</pre>
+<p><b>In SOMA.</b> The Uncertainty organ attaches conformal intervals to predictions, durations, and verifier
+scores, so "the organism knows what it does not know" is a calibrated number, not a vibe — the precondition,
+per Book I, that separates reasoning from confident hallucination.</p>
+
+<h2>5. The Cognition system (S5)</h2>
+
+<h3>5.1 Information gain (what to check next)</h3>
+<p><b>Statement.</b> The value of an observation is the expected reduction in entropy it brings:
+IG(X;Q) = H(X) − H(X | Q). Choose the question/check that maximizes it.</p>
+<pre>best = checks.max_by_key(|q| entropy(belief) - expected_entropy(belief, q));</pre>
+<p><b>In SOMA.</b> Deliberation uses information gain to decide whether to ask HumanSeat, run a verifier,
+inspect memory, or rerun — spending scarce attention where it most reduces uncertainty (the epistemic term of
+§4.1 made discrete).</p>
+
+<h3>5.2 Reluctant action as an expected-free-energy threshold</h3>
+<p><b>Statement.</b> Define a hesitation rule: act only if the best policy's expected free energy is below a
+threshold and its conformal uncertainty (§4.3) is within tolerance; otherwise <em>defer</em> — gather
+information, escalate a tier, or request HumanSeat.</p>
+<pre>match choose(world, policies) {
+    p if efe(p) &lt; tau &amp;&amp; uncertainty(p) &lt; u_max =&gt; Act(p),
+    _ =&gt; Defer(seek_info_or_escalate()),          // visible second-guessing
+}</pre>
+<p><b>In SOMA.</b> This is the designed mechanism behind one of Book I's two "lights-on" indicators. The
+hesitation is observable (it is logged), and it is the same gate that routes hard cases to verification and
+HumanSeat — the brake and the second-guessing are one mechanism.</p>
+
+<h3>5.3 Multi-armed bandits &amp; topological ordering (acting well under scarcity)</h3>
+<p><b>Statement.</b> Bandit policies (UCB, Thompson §3.3) balance trying new options vs. using known-good
+ones. Topological sort orders a dependency DAG so prerequisites precede dependents; the critical path is the
+chain that determines total completion time.</p>
+<pre>order = topo_sort(task_dag);                 // prerequisites first
+critical = longest_path(task_dag);          // the bottleneck chain</pre>
+<p><b>In SOMA.</b> Cognition selects methods/tools as bandit arms; the organism schedules multi-step goals by
+topological order and watches the critical path to know which workflow is pacing the whole effort.</p>
+
+<h2>6. The Homeostatic system (S7)</h2>
+
+<h3>6.1 The Yerkes–Dodson law (why arousal helps, then hurts)</h3>
+<p><b>Statement.</b> Performance is an inverted-U function of arousal: too little under-drives, too much
+chokes, an intermediate band is optimal.</p>
+<p><img src="img/yerkes.png" alt="Yerkes-Dodson inverted-U curve with setpoint and floor"/></p>
+<p class="cap">Figure 6.1 — The regulated arousal curve, with a setpoint and a non-zero performance floor.</p>
+
+<h3>6.2 PID control + hysteresis (the regulator the first experiment lacked)</h3>
+<p><b>Statement.</b> A PID controller drives arousal toward a setpoint using present error, accumulated error,
+and rate of change. Hysteresis uses different thresholds for raising vs. lowering a state, preventing
+flip-flop. A performance <em>floor</em> guarantees the organism can always make enough progress to recover.</p>
+<p class="eq">u(t) = K<sub>p</sub>·e(t) + K<sub>i</sub>·∫e dt + K<sub>d</sub>·de/dt</p>
+<pre>fn tick_arousal(s: &amp;mut Homeostat, trust_trend: f64) {
+    let e = s.setpoint - arousal_from(trust_trend);
+    s.integral += e;
+    let u = KP*e + KI*s.integral + KD*(e - s.prev_e);
+    s.arousal = clamp(s.arousal - u, FLOOR, CEIL);   // relief valve: never below FLOOR
+    s.prev_e = e;
+}</pre>
+<p><b>In SOMA.</b> This is the corrected anxiety experiment of Book I §7. The original spiraled — low trust →
+high anxiety → worse performance → lower trust — because it had no regulator. With a setpoint, an always-on
+relief rate, hysteresis, and a floor, the loop self-stabilizes. <em>The failure was a missing regulator, not
+a bad idea.</em> Soak tests (Book IV §12) assert it never stalls.</p>
+
+<h3>6.3 Little's law, queueing &amp; backpressure (metabolic limits)</h3>
+<p><b>Statement.</b> In a stable queue, work-in-progress = arrival rate × latency (L = λW). If arrivals or
+latency rise, queued work grows unless capacity does. Backpressure slows upstream when downstream saturates.</p>
+<pre>if wip &gt; lambda * target_latency { throttle_intake(); }   // Little's law as a guard</pre>
+<p><b>In SOMA.</b> The Metabolism/Resource organ uses L = λW to size attention and concurrency under a
+carrying capacity, and applies backpressure so cells never flood verifiers or the workspace — the
+tragedy-of-the-commons guard (Appendix A).</p>
+
+<h2>7. Reality-consistency &amp; integrity — the Workspace (S1)</h2>
+
+<h3>7.1 Hash chains (tamper-evident time)</h3>
+<p><b>Statement.</b> Each record includes the previous record's hash; rewriting any record breaks every later
+hash. The chain is the organism's incorruptible memory of its own past.</p>
+<pre>record.hash = H(record.prev_hash || canonical(record.body));
+verify: recompute forward from genesis; any mismatch halts replay.</pre>
+<p><b>In SOMA.</b> The Event-Log organ; the substrate of INV-1 and of identity continuity (S2). A broken
+chain is detected, not silently accepted (fail-closed, INV-8).</p>
+
+<h3>7.2 Lamport &amp; vector clocks, CRDTs (consistency without a global clock)</h3>
+<p><b>Statement (Lamport).</b> A logical counter gives a partial order of events even when wall clocks
+disagree. <b>(Vector clocks)</b> per-source counters detect whether two events are ordered or concurrent.
+<b>(CRDTs)</b> data types whose replicas merge without coordination and converge.</p>
+<pre>// Lamport: on event  c = c+1;  on receive(m)  c = max(c, m.c) + 1
+// Vector:  V[self]++;  on receive  V = elementwise_max(V, m.V); V[self]++
+// CRDT merge: join(a, b) is commutative, associative, idempotent → convergence</pre>
+<p><b>In SOMA.</b> Within one organism the log gives a total order; across organisms (the ecosystem, Book II
+L6) Lamport/vector clocks order events and CRDTs let local perceptions merge without a central clock. This is
+how "shared reality" stays coherent across holons that never talk directly.</p>
+
+<h3>7.3 Cellular sheaf consistency (measuring disagreement)</h3>
+<p><b>Statement.</b> A sheaf assigns data to nodes/edges of a network with consistency conditions; a global
+"section" is a consistent assignment, and cohomology measures how far the network is from agreement.</p>
+<p><b>In SOMA.</b> Used (load-bearing at the ecosystem scale, conjectural within one organism) to quantify
+when holons disagree about shared state — trust levels, goal status — and to localize the disagreement before
+it causes a split. Flagged honestly: the single-organism case usually needs only vector clocks (§7.2); the
+sheaf earns its keep at L6.</p>
+
+<h2>8. Memory physiology (S3)</h2>
+
+<h3>8.1 Consolidation by exponential decay; salience by centrality</h3>
+<p><b>Statement.</b> A memory's activation decays exponentially unless reinforced; importance flows through
+links (PageRank / eigenvector centrality): a memory is salient if linked to salient memories.</p>
+<pre>activation *= exp(-dt / tau);                       // decay; reinforcement resets
+salience = power_iterate(link_matrix);              // PageRank fixpoint</pre>
+<p><b>In SOMA.</b> The Consolidation organ moves memory hot→warm→cold by decayed activation; recall promotes
+cold memory back to focus on similarity. Salience by centrality decides what consolidates into semantic
+memory and what composts into evidence (the necromass view, Book II §9).</p>
+
+<h3>8.2 Optimal transport / Wasserstein drift (knowing when memory has shifted)</h3>
+<p><b>Statement.</b> The Wasserstein distance is the minimum cost to morph one distribution into another;
+it detects when a population (trust scores, outcomes, latencies) has drifted from a known-good baseline.</p>
+<pre>drift = wasserstein(current_distribution, baseline);  if drift &gt; d_max { flag(); }</pre>
+<p><b>In SOMA.</b> Feeds the Sentinel organ (S8) and the evolution loop (Book V): distributional drift is the
+signal that the world changed and the organism must adapt, distinct from a single bad outcome.</p>
+
+<h2>9. Safety &amp; immune physiology (S8)</h2>
+
+<h3>9.1 Viability theory (staying in the safe set)</h3>
+<p><b>Statement.</b> Viability theory studies controls that keep a system's trajectory inside an acceptable
+set K over time. The viability kernel is the subset of states from which staying in K is possible.</p>
+<pre>if next_state(action) not_in viability_kernel(K) { reject(action); }</pre>
+<p><b>In SOMA.</b> The organism maintains trust, autonomy, load, latency, context-exposure, and retry pressure
+inside a safe operating space — choosing controls that keep it viable rather than only maximizing a reward
+(the planetary-boundaries discipline, Appendix A). This is governance as <em>staying alive well</em>, not
+just goal-chasing.</p>
+
+<h3>9.2 Circuit breakers, CUSUM drift, negative selection, danger model</h3>
+<p><b>Statement.</b> A circuit breaker stops calling a repeatedly-failing part. CUSUM accumulates small
+deviations until they prove a shift. Negative selection rejects parts that react against "self" (invariants).
+The danger model responds to <em>harm signals</em>, not mere foreignness.</p>
+<pre>// circuit breaker
+if failures_in_window &gt; k { open_breaker(holon, cooldown); }
+// CUSUM
+S = max(0, S + (x - target - slack));  if S &gt; h { signal_shift(); }</pre>
+<p><b>In SOMA.</b> The Sentinel organ combines a fast innate layer (schema checks, capability bounds, negative
+selection against invariant-violating holons) with a slower adaptive layer (CUSUM/Wasserstein drift, danger-
+model prioritization by harm). The cytokine-storm cap bounds remediation so the immune response never
+destabilizes the body (Book IV §10).</p>
+
+<h2>10. Emergence physiology (cross-cutting)</h2>
+<p>These results are how the organism detects, in itself, the very phenomenon the whole design is about:
+coordinated behavior arising from parts.</p>
+<ul>
+<li><b>Synergetics / order parameters</b> — many parts suddenly coordinate; an order parameter captures the
+collective mode. Used to detect emergent coordination among holons.</li>
+<li><b>Causal emergence</b> — when a coarse-grained (system-level) description has strictly more effective
+information than the fine-grained (cell-level) one, the macro level is genuinely causal. This is the formal
+handle on the thesis's central claim that "the system is intelligent before any component is" — and a
+candidate <em>metric</em> for system-level cognition (§11, Appendix D).</li>
+<li><b>Percolation</b> — at a threshold density of connections, local links suddenly create global
+connectivity (or failure spreads globally). Bounds when the organism becomes one connected reality vs. many
+islands.</li>
+<li><b>Vicsek alignment</b> — global order emerges from purely local alignment rules past a density/radius
+threshold; predicts onset of organism-wide coordination from local holon behavior.</li>
+</ul>
+<div class="callout"><b>Causal emergence is the most important entry in this book.</b> It turns the thesis's
+slogan into something measurable: compute the effective information at the cell level and at the system level;
+if the macro exceeds the micro, the organism has genuine system-level causal power — exactly what "cognition
+belongs to the whole" predicts. This is the bridge from philosophy (Book I) to a number.</div>
+
+<h2>11. The central claim, as a pre-registered falsifiable prediction</h2>
+<p>The founding thesis (Book I) must be stated so it can be <em>wrong</em>. Loosely worded, it is unfalsifiable
+or riggable. Here is the disciplined form, with the controls that make it honest.</p>
+<div class="invariant"><b>Prediction (GSE-1).</b> A governed organism of small models will outperform a single
+large model of <em>equal total compute</em> on a fixed, pre-registered suite of tasks that require
+accumulated, identity-attributed memory over time.</div>
+<p><b>The controls that make it testable, not true-by-construction:</b></p>
+<ol>
+<li><b>Pre-registered suite.</b> The task suite and metric are chosen and published <em>before</em> results.</li>
+<li><b>Equal log access.</b> The single-model baseline gets equal read access to the identical accumulated
+event log. We are testing <em>architecture</em>, not memory deprivation.</li>
+<li><b>Honest compute budget.</b> "Equal total compute" counts the organism's governance, workspace, and
+projection compute — not only model FLOPs.</li>
+<li><b>Provider-neutral metric.</b> "Identity-attributed memory" is defined <em>behaviorally</em> (does the
+system correctly use who-did-what-when?), never in terms of SOMA's own structures — otherwise the organism
+wins by definition.</li>
+<li><b>A stated falsifier.</b> A pre-declared effect size: if the organism does not beat the baseline by at
+least δ on the metric, GSE-1 is falsified for that suite. We commit to reporting that.</li>
+</ol>
+<p>The candidate metric is causal emergence (§10): the suite is built so success requires macro-level causal
+information the single model, however large, cannot represent without the governed structure. If a large
+enough single model matches the organism <em>with</em> equal log access and honest budget, the thesis is
+wrong — and we say so. That willingness is the difference between a theory and a manifesto.</p>
+
+<h2>12. Worked numerical examples</h2>
+<p>The algorithms above are implementable as written; these worked examples remove any remaining ambiguity by
+running concrete numbers through the load-bearing organs. An implementer should be able to reproduce each.</p>
+
+<h3>12.1 Trust update and authority (S8)</h3>
+<p>A summarizer holon starts with an uninformative prior Beta(1, 1): mean 0.50. It is verified-successful on
+8 tasks and verified-failed on 2 (evidence weight w = 1 each). Posterior: Beta(1+8, 1+2) = Beta(9, 3).</p>
+<p class="eq">mean = 9/(9+3) = 0.750 &nbsp;·&nbsp; Var = (9·3)/[(12)²·13] = 27/1872 = 0.0144 &nbsp;·&nbsp; sd ≈ 0.120</p>
+<p>If the Authority organ requires mean ≥ 0.70 for <code>direct-write</code> in this domain, the holon now
+qualifies; had two more failures landed (Beta(9,5), mean 0.643) it would be held at <code>suggested-write</code>.
+Note the uncertainty (sd ≈ 0.12) is still wide at n = 10, so Thompson routing (§12.4) will still occasionally
+explore alternatives rather than lock in.</p>
+
+<h3>12.2 Homeostatic arousal tick (S7)</h3>
+<p>Setpoint = 0.40; gains K<sub>p</sub> = 0.5, K<sub>i</sub> = 0.1, K<sub>d</sub> = 0.2; floor = 0.15. Recent
+trust trend is negative, mapping to a raw arousal of 0.80, so error e = 0.40 − 0.80 = −0.40 (over-aroused).
+With integral accumulator I = −0.30 and previous error e<sub>prev</sub> = −0.35:</p>
+<p class="eq">u = 0.5(−0.40) + 0.1(−0.30) + 0.2(−0.40 − (−0.35)) = −0.20 − 0.03 − 0.01 = −0.24</p>
+<p>New arousal = clamp(0.80 − (−0.24)?, …) — the controller drives <em>toward</em> setpoint, so arousal moves
+by −|correction| toward 0.40: 0.80 → 0.56, still above setpoint but relaxing, and the performance multiplier
+(read off the Yerkes–Dodson curve, Fig 6.1) rises as arousal returns to the optimal band. Because the floor
+clamps at 0.15, performance can never be driven to zero — the holon always retains enough capacity to recover,
+which is exactly what the un-regulated experiment (Book I §7) lacked.</p>
+
+<h3>12.3 Conformal interval (S4 Uncertainty)</h3>
+<p>A duration estimator has 20 calibration residuals; the 90th-percentile absolute residual is q = 4.2
+minutes. For a point estimate of 12.0 minutes at ε = 0.10, the conformal interval is 12.0 ± 4.2 = [7.8, 16.2]
+with ≥ 90% coverage. The Deliberation organ (§5.2) compares this width against its tolerance u<sub>max</sub>:
+a wide interval on a high-stakes task is precisely what trips reluctant action into <em>defer</em>.</p>
+
+<h3>12.4 Thompson routing (S1 / S8)</h3>
+<p>Three candidate holons: A = Beta(9,3) (mean .75), B = Beta(30,10) (mean .75, tighter), C = Beta(2,1)
+(mean .67, very uncertain). A and B have equal means but B is more proven; C is unproven. Sampling θ̃ from each
+and taking the max routes <em>mostly</em> to A/B but occasionally to C in proportion to C's upside
+probability — so the newcomer is explored without being starved, and the tie between A and B is broken
+stochastically rather than by a frozen ranking. Over many tasks this is the kill-the-winner counterweight in
+action.</p>
+
+<h3>12.5 Drift decision (S8 Sentinel)</h3>
+<p>Baseline output-quality distribution has mean 0.82; the trailing-window distribution has mean 0.68 with a
+1-D Wasserstein distance of 0.16 from baseline. With threshold d<sub>max</sub> = 0.12, drift fires:
+<code>sentinel.drift.detected</code> → trust re-evaluation → (if confirmed) authority contraction and a
+regeneration cycle (Book V §9.1). CUSUM offers the same call incrementally: with slack k = 0.02 and threshold
+h = 0.5, accumulating per-task shortfalls of ≈0.14 each crosses h within ~4 tasks — an earlier, cheaper alarm
+than waiting for the full window.</p>
+
+<h3>12.6 Complexity of the load-bearing algorithms</h3>
+<table>
+<tr><th>Organ / algorithm</th><th>Per-update cost</th><th>Notes</th></tr>
+<tr><td>Bayesian trust update (§3.1)</td><td>O(1)</td><td>two counter increments; mean/var closed-form</td></tr>
+<tr><td>Merkle trust commit (§3.2)</td><td>O(log n)</td><td>n = number of holons; proof path is log n</td></tr>
+<tr><td>Thompson routing (§3.3)</td><td>O(k)</td><td>k = candidates; one Beta sample each</td></tr>
+<tr><td>Active-inference orient (§4.1)</td><td>O(model)</td><td>dominated by the world-model's own update cost</td></tr>
+<tr><td>Kalman update (§4.2)</td><td>O(d³)</td><td>d = state dim; d small for self-signals</td></tr>
+<tr><td>Conformal interval (§4.3)</td><td>O(1) amortized</td><td>quantile precomputed; O(m log m) to (re)calibrate over m residuals</td></tr>
+<tr><td>PID arousal tick (§6.2)</td><td>O(1)</td><td>constant-time control law</td></tr>
+<tr><td>Hash-chain append/verify (§7.1)</td><td>O(1) / O(n)</td><td>append O(1); full verify scans n records</td></tr>
+<tr><td>Wasserstein drift, 1-D (§8.2)</td><td>O(m log m)</td><td>sort of m samples; CUSUM is O(1) incremental</td></tr>
+<tr><td>Causal-emergence estimate (§10)</td><td>problem-dependent</td><td>effective-information; tractable only on coarse partitions — a research cost (Appendix D)</td></tr>
+</table>
+<p>The point of the table: the organism's <em>governing</em> mathematics is cheap (mostly O(1) or O(log n))
+— deliberately, because it runs on every event. The expensive parts (model inference, causal-emergence
+metrics) live where expense belongs: inside cells (non-deterministic content) and in offline research, never
+on the hot coordination path. This is the determinism boundary (§2) showing up as a <em>cost</em> boundary.</p>
+
+<p class="small">End of Book III. The exhaustive idea catalog — all ~200, labeled load-bearing or
+inspirational — is Appendix A. Book V puts this physiology in motion as the runtime life of the organism.</p>
+
+</body>
+</html>

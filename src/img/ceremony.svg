@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="500" font-family="Georgia, serif">
+<rect width="1000" height="500" fill="#ffffff"/>
+<text x="500" y="32" font-size="23" text-anchor="middle" fill="#16335f">The one onboarding ceremony — identical at every scale</text>
+<g font-size="14.5">
+<rect x="350" y="60"  width="300" height="40" rx="7" fill="#e7f7ec" stroke="#176b34" stroke-width="1.8"/><text x="500" y="85" text-anchor="middle" fill="#176b34">1. manifest validated</text>
+<rect x="350" y="112" width="300" height="40" rx="7" fill="#e7f7ec" stroke="#176b34" stroke-width="1.8"/><text x="500" y="137" text-anchor="middle" fill="#176b34">2. adapter contract registered</text>
+<rect x="350" y="164" width="300" height="40" rx="7" fill="#fbf0e3" stroke="#8a4b10" stroke-width="1.8"/><text x="500" y="189" text-anchor="middle" fill="#8a4b10">3. policy compiled (pub/sub allowlist)</text>
+<rect x="350" y="216" width="300" height="40" rx="7" fill="#fbf0e3" stroke="#8a4b10" stroke-width="1.8"/><text x="500" y="241" text-anchor="middle" fill="#8a4b10">4. subscription scopes approved</text>
+<rect x="350" y="268" width="300" height="40" rx="7" fill="#ecf3fc" stroke="#2c5aa0" stroke-width="1.8"/><text x="500" y="293" text-anchor="middle" fill="#2c5aa0">5. heartbeat + readiness declared</text>
+<rect x="350" y="320" width="300" height="40" rx="7" fill="#dbe7fb" stroke="#16335f" stroke-width="2"/><text x="500" y="345" text-anchor="middle" fill="#16335f">6. holon.onboarded  (now may act)</text>
+</g>
+<g stroke="#9aa6b6" stroke-width="1.6" marker-end="url(#ar)">
+<line x1="500" y1="100" x2="500" y2="112"/><line x1="500" y1="152" x2="500" y2="164"/>
+<line x1="500" y1="204" x2="500" y2="216"/><line x1="500" y1="256" x2="500" y2="268"/>
+<line x1="500" y1="308" x2="500" y2="320"/></g>
+<defs><marker id="ar" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#9aa6b6"/></marker></defs>
+<rect x="60" y="120" width="230" height="180" rx="9" fill="#fff7ec" stroke="#c8851a" stroke-width="1.6"/>
+<text x="175" y="148" font-size="14" text-anchor="middle" fill="#8a4b10">every record is:</text>
+<text x="75" y="176" font-size="12.5" fill="#555">• appended to the log</text>
+<text x="75" y="200" font-size="12.5" fill="#555">• hash-chained</text>
+<text x="75" y="224" font-size="12.5" fill="#555">• stamped mechanism_</text>
+<text x="85" y="242" font-size="12.5" fill="#555">of_action</text>
+<text x="75" y="268" font-size="12.5" fill="#555">• fail-closed if any</text>
+<text x="85" y="286" font-size="12.5" fill="#555">step is missing</text>
+<rect x="710" y="120" width="240" height="180" rx="9" fill="#eef6f0" stroke="#1f7a44" stroke-width="1.6"/>
+<text x="830" y="148" font-size="14" text-anchor="middle" fill="#145a30">enforced afterward:</text>
+<text x="725" y="176" font-size="12.5" fill="#555">no work without a lease</text>
+<text x="725" y="200" font-size="12.5" fill="#555">no act before onboarded</text>
+<text x="725" y="224" font-size="12.5" fill="#555">pub/sub only in policy</text>
+<text x="725" y="248" font-size="12.5" fill="#555">completion verified,</text>
+<text x="735" y="266" font-size="12.5" fill="#555">never self-claimed</text>
+<text x="725" y="290" font-size="12.5" fill="#555">killed = cannot act</text>
+<text x="500" y="400" font-size="14" text-anchor="middle" fill="#444">a cell runs this. a workflow runs this. an organ runs this. a whole system runs this.</text>
+<text x="500" y="424" font-size="13" text-anchor="middle" fill="#777">one ceremony, no second mechanism</text>
+</svg>

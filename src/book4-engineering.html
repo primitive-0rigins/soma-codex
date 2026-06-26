@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>SOMA Codex — Book IV — Engineering Manual &amp; Specifications</title>
+<!--SOMA_STYLE-->
+</head>
+<body>
+
+<h1>SOMA Codex</h1>
+<p class="lede">Book IV — Engineering Manual &amp; Specifications</p>
+<p class="small">The buildable specification. Where Book II gives the anatomy and Book III the physiology,
+this book is what an engineer — or an AI coding tool — implements <em>from</em>. Language: <b>Rust</b>.</p>
+<hr/>
+
+<p class="lede">This book specifies the organism as software: the crate map, the single onboarding ceremony,
+the projection and lease contracts, the event format, the runtime invariants stated as MUST clauses, the
+determinism specification, and the threat model. It is written so that each section can be handed to an
+implementer as a contract. Where a section depends on the anatomy, it cites Book II by system (S1–S8); where
+it depends on an algorithm, it cites Book III.</p>
+
+<h2>1. Engineering discipline (non-negotiable)</h2>
+<p>These rules hold for every crate. They are the organism's equivalent of "no toxic biochemistry" — they
+are enforced by the toolchain, not by reviewer goodwill.</p>
+<table>
+<tr><th>Rule</th><th>Enforcement</th><th>Why</th></tr>
+<tr><td>Rust, edition 2024, MSRV pinned</td><td>workspace <code>Cargo.toml</code></td><td>memory safety; one language for the body (glue/ML excepted)</td></tr>
+<tr><td><code>unsafe_code = "forbid"</code></td><td>workspace lint (compile error)</td><td>no undefined behavior anywhere in the body</td></tr>
+<tr><td>no <code>unwrap</code>/<code>expect</code>/<code>panic</code>/<code>todo</code>/<code>unimplemented</code></td><td><code>clippy</code> deny</td><td>every failure path is explicit; the organism never aborts silently</td></tr>
+<tr><td>no <code>print*</code>/<code>dbg!</code></td><td><code>clippy</code> deny</td><td>observability is structured (tracing/metrics), never ad-hoc</td></tr>
+<tr><td><code>missing_docs = "warn"</code></td><td>workspace lint</td><td>the body is self-documenting</td></tr>
+<tr><td>fail-closed defaults</td><td>code review + tests</td><td>absent a governance boundary, refuse to operate (INV-8)</td></tr>
+</table>
+<div class="callout"><b>Why a forbidden-panic body matters for an organism.</b> A panic is an uncontrolled
+death of a holon. In a system whose whole thesis is governed continuity, an unhandled panic is a governance
+hole: a part dies without a record, outside the immune system's view. Forbidding it forces every failure to
+become a <em>governed event</em> — which is exactly what the evolution loop (Book V) feeds on.</div>
+
+<h2>2. The crate map</h2>
+<p>The organism is a Rust workspace. Dependencies flow strictly downward; a crate may depend only on crates
+beneath it, and this is a compile-time property, not a convention.</p>
+<p><img src="img/crates.png" alt="Crate dependency map"/></p>
+<p class="cap">Figure 2.1 — Crate map. Each system crate (S1–S8) implements the anatomy of Book II.</p>
+<table>
+<tr><th>Crate</th><th>Implements (Book II)</th><th>Responsibility</th></tr>
+<tr><td><code>soma-core</code></td><td>the membrane &amp; holon contract</td><td>the <code>Holon</code> trait, typed IDs, <code>EventSpec</code>, canonical encoding, the projection/aperture types. No I/O, no crypto runtime.</td></tr>
+<tr><td><code>soma-workspace</code></td><td>S1 Workspace</td><td>append-only hash-chained log, subscriptions, projection computation, replay-with-verification.</td></tr>
+<tr><td><code>soma-holon</code></td><td>the recursion rule</td><td>the universal SDK every holon uses: manifest, the onboarding ceremony, lease protocol, outcome reporting. Used identically by cells and systems.</td></tr>
+<tr><td><code>soma-governance</code></td><td>S8 Immune/Governance</td><td>Trust, Authority (+ kill switch), Verification (non-valent), Sentinel. The laws maintained.</td></tr>
+<tr><td><code>soma-identity</code></td><td>S2 Identity &amp; Self</td><td>Identity Registry, Continuity, Self-Model.</td></tr>
+<tr><td><code>soma-memory</code></td><td>S3 Memory</td><td>episodic/semantic/procedural stores, consolidation, recall.</td></tr>
+<tr><td><code>soma-world</code></td><td>S4 World-Model</td><td>predictive world-model, Cartographer graph, Uncertainty.</td></tr>
+<tr><td><code>soma-cognition</code></td><td>S5 Cognition</td><td>Reasoning (model-inference cells), Deliberation, Effector.</td></tr>
+<tr><td><code>soma-goal</code></td><td>S6 Goal</td><td>Constitution (lexical), Goal (ODD), Evaluation.</td></tr>
+<tr><td><code>soma-homeostasis</code></td><td>S7 Homeostasis</td><td>Arousal/Anxiety, Metabolism/Resource, Valence.</td></tr>
+<tr><td><code>soma-organism</code></td><td>L5 assembly</td><td>the runtime/daemon that wires the systems, runs the lifecycle loop (Book V), holds the local lock, exposes the operator/HumanSeat surface.</td></tr>
+</table>
+
+<h2>3. <code>soma-core</code>: the Holon contract</h2>
+<p>The whole architecture is one trait applied recursively. A <code>Holon</code> is anything with a membrane.
+The trait is deliberately small — five capabilities matching the five-part recursion rule (Book II §3).</p>
+<pre>// soma-core — illustrative signatures (not final API)
+
+/// A governed unit at any scale: cell, workflow, organ, system, organism.
+pub trait Holon {
+    /// Stable identity within the organism.
+    fn id(&amp;self) -&gt; HolonId;
+
+    /// The contract this holon presents at its membrane (capabilities,
+    /// publishes/subscribes, trust ceiling, whether it needs a human gate).
+    fn manifest(&amp;self) -&gt; &amp;Manifest;
+
+    /// Perceive: fold one governed projection into private state.
+    /// This is the ONLY way the outside reaches the holon.
+    fn perceive(&amp;mut self, view: Projection) -&gt; Result&lt;(), HolonError&gt;;
+
+    /// Act: given a granted lease, produce outcome records for the log.
+    /// Returns records to append; never performs a side effect directly.
+    fn act(&amp;mut self, lease: &amp;Lease) -&gt; Result&lt;Vec&lt;OutcomeRecord&gt;, HolonError&gt;;
+
+    /// Project: expose this holon's governed ~20% to its parent.
+    fn project(&amp;self, aperture: Aperture) -&gt; Projection;
+}</pre>
+<p>Key consequences of this shape:</p>
+<ul>
+<li><b>No holon performs a side effect itself.</b> <code>act</code> returns <em>records</em>; the workspace
+appends them; effectors are themselves holons that consume leased records. This is what makes "the bus is the
+only channel" (INV-2) structurally true rather than a policy.</li>
+<li><b>Perception is one-directional and governed.</b> <code>perceive</code> takes a <code>Projection</code>
+the workspace computed under the governance policy — the holon cannot widen its own aperture.</li>
+<li><b>Composition is uniform.</b> An organ holding workflows holds <code>Vec&lt;Box&lt;dyn Holon&gt;&gt;</code>
+and coordinates them through projections and leases — exactly as the organism holds systems. There is no
+"system-level" API distinct from the "cell-level" API. That sameness <em>is</em> the holarchy in code.</li>
+</ul>
+<h4>Typed identifiers and events</h4>
+<p>All identifiers are validated newtypes (non-empty, bounded length, no control characters): <code>HolonId,
+OrgId, GoalId, TaskId, LeaseId, EventType, RecordSeq, MechanismOfAction</code>. Every record is described by
+an <code>EventSpec { event_type, source, description, required_payload_keys }</code>; the workspace rejects a
+record that does not satisfy its spec. Encoding is <em>canonical</em> (deterministic key ordering) so that
+hashing is stable — the precondition for the hash chain and for record-replay (§8).</p>
+
+<h2>4. The Manifest schema (<code>soma-holon.v1</code>)</h2>
+<p>Every holon declares itself with one manifest schema, regardless of scale. This is the document the
+ceremony validates.</p>
+<table>
+<tr><th>Field</th><th>Type</th><th>Meaning / constraint</th></tr>
+<tr><td><code>schema_version</code></td><td>string</td><td>exactly <code>"soma-holon.v1"</code></td></tr>
+<tr><td><code>holon_id</code></td><td>HolonId</td><td>unique within the organism</td></tr>
+<tr><td><code>kind</code></td><td>enum</td><td><code>Cell | Workflow | Organ | System | Organism</code> — the holon's level</td></tr>
+<tr><td><code>parent</code></td><td>HolonId?</td><td>the holon it is a part of; <code>None</code> only for the organism (whose parent is the ecosystem / HumanSeat)</td></tr>
+<tr><td><code>display_name</code></td><td>string</td><td>non-empty; for logs/UI</td></tr>
+<tr><td><code>capabilities</code></td><td>[string]</td><td>what it can do; clean set</td></tr>
+<tr><td><code>domains</code></td><td>[string]</td><td>operational scopes it serves</td></tr>
+<tr><td><code>publishes</code></td><td>[EventType]</td><td>event types it may emit; each must match a declared capability prefix</td></tr>
+<tr><td><code>subscribes</code></td><td>[EventType]</td><td>event types it may receive</td></tr>
+<tr><td><code>aperture_tier</code></td><td>enum</td><td><code>Peripheral</code> (summaries only) or <code>Focused</code> (detail under live lease + authority)</td></tr>
+<tr><td><code>max_trust_required</code></td><td>f64 ∈ [0,1]</td><td>trust ceiling above which work is blocked for this holon's risk class</td></tr>
+<tr><td><code>requires_human_gate</code></td><td>bool</td><td>whether its actions need HumanSeat approval</td></tr>
+<tr><td><code>sub_holons</code></td><td>[HolonId]</td><td>its children (empty for a cell); the recursion made explicit</td></tr>
+</table>
+<p>The schema is identical for a routing cell and for the entire World-Model system. The difference between a
+cell and a system is the value of <code>kind</code> and the size of <code>sub_holons</code> — not a different
+contract. This is the engineering expression of "the same interface at every scale."</p>
+
+<h2>5. The one onboarding ceremony</h2>
+<p>Before any holon may act, it passes one ceremony. There is no second admission path. Each step writes a
+hash-chained, mechanism-stamped record to the workspace; if any step is missing, the holon is not onboarded
+and the runtime fails closed.</p>
+<p><img src="img/ceremony.png" alt="The onboarding ceremony, six steps"/></p>
+<p class="cap">Figure 5.1 — The ceremony. A cell runs it; a whole system runs it; the steps are the same.</p>
+<ol>
+<li><b>Manifest validated</b> — shape, scope, capability/event consistency, no duplicate children. Emits
+<code>holon.manifest.validated</code> with the manifest hash.</li>
+<li><b>Adapter contract registered</b> — a concrete contract is derived from the manifest (sorted capabilities,
+lease protocol, trust/authority hooks, audit fields) and committed: <code>holon.adapter_contract.registered</code>.</li>
+<li><b>Policy compiled</b> — publish/subscribe allowlists are compiled from the manifest; a policy digest is
+recorded: <code>holon.policy.compiled</code>.</li>
+<li><b>Subscription scopes approved</b> — each publish and subscribe event type is individually approved:
+<code>holon.subscription_scope.approved</code> (one per scope).</li>
+<li><b>Heartbeat &amp; readiness declared</b> — the holon declares liveness affordances: <code>holon.readiness.declared</code>.</li>
+<li><b>Onboarded</b> — the gate. Only when steps 1–5 exist and are consistent does the runtime write
+<code>holon.onboarded</code>. From this record forward, and not before, the holon may claim leases, be routed
+work, receive focused context, and have completions accepted.</li>
+</ol>
+<p>The ceremony is implemented once in <code>soma-holon</code> and called by every crate. The organism's own
+boot (Book V) is the ceremony applied to the top-level <code>Organism</code> holon, whose parent is HumanSeat.</p>
+
+<h2>6. The projection contract (parent ↔ child)</h2>
+<p>This is the mechanical form of the 80/20 membrane (Book II §3.2). It governs every parent's view of every
+child, at every scale.</p>
+<pre>// what crosses a membrane inward
+pub struct Projection {
+    pub of: HolonId,           // whose state this summarizes
+    pub aperture: Aperture,    // Peripheral | Focused
+    pub at_seq: RecordSeq,     // the log position this view reflects
+    pub summary: CanonicalMap, // the governed ~20% — never the holon's internals
+}
+
+pub enum Aperture { Peripheral, Focused }   // Focused requires live lease + authority</pre>
+<p>Rules of the contract:</p>
+<ul>
+<li><b>Aperture is computed, not requested.</b> The Projection/Aperture organ (S1) decides each holon's
+aperture from its task state, lease liveness, domain authority, and trust. A holon cannot promote its own
+aperture (INV-11).</li>
+<li><b>Peripheral by default.</b> Idle or unleased holons get summaries only. Focused detail opens only while
+a matching lease is live and authority covers the domain, and closes the moment the lease ends.</li>
+<li><b>A projection reflects a log position.</b> Every projection is stamped with <code>at_seq</code>, so
+perception is always "as of" a definite point in the organism's history — which is what makes coordination
+replayable (§8).</li>
+<li><b>Internals never cross.</b> The <code>summary</code> is constructed by the child's <code>project()</code>
+under the aperture; the child's private 80% is never serialized across the membrane.</li>
+</ul>
+
+<h2>7. The lease protocol (governed action)</h2>
+<p>No holon acts without a lease. A lease is a kernel-of-governance grant — time-limited, scoped, signed by
+the Authority organ (S8) — that authorizes one holon to work one task. The protocol is a small state machine:</p>
+<pre class="diagram">
+   request --&gt; [Authority checks: onboarded? trust in domain? authority covers? not killed?]
+           --&gt; GRANT(lease_id, ttl, scope)   |   DENY(reason)
+   GRANT --&gt; Claim --&gt; (Renew)* --&gt; Complete(evidence) | Fail(reason) | Release
+   Complete --&gt; [Verification organ confirms] --&gt; Accepted | Escalate(tier|HumanSeat) | Reject
+</pre>
+<ul>
+<li><b>Claim</b> binds the lease to the holon and opens its focused aperture for the task domain.</li>
+<li><b>Renew</b> extends the TTL while work continues; an expired lease auto-closes the aperture.</li>
+<li><b>Complete</b> submits the work <em>with evidence</em>; it does not itself complete the task. The
+Verification organ decides. There is no self-certified completion (INV-4).</li>
+<li><b>Fail</b> attributes a reason that becomes trust evidence and evolution signal (Book V).</li>
+<li><b>Release</b> returns the task without prejudice (e.g., the holon recognizes it is the wrong one).</li>
+</ul>
+
+<h2>8. The event record &amp; determinism specification</h2>
+<h4>Record format</h4>
+<pre>pub struct Record {
+    pub seq: RecordSeq,            // total order within the organism
+    pub event_type: EventType,    // must match a known EventSpec
+    pub source: HolonId,          // who emitted it
+    pub mechanism_of_action: MechanismOfAction, // WHY — never empty (INV-7)
+    pub parent_id: Option&lt;String&gt;, // causal parent record, if any
+    pub payload: CanonicalMap,    // canonical (deterministic) encoding
+    pub prev_hash: Hash,          // commits to the previous record
+    pub hash: Hash,               // sha-256 over (prev_hash, body)
+}</pre>
+<h4>What "deterministic" means here — precisely</h4>
+<div class="invariant"><b>INV-9 — Determinism is a property of how holons coordinate, not of what they
+say.</b> The governing core is <em>deterministic by record-replay, not by re-execution</em>. Given the
+recorded log — which <em>includes</em> the non-deterministic cell outputs as data — the coordination protocol
+(ordering, governance decisions, trust updates, projection computation, policy evaluation) re-runs and
+produces identical results. The organism is <strong>not</strong> deterministically re-executable from first
+principles, because a Reasoning cell's model inference (S5) cannot be re-derived from its inputs. It is
+<em>logged</em>, and replay reads it back.</div>
+<p>Concretely, the boundary is:</p>
+<table>
+<tr><th>Deterministic (replayable)</th><th>Non-deterministic (logged, not re-derived)</th></tr>
+<tr><td>record ordering &amp; hash chain</td><td>model inference inside Reasoning cells (S5)</td></tr>
+<tr><td>governance / authority / lease decisions</td><td>wall-clock timestamps</td></tr>
+<tr><td>trust posterior updates from recorded outcomes</td><td>any external tool result a cell privately obtained</td></tr>
+<tr><td>projection / aperture computation</td><td>random seeds drawn inside a holon's private 80%</td></tr>
+<tr><td>policy compilation &amp; evaluation</td><td></td></tr>
+</table>
+<p>This is why the membrane identity is three-way, not four (Book II §3.1): a non-deterministic value lives in
+the shared 20%, so "shared" ≠ "deterministic data." The <em>protocol</em> over that shared data is what
+replays. Replay therefore serves audit, debugging, and the evolution loop — not bit-exact re-simulation of
+thought.</p>
+
+<h2>9. Runtime invariants (the MUST clauses)</h2>
+<p>These are the laws of the organism, stated so they can be tested. Each is enforced in code and checked by
+tests; several are enforced structurally (by the shape of the <code>Holon</code> trait) rather than by
+runtime checks, which is stronger.</p>
+<div class="invariant"><b>INV-1 — Append-only.</b> The event log MUST be append-only and hash-chained;
+records are never edited or deleted. Retention/compaction MUST be non-destructive markers.</div>
+<div class="invariant"><b>INV-2 — One channel.</b> Holons MUST coordinate only through the workspace. There
+MUST be no direct holon-to-holon channel at any scale. (Structural: <code>act()</code> returns records; it
+cannot reach another holon.)</div>
+<div class="invariant"><b>INV-3 — One ceremony.</b> A holon MUST NOT act until its <code>holon.onboarded</code>
+record exists. Every holon, every scale, uses the same ceremony.</div>
+<div class="invariant"><b>INV-4 — Verified, never claimed.</b> A task MUST NOT be completed on a holon's
+self-report. The non-valent Verification organ MUST confirm completion for any task above trivial risk.</div>
+<div class="invariant"><b>INV-5 — Killed cannot act.</b> A killed or quarantined holon MUST immediately lose
+authority; its outstanding leases are void; it cannot publish, subscribe, claim, or be routed work.</div>
+<div class="invariant"><b>INV-6 — HumanSeat ceiling.</b> Destructive or high-risk actions MUST require
+HumanSeat approval. HumanSeat sits <em>above</em> the holarchy (§11); no automation may bypass or optimize
+against it.</div>
+<div class="invariant"><b>INV-7 — Mechanism on every event.</b> Every record MUST carry a non-empty
+<code>mechanism_of_action</code>. No anonymous side effects.</div>
+<div class="invariant"><b>INV-8 — Fail closed.</b> If a required governance boundary is absent, the holon
+MUST refuse to operate rather than operate ungoverned.</div>
+<div class="invariant"><b>INV-9 — Coordination determinism.</b> The coordination protocol MUST be replayable
+from the recorded log; content (cell inference) is logged, not re-executed (§8).</div>
+<div class="invariant"><b>INV-10 — Lexical constitution.</b> Constitutional objectives MUST be constraints
+prior to all goal optimization — never weighted terms a valence/reward signal can outbid. (Structural: the
+Constitution organ is separate from and gates the Goal organ; Book II §12.)</div>
+<div class="invariant"><b>INV-11 — Projection-only perception.</b> A holon MUST perceive others only via
+governed projection; it MUST NOT read another holon's internals, nor widen its own aperture.</div>
+<div class="invariant"><b>INV-12 — Scope on every event.</b> Every record and boundary crossing MUST carry
+organism/identity/scope so it is attributable and auditable.</div>
+<div class="callout"><b>Two invariants are exceptions to "everything is a holon."</b> The Verification organ
+(INV-4) and the HumanSeat path (INV-6) are deliberately <em>non-valent</em> authorities carved out of the
+recursion's drive economy. A self-modeling organism with intrinsic drives (S7) must have at least one brake
+it cannot want to defeat. These are those brakes. If a future change cannot keep them carved out, the safety
+claim of this design is void and the documents must say so plainly.</div>
+
+<h2>10. Security &amp; threat model (recast for the organism)</h2>
+<p>SOMA is local-first and customer-owned; there is no supplier in its data path and no hidden remote control.
+The threat model is recast biologically: the immune system (S8) defends the body; the membrane (Book II §3)
+is the trust boundary; the log is the asset whose integrity is everything.</p>
+<table>
+<tr><th>Asset</th><th>Adversary / failure</th><th>Defense (organ / invariant)</th></tr>
+<tr><td>The event log + hash chain (the organism's reality &amp; identity)</td><td>tampering, reordering, silent edit</td><td>append-only + hash chain (INV-1); replay-with-verification (S1); continuity anchored to chain (S2)</td></tr>
+<tr><td>Authority &amp; leases</td><td>a holon acting beyond scope, or after kill</td><td>Authority organ; lease protocol (§7); INV-3/5</td></tr>
+<tr><td>Trust (the reward channel)</td><td>a holon that learns to <em>look</em> reliable (reward-hacking)</td><td>verification-gated trust evidence (INV-4); Sentinel drift/anomaly detection; kill-the-winner scrutiny of dominant holons (Book III)</td></tr>
+<tr><td>The constitutional floor</td><td>a strong valence signal outbidding safety</td><td>lexical priority (INV-10); valence subordinate to Constitution (S6) and Verification (S8)</td></tr>
+<tr><td>Destructive actions (delete, restore, self-modify)</td><td>automation overreach</td><td>HumanSeat ceiling (INV-6), above the holarchy (§11)</td></tr>
+<tr><td>A failing or hostile holon</td><td>cascade, cytokine storm (over-remediation)</td><td>circuit breakers; bounded remediation; negative selection; quarantine before kill (S8, Book III)</td></tr>
+<tr><td>Secrets / private state in the 80%</td><td>leakage across the membrane</td><td>projection-only perception (INV-11); internals never serialized (§6)</td></tr>
+</table>
+
+<h2>11. HumanSeat: the apex, above the holarchy</h2>
+<p>HumanSeat is decided, not ambiguous: it sits <strong>above</strong> the organism, not as a parent
+<em>inside</em> the recursion. The organism's top-level holon projects upward to HumanSeat exactly as any
+child projects to its parent — but HumanSeat is the one authority that carries no valence, holds no lease,
+and cannot be optimized against. It is "the human is the authority ceiling who can step out, never the relay"
+(Book I, the HumanSeat principle; the M in MEDA). Concretely:</p>
+<ul>
+<li>HumanSeat approves/denies the gated actions of INV-6, on holds with timeouts.</li>
+<li>HumanSeat can quarantine or kill any holon, including a whole system, and the kill is honored by INV-5.</li>
+<li>HumanSeat is <em>outside</em> the deterministic core: a human decision is an input recorded on the log,
+not a replayable computation.</li>
+<li>The designer-who-removes-himself (Book I §11) is encoded here: HumanSeat can step out, and the organism
+runs on under its own constitution — but the seat above it never disappears from the design.</li>
+</ul>
+
+<h2>12. Verification &amp; test strategy</h2>
+<p>Because the invariants are the product, the test suite is organized around them, not around features.</p>
+<ul>
+<li><b>Invariant tests</b> — one suite per INV-1…INV-12, each attempting the forbidden thing and asserting it
+is refused (e.g., a holon attempting to act before <code>holon.onboarded</code>; a killed holon attempting
+to claim; a goal value attempting to outbid a constitutional constraint).</li>
+<li><b>Replay tests</b> — record a session, replay the coordination protocol, assert identical governance
+decisions, trust posteriors, and projections (INV-9), with cell outputs read from the log.</li>
+<li><b>Membrane tests</b> — assert no projection ever contains a child's internals; assert apertures cannot
+be self-widened (INV-11).</li>
+<li><b>Property tests</b> — the hash chain never verifies after any single-record mutation; canonical encoding
+is order-independent.</li>
+<li><b>Recursion tests</b> — the same ceremony, lease, and projection tests run with the holon-under-test
+instantiated as a cell, then as an organ, then as a system — proving the interface is genuinely self-similar.</li>
+<li><b>Soak tests</b> — long-running homeostatic stability: inject failure, assert the anxiety regulator
+(S7) recovers to setpoint and never spirals to a stall (the corrected anxiety experiment, Book I §7 / Book III).</li>
+</ul>
+
+<h2>13. Event schema catalog</h2>
+<p>Every record on the workspace has a known <code>EventSpec</code>; the workspace rejects any record whose
+payload does not satisfy its spec (fail-closed, INV-8). This catalog is the canonical set of event types for
+v1. Event types are dotted, lowercase, and prefixed by the organ family that owns them; each must match a
+declared capability prefix in the emitter's manifest (Book IV §4).</p>
+<h4>Lifecycle &amp; ceremony events (every holon)</h4>
+<table>
+<tr><th>event_type</th><th>required payload keys</th><th>meaning</th></tr>
+<tr><td><code>holon.manifest.validated</code></td><td>holon_id, manifest_hash, kind</td><td>step 1 of the ceremony</td></tr>
+<tr><td><code>holon.adapter_contract.registered</code></td><td>holon_id, manifest_hash, contract_hash</td><td>step 2; concrete contract committed</td></tr>
+<tr><td><code>holon.policy.compiled</code></td><td>holon_id, policy_digest, pub_count, sub_count</td><td>step 3; pub/sub allowlist compiled</td></tr>
+<tr><td><code>holon.subscription_scope.approved</code></td><td>holon_id, direction, event_type</td><td>step 4; one per approved scope</td></tr>
+<tr><td><code>holon.readiness.declared</code></td><td>holon_id, heartbeat_ms</td><td>step 5; liveness affordances</td></tr>
+<tr><td><code>holon.onboarded</code></td><td>holon_id, kind, contract_hash, policy_digest, sub_holon_ids</td><td>step 6; the gate — may act after this</td></tr>
+<tr><td><code>holon.heartbeat</code></td><td>holon_id, at_seq</td><td>periodic liveness</td></tr>
+<tr><td><code>holon.retired</code></td><td>holon_id, reason</td><td>removed from service; memory retained</td></tr>
+</table>
+<h4>Task &amp; lease events (governed action)</h4>
+<table>
+<tr><th>event_type</th><th>required payload keys</th><th>meaning</th></tr>
+<tr><td><code>goal.admitted</code></td><td>goal_id, criteria, constraints</td><td>an outcome-driven goal enters ACTIVE</td></tr>
+<tr><td><code>task.created</code></td><td>task_id, goal_id, domain, risk</td><td>a task derived from a goal</td></tr>
+<tr><td><code>lease.requested</code></td><td>task_id, holon_id</td><td>a holon asks to work a task</td></tr>
+<tr><td><code>lease.granted</code></td><td>task_id, holon_id, lease_id, ttl_ms, scope</td><td>authority grants a scoped, timed lease</td></tr>
+<tr><td><code>lease.denied</code></td><td>task_id, holon_id, reason</td><td>onboarding/trust/authority/kill check failed</td></tr>
+<tr><td><code>lease.renewed</code></td><td>lease_id, ttl_ms</td><td>extend while work continues</td></tr>
+<tr><td><code>work.attempted</code></td><td>lease_id, holon_id, evidence</td><td>intermediate progress / outcome candidate</td></tr>
+<tr><td><code>task.completed</code></td><td>task_id, lease_id, verifier_evidence</td><td>accepted by Verification (INV-4)</td></tr>
+<tr><td><code>task.failed</code></td><td>task_id, lease_id, reason</td><td>trust-attributed failure</td></tr>
+<tr><td><code>lease.released</code></td><td>lease_id, reason</td><td>returned without prejudice</td></tr>
+</table>
+<h4>Governance, trust &amp; safety events</h4>
+<table>
+<tr><th>event_type</th><th>required payload keys</th><th>meaning</th></tr>
+<tr><td><code>trust.evidence.applied</code></td><td>holon_id, domain, outcome, weight, evidence_id</td><td>a verified outcome updates a Beta posterior</td></tr>
+<tr><td><code>trust.snapshot</code></td><td>holon_id, domain, mean, variance, root_hash</td><td>Merkle-rooted trust state (Book III §3.2)</td></tr>
+<tr><td><code>authority.granted</code></td><td>holon_id, scope_class</td><td>authority scope derived from trust</td></tr>
+<tr><td><code>authority.contracted</code></td><td>holon_id, scope_class, reason</td><td>scope reduced on trust drift</td></tr>
+<tr><td><code>holon.quarantined</code></td><td>holon_id, reason</td><td>Sentinel isolates before kill</td></tr>
+<tr><td><code>holon.killed</code></td><td>holon_id, reason, approved_by</td><td>authority revoked; leases void (INV-5)</td></tr>
+<tr><td><code>sentinel.drift.detected</code></td><td>holon_id, metric, distance</td><td>CUSUM/Wasserstein drift signal (Book III §8.2, §9.2)</td></tr>
+<tr><td><code>breaker.opened</code> / <code>breaker.closed</code></td><td>holon_id, window</td><td>circuit breaker state change</td></tr>
+</table>
+<h4>HumanSeat &amp; homeostasis events</h4>
+<table>
+<tr><th>event_type</th><th>required payload keys</th><th>meaning</th></tr>
+<tr><td><code>humanseat.gate.raised</code></td><td>gate_id, action, reason, timeout_ms</td><td>a gated action awaits approval (INV-6)</td></tr>
+<tr><td><code>humanseat.gate.approved</code> / <code>.denied</code></td><td>gate_id, by</td><td>the apex decision (an input, not a computation)</td></tr>
+<tr><td><code>homeostasis.arousal.ticked</code></td><td>level, setpoint, multiplier</td><td>regulated arousal update (Book III §6.2)</td></tr>
+<tr><td><code>evolution.diagnosed</code></td><td>holon_id, criterion, root_cause</td><td>a specific shortfall (Book V §4)</td></tr>
+<tr><td><code>evolution.regenerated</code></td><td>holon_id, change_kind, new_generation</td><td>a targeted improvement deployed</td></tr>
+</table>
+
+<h2>14. Per-crate module specifications</h2>
+<p>Each crate's public surface, organ by organ. Types are illustrative (final signatures may differ) but the
+responsibilities and boundaries are normative.</p>
+
+<h3>14.1 <code>soma-core</code></h3>
+<p>Modules: <code>holon</code> (the <code>Holon</code> trait, §3), <code>id</code> (validated newtypes),
+<code>event</code> (<code>EventSpec</code>, <code>EventType</code>, the catalog registry), <code>canonical</code>
+(deterministic encoding + hashing), <code>projection</code> (<code>Projection</code>, <code>Aperture</code>),
+<code>lease</code> (<code>Lease</code>, <code>LeaseState</code>), <code>manifest</code> (<code>Manifest</code>,
+<code>HolonKind</code>). No I/O, no async, no crypto runtime beyond hashing. Everything above depends on this
+and nothing else at the bottom.</p>
+
+<h3>14.2 <code>soma-workspace</code> (S1)</h3>
+<p>Modules: <code>log</code> (append-only segments, hash chain, <code>append(record) -&gt; (seq, hash)</code>,
+<code>replay_verified(from) -&gt; impl Iterator</code>), <code>subscription</code> (durable cursors, ack/nack,
+relevance routing), <code>projection</code> (the Aperture organ: <code>project(holon, policy) -&gt; Projection</code>).
+Guarantees: append is atomic and fsync-durable; replay re-verifies the chain and halts on mismatch; a
+malformed record is rejected, never silently skipped. This crate is the sole writer of truth.</p>
+
+<h3>14.3 <code>soma-holon</code> (the recursion SDK)</h3>
+<p>The crate every holon links. Modules: <code>ceremony</code> (<code>onboard(manifest, &amp;mut Workspace)
+-&gt; Receipt</code> — the six steps of §5), <code>policy</code> (compile pub/sub allowlists; the digest),
+<code>lease</code> (<code>request</code>/<code>renew</code>/<code>complete</code>/<code>fail</code>/<code>release</code>
+through the SDK boundary, never writing kernel state directly), <code>outcome</code> (<code>report(evidence)</code>).
+This crate is what makes "one ceremony, no second mechanism" (INV-3) literally true: there is exactly one
+code path to onboard, and it is here.</p>
+
+<h3>14.4 <code>soma-governance</code> (S8)</h3>
+<p>Modules: <code>trust</code> (<code>TrustStore</code> of Beta posteriors per (holon, domain, tier);
+Merkle-rooted persistence; <code>apply(evidence)</code>, <code>score(holon, domain) -&gt; (mean, var)</code>),
+<code>authority</code> (<code>scope_for(holon) -&gt; ScopeClass</code>; the kill switch <code>kill(holon,
+reason, approval)</code>; lease admission checks), <code>verification</code> (the non-valent
+<code>verify(task, evidence) -&gt; Verdict</code>; carries no goals/valence; cannot be a lease holder),
+<code>sentinel</code> (negative selection, danger model, CUSUM/Wasserstein drift, circuit breakers, bounded
+remediation). This crate maintains the laws that every membrane enforces.</p>
+
+<h3>14.5 <code>soma-identity</code> (S2)</h3>
+<p>Modules: <code>registry</code> (membranes: self/non-self, holon names &amp; boundaries),
+<code>continuity</code> (<code>reconstruct(&amp;Workspace) -&gt; SelfState</code> — rebuild "I" from the
+hash-chained log at boot), <code>self_model</code> (the reflexive <code>SelfModel { i_am, my_parts, my_state
+}</code>; <code>reconcile(projection)</code>; raises contradictions to Cognition + Homeostasis). Closes Gap 1.</p>
+
+<h3>14.6 <code>soma-memory</code> (S3)</h3>
+<p>Modules: <code>episodic</code>, <code>semantic</code>, <code>procedural</code> (the three stores),
+<code>consolidation</code> (hot→warm→cold by decayed activation; <code>recall(query) -&gt; Vec&lt;Memory&gt;</code>
+by similarity; salience by centrality). Failed work is composted here as evidence (necromass), feeding the
+evolution loop.</p>
+
+<h3>14.7 <code>soma-world</code> (S4)</h3>
+<p>Modules: <code>model</code> (predictive world-model: <code>predict()</code>, <code>update_to_reduce(surprise)</code>,
+free-energy descent), <code>cartographer</code> (the relational knowledge graph; dependency/blast-radius
+queries), <code>uncertainty</code> (conformal intervals on every estimate). Consumes projections; produces
+the world-state projection the rest of the body orients on.</p>
+
+<h3>14.8 <code>soma-cognition</code> (S5)</h3>
+<p>Modules: <code>reasoning</code> (domain-specialized cells; the boundary where non-deterministic model
+inference lives — its output is logged, never re-derived, INV-9), <code>deliberation</code> (expected-free-
+energy action selection with the reluctant-action threshold of Book III §5.2), <code>effector</code> (the only
+crate that acts on the world outside the organism, and only through a granted lease). Model calls are made
+inside a cell's private 80% and their results are written to the log as content.</p>
+
+<h3>14.9 <code>soma-goal</code> (S6)</h3>
+<p>Modules: <code>constitution</code> (the lexically-prior, non-tradeable objective set; <code>permits(action)
+-&gt; bool</code> evaluated <em>before</em> any goal scoring — INV-10), <code>goal</code> (outcome-driven
+goals: weighted criteria, hard/soft constraints, injected context; the DRAFT→…→COMPLETED lifecycle),
+<code>evaluation</code> (grade outcomes, calibrate the grader, emit the specific shortfall signal). The
+constitution module is a separate compilation unit from the goal module on purpose.</p>
+
+<h3>14.10 <code>soma-homeostasis</code> (S7)</h3>
+<p>Modules: <code>arousal</code> (the PID + hysteresis regulator with setpoint, relief valve, and performance
+floor — <code>tick(trust_trend)</code>, Book III §6.2), <code>metabolism</code> (resource budget; Little's-law
+backpressure), <code>valence</code> (the functional good/bad weighting). All signals are functional, not
+phenomenal (Book 0 §6); all are subordinate to the constitution (S6) and the verification ceiling (S8).</p>
+
+<h3>14.11 <code>soma-organism</code> (L5 assembly)</h3>
+<p>The runtime/daemon. Wires the systems in dependency order, runs the living loop (Book V §1), holds the
+local lock and the workspace handle, reconstructs the self at boot, exposes the operator/HumanSeat surface,
+and runs the bounded tick loop with health guards. It is the top-level <code>Holon</code> whose parent is
+HumanSeat; its own boot is the ceremony applied to itself.</p>
+
+<h2>15. Worked type reference: a task from grant to verified completion</h2>
+<p>To make the contracts concrete, here is the full path of one task in types, showing where each invariant
+bites.</p>
+<pre>// 1. Goal admitted (soma-goal) — constitution checked FIRST (INV-10)
+let goal = Goal::new(criteria, constraints);
+constitution.permits(&amp;goal)?;                       // lexical gate, before any scoring
+workspace.append(record("goal.admitted", goal.digest()))?;   // INV-7: mechanism stamped
+
+// 2. Task + lease (soma-holon -> soma-governance)
+let task = Task::from_goal(&amp;goal, domain, risk);
+let lease = match authority.admit(&amp;holon, &amp;task) {   // checks onboarded? trust? scope? not killed?
+    Ok(scope) =&gt; Lease::grant(task.id, holon.id(), ttl, scope),   // INV-3, INV-5
+    Err(reason) =&gt; return deny(reason),                            // INV-8 fail-closed
+};
+
+// 3. Perceive + act (soma-cognition) — focused aperture only while lease live (INV-11)
+let view: Projection = workspace.project(holon.id(), Aperture::Focused);
+holon.perceive(view)?;
+let outcome: Vec&lt;OutcomeRecord&gt; = holon.act(&amp;lease)?;   // returns RECORDS, not side effects (INV-2)
+
+// 4. Verify — non-valent organ decides; no self-certification (INV-4)
+match verification.verify(&amp;task, &amp;outcome) {
+    Verdict::Accept =&gt; { workspace.append(record("task.completed", ...))?;
+                         trust.apply(Evidence::success(holon.id(), domain)); }   // INV-9 fold
+    Verdict::Escalate(t) =&gt; escalate(t),        // tier or HumanSeat (INV-6)
+    Verdict::Reject(why) =&gt; { workspace.append(record("task.failed", why))?;
+                             trust.apply(Evidence::failure(holon.id(), domain)); }
+}</pre>
+<p>Every line above is either a governed record on the workspace or a pure function of it. There is no path
+in this code that reaches another holon directly, completes without verification, acts without a lease, or
+edits the past — because those paths do not exist in the types. The invariants are enforced by what the API
+makes <em>impossible</em>, not only by what it checks.</p>
+
+<p class="small">End of Book IV. The crate map, ceremony, contracts, event catalog, and invariants here are
+the build contract; Book III supplies the algorithms inside the organs, and Book V shows them running.</p>
+
+</body>
+</html>

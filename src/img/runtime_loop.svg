@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="640" font-family="Georgia, serif">
+<rect width="900" height="640" fill="#ffffff"/>
+<text x="450" y="34" font-size="22" text-anchor="middle" fill="#16335f">The living loop — one cognitive cycle</text>
+<g font-size="15" text-anchor="middle">
+<g><circle cx="450" cy="110" r="58" fill="#ecf3fc" stroke="#2c5aa0" stroke-width="2"/><text x="450" y="108" fill="#2c5aa0">PERCEIVE</text><text x="450" y="128" font-size="11" fill="#555">fold projections</text></g>
+<g><circle cx="650" cy="190" r="58" fill="#ecf3fc" stroke="#2c5aa0" stroke-width="2"/><text x="650" y="188" fill="#2c5aa0">ORIENT</text><text x="650" y="208" font-size="11" fill="#555">world-model</text></g>
+<g><circle cx="720" cy="370" r="58" fill="#fdeede" stroke="#8a4b10" stroke-width="2"/><text x="720" y="368" fill="#8a4b10">DELIBERATE</text><text x="720" y="388" font-size="11" fill="#555">reluctant action</text></g>
+<g><circle cx="600" cy="520" r="58" fill="#fdeede" stroke="#8a4b10" stroke-width="2"/><text x="600" y="518" fill="#8a4b10">ACT</text><text x="600" y="538" font-size="11" fill="#555">leased effector</text></g>
+<g><circle cx="380" cy="560" r="58" fill="#eef6f0" stroke="#1f7a44" stroke-width="2"/><text x="380" y="558" fill="#1f7a44">VERIFY</text><text x="380" y="578" font-size="11" fill="#555">non-valent gate</text></g>
+<g><circle cx="200" cy="470" r="58" fill="#e7f7ec" stroke="#176b34" stroke-width="2"/><text x="200" y="468" fill="#176b34">REMEMBER</text><text x="200" y="488" font-size="11" fill="#555">consolidate</text></g>
+<g><circle cx="160" cy="280" r="58" fill="#e7f7ec" stroke="#176b34" stroke-width="2"/><text x="160" y="278" fill="#176b34">EVOLVE</text><text x="160" y="298" font-size="11" fill="#555">diagnose→regen</text></g>
+<g><circle cx="270" cy="140" r="58" fill="#f3eefb" stroke="#6b4fa0" stroke-width="2"/><text x="270" y="138" fill="#6b4fa0">REST</text><text x="270" y="158" font-size="11" fill="#555">low-load tend</text></g>
+</g>
+<g stroke="#9aa6b6" stroke-width="2" fill="none" marker-end="url(#m)">
+<path d="M505,128 Q560,150 600,165"/><path d="M698,235 Q720,290 718,310"/>
+<path d="M695,422 Q660,475 645,478"/><path d="M548,545 Q470,560 438,558"/>
+<path d="M326,540 Q260,520 245,512"/><path d="M180,415 Q160,360 162,338"/>
+<path d="M185,228 Q220,180 228,172"/><path d="M315,118 Q380,100 393,102"/>
+</g>
+<defs><marker id="m" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#777"/></marker></defs>
+<text x="450" y="350" font-size="13" text-anchor="middle" fill="#999">every arrow is a record on the workspace</text>
+</svg>

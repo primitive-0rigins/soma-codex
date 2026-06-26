@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="430" font-family="Georgia, serif">
+<rect width="1000" height="430" fill="#ffffff"/>
+<text x="500" y="34" font-size="23" text-anchor="middle" fill="#16335f">The Membrane — one boundary, three identities</text>
+<circle cx="500" cy="235" r="150" fill="none" stroke="#444" stroke-width="2.5" stroke-dasharray="2 0"/>
+<text x="500" y="150" font-size="17" text-anchor="middle" fill="#176b34">shared ~20% (governed projection)</text>
+<text x="500" y="240" font-size="20" text-anchor="middle" fill="#333">HOLON</text>
+<text x="500" y="270" font-size="15" text-anchor="middle" fill="#8a4b10">private ~80% (its own perception)</text>
+<rect x="40"  y="120" width="210" height="70" rx="9" fill="#eaf2ff" stroke="#16335f" stroke-width="2"/>
+<text x="145" y="150" font-size="17" text-anchor="middle" fill="#16335f">self-similar</text>
+<text x="145" y="174" font-size="14" text-anchor="middle" fill="#555">interface</text>
+<rect x="40"  y="290" width="210" height="70" rx="9" fill="#fdeede" stroke="#8a4b10" stroke-width="2"/>
+<text x="145" y="320" font-size="17" text-anchor="middle" fill="#8a4b10">governance</text>
+<text x="145" y="344" font-size="14" text-anchor="middle" fill="#555">boundary</text>
+<rect x="750" y="205" width="210" height="70" rx="9" fill="#e7f7ec" stroke="#176b34" stroke-width="2"/>
+<text x="855" y="235" font-size="17" text-anchor="middle" fill="#176b34">80 / 20</text>
+<text x="855" y="259" font-size="14" text-anchor="middle" fill="#555">shared vs private</text>
+<line x1="250" y1="155" x2="355" y2="200" stroke="#16335f" stroke-width="2"/>
+<line x1="250" y1="325" x2="355" y2="280" stroke="#8a4b10" stroke-width="2"/>
+<line x1="750" y1="240" x2="650" y2="238" stroke="#176b34" stroke-width="2"/>
+<text x="500" y="410" font-size="15" text-anchor="middle" fill="#444">coordination across the membrane is deterministic (record-replay); content within is not</text>
+</svg>

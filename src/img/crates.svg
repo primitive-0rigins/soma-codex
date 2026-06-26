@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" font-family="Georgia, serif">
+<rect width="1000" height="560" fill="#ffffff"/>
+<text x="500" y="32" font-size="23" text-anchor="middle" fill="#16335f">Crate map — dependencies flow downward only</text>
+<!-- top: organism runtime -->
+<rect x="330" y="56" width="340" height="46" rx="8" fill="#dbe7fb" stroke="#16335f" stroke-width="2"/>
+<text x="500" y="85" font-size="17" text-anchor="middle" fill="#16335f">soma-organism (runtime / daemon)</text>
+<!-- systems row -->
+<g font-size="13.5">
+<rect x="40"  y="140" width="150" height="44" rx="7" fill="#ecf3fc" stroke="#2c5aa0" stroke-width="1.8"/><text x="115" y="167" text-anchor="middle" fill="#2c5aa0">soma-identity</text>
+<rect x="205" y="140" width="150" height="44" rx="7" fill="#ecf3fc" stroke="#2c5aa0" stroke-width="1.8"/><text x="280" y="167" text-anchor="middle" fill="#2c5aa0">soma-memory</text>
+<rect x="370" y="140" width="150" height="44" rx="7" fill="#ecf3fc" stroke="#2c5aa0" stroke-width="1.8"/><text x="445" y="167" text-anchor="middle" fill="#2c5aa0">soma-world</text>
+<rect x="535" y="140" width="150" height="44" rx="7" fill="#ecf3fc" stroke="#2c5aa0" stroke-width="1.8"/><text x="610" y="167" text-anchor="middle" fill="#2c5aa0">soma-cognition</text>
+<rect x="700" y="140" width="120" height="44" rx="7" fill="#ecf3fc" stroke="#2c5aa0" stroke-width="1.8"/><text x="760" y="167" text-anchor="middle" fill="#2c5aa0">soma-goal</text>
+<rect x="835" y="140" width="125" height="44" rx="7" fill="#ecf3fc" stroke="#2c5aa0" stroke-width="1.8"/><text x="897" y="160" text-anchor="middle" fill="#2c5aa0">soma-</text><text x="897" y="177" text-anchor="middle" fill="#2c5aa0">homeostasis</text>
+</g>
+<rect x="370" y="210" width="260" height="44" rx="7" fill="#fdeede" stroke="#8a4b10" stroke-width="1.8"/>
+<text x="500" y="237" font-size="14" text-anchor="middle" fill="#8a4b10">soma-governance (immune)</text>
+<!-- holon sdk -->
+<rect x="300" y="300" width="400" height="46" rx="8" fill="#e7f7ec" stroke="#176b34" stroke-width="2"/>
+<text x="500" y="329" font-size="16" text-anchor="middle" fill="#176b34">soma-holon (universal SDK: ceremony, manifest, lease)</text>
+<!-- workspace -->
+<rect x="300" y="392" width="400" height="46" rx="8" fill="#dde9f7" stroke="#16335f" stroke-width="2"/>
+<text x="500" y="421" font-size="16" text-anchor="middle" fill="#16335f">soma-workspace (event log + projection)</text>
+<!-- core -->
+<rect x="300" y="484" width="400" height="46" rx="8" fill="#eef1f4" stroke="#444" stroke-width="2"/>
+<text x="500" y="513" font-size="16" text-anchor="middle" fill="#333">soma-core (Holon trait, ids, events, canonical enc.)</text>
+<g stroke="#9aa6b6" stroke-width="1.5">
+<line x1="500" y1="102" x2="500" y2="140"/>
+<line x1="500" y1="254" x2="500" y2="300"/>
+<line x1="500" y1="346" x2="500" y2="392"/>
+<line x1="500" y1="438" x2="500" y2="484"/>
+</g>
+<text x="500" y="552" font-size="13" text-anchor="middle" fill="#777">a crate may depend only on crates below it — enforced at compile time</text>
+</svg>

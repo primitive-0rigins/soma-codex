@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="240" font-family="Georgia, serif">
+<rect width="980" height="240" fill="#ffffff"/>
+<text x="490" y="32" font-size="21" text-anchor="middle" fill="#16335f">Developmental lifecycle — how a holon earns its place</text>
+<g font-size="13.5" text-anchor="middle">
+<rect x="20"  y="90" width="120" height="50" rx="8" fill="#f3eefb" stroke="#6b4fa0" stroke-width="1.8"/><text x="80" y="120" fill="#6b4fa0">Candidate</text>
+<rect x="170" y="90" width="120" height="50" rx="8" fill="#ecf3fc" stroke="#2c5aa0" stroke-width="1.8"/><text x="230" y="120" fill="#2c5aa0">Training</text>
+<rect x="320" y="90" width="120" height="50" rx="8" fill="#ecf3fc" stroke="#2c5aa0" stroke-width="1.8"/><text x="380" y="120" fill="#2c5aa0">Evaluating</text>
+<rect x="470" y="90" width="120" height="50" rx="8" fill="#e7f7ec" stroke="#176b34" stroke-width="1.8"/><text x="530" y="120" fill="#176b34">Graduated</text>
+<rect x="620" y="90" width="120" height="50" rx="8" fill="#e7f7ec" stroke="#176b34" stroke-width="2.2"/><text x="680" y="120" fill="#176b34">Promoted</text>
+<rect x="820" y="90" width="120" height="50" rx="8" fill="#eef1f4" stroke="#777" stroke-width="1.8" stroke-dasharray="5 4"/><text x="880" y="120" fill="#555">Retired</text>
+</g>
+<g stroke="#9aa6b6" stroke-width="1.8" fill="none" marker-end="url(#m)">
+<line x1="140" y1="115" x2="170" y2="115"/><line x1="290" y1="115" x2="320" y2="115"/>
+<line x1="440" y1="115" x2="470" y2="115"/><line x1="590" y1="115" x2="620" y2="115"/>
+<line x1="740" y1="115" x2="820" y2="115"/></g>
+<path d="M380,140 Q300,200 230,140" stroke="#b03030" stroke-width="1.6" fill="none" marker-end="url(#m)"/>
+<text x="300" y="195" font-size="11.5" text-anchor="middle" fill="#b03030">fail eval → back to training</text>
+<defs><marker id="m" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#888"/></marker></defs>
+<text x="680" y="165" font-size="11.5" text-anchor="middle" fill="#176b34">live in service</text>
+<text x="490" y="225" font-size="12.5" text-anchor="middle" fill="#777">sandbox scenarios: capability · trust · stress · adversarial — failure is composted into evidence</text>
+</svg>

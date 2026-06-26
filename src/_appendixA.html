@@ -1,0 +1,789 @@
+<p class="small">220 ideas, reproduced faithfully from the source corpus. The 37 marked <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span> are wired into an organ in Book III; the rest are generative analogies and open conjectures, kept for the design imagination and labeled honestly as such.</p>
+<h3>Practical Prediction And Runtime Math</h3>
+<h4>Bayes&#x27; Theorem <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Updated belief equals old belief times new evidence.</p>
+<p class="small"><b>Use in SOMA:</b> trust scores, verifier confidence, agent freedom, domain authority.</p>
+<h4>Markov Chains <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>The next state depends mostly on the current state.</p>
+<p class="small"><b>Use in SOMA:</b> workflow states, agent lifecycle, node health transitions.</p>
+<h4>Hidden Markov Models <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Visible signals hint at hidden state.</p>
+<p class="small"><b>Use in SOMA:</b> infer whether a node is asleep, overloaded, offline, or disconnected from heartbeat and latency.</p>
+<h4>Kalman Filter <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Prediction plus noisy measurement gives a better estimate.</p>
+<p class="small"><b>Use in SOMA:</b> smooth live progress, node health, confidence, and runtime estimates.</p>
+<h4>Exponential Moving Average <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Mostly old score plus a little new data.</p>
+<p class="small"><b>Use in SOMA:</b> trust smoothing, latency averages, node reliability.</p>
+<h4>Logistic Function <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Turns messy scores into probability from 0 to 1.</p>
+<p class="small"><b>Use in SOMA:</b> risk scoring, routing probability, completion likelihood.</p>
+<h4>Entropy <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Measures uncertainty or disorder.</p>
+<p class="small"><b>Use in SOMA:</b> detect drift, unstable agents, unpredictable workflows, noisy context.</p>
+<h4>Lyapunov Exponent</h4>
+<p>Measures how fast tiny differences explode.</p>
+<p class="small"><b>Use in SOMA:</b> detect workflows where small delays or errors cascade.</p>
+<h4>Power Law</h4>
+<p>A few things cause most of the effect.</p>
+<p class="small"><b>Use in SOMA:</b> find the few bugs, agents, nodes, or routes causing most failures.</p>
+<h4>Queueing Theory <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Arrival rate versus service rate predicts overload.</p>
+<p class="small"><b>Use in SOMA:</b> task queues, verifier pools, agent saturation, timeout risk.</p>
+<h4>Game Theory / Nash Equilibrium</h4>
+<p>Actors choose based on what others might do.</p>
+<p class="small"><b>Use in SOMA:</b> multi-agent resource allocation and avoiding selfish task grabbing.</p>
+<h4>Cellular Automata</h4>
+<p>Simple local rules create complex global behavior.</p>
+<p class="small"><b>Use in SOMA:</b> simulate agent swarms, failure spread, local rule emergence.</p>
+<h4>Shortest Path / Dijkstra</h4>
+<p>Finds the cheapest path through a network.</p>
+<p class="small"><b>Use in SOMA:</b> mesh routing, relay selection, low-risk task path.</p>
+<h4>Monte Carlo Simulation</h4>
+<p>Run many possible futures and see what usually happens.</p>
+<p class="small"><b>Use in SOMA:</b> workflow risk forecasting, scheduling, failure simulation.</p>
+<h4>PID Control <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Correction equals current error plus accumulated error plus rate of change.</p>
+<p class="small"><b>Use in SOMA:</b> backpressure, task intake, verifier timeout control, node load balancing.</p>
+<h4>Hysteresis <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Different thresholds for turning something on versus off.</p>
+<p class="small"><b>Use in SOMA:</b> avoid flip-flopping trust, quarantine, escalation, node wake/sleep.</p>
+<h4>POMDP</h4>
+<p>Decision-making when the true state is hidden.</p>
+<p class="small"><b>Use in SOMA:</b> decide whether to wait, ping, reassign, escalate, or ask HumanSeat when agent state is uncertain.</p>
+<h4>Survival Analysis <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Probability something survives past time T.</p>
+<p class="small"><b>Use in SOMA:</b> lease timeout prediction, node failure prediction, task completion likelihood.</p>
+<h4>Hazard Function</h4>
+<p>Risk of failure right now, given it has survived so far.</p>
+<p class="small"><b>Use in SOMA:</b> detect when long-running tasks become suspicious.</p>
+<h4>Drift Detection <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Current behavior no longer matches past behavior.</p>
+<p class="small"><b>Use in SOMA:</b> model drift, verifier drift, node latency shifts, output quality drop.</p>
+<h4>CUSUM <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Small changes accumulate until they prove a shift.</p>
+<p class="small"><b>Use in SOMA:</b> detect slow degradation in agents, trust, or runtime health.</p>
+<h4>PageRank <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Importance flows through links.</p>
+<p class="small"><b>Use in SOMA:</b> context relevance, central agents, upstream failure causes.</p>
+<h4>Eigenvector Centrality</h4>
+<p>You are important if connected to important things.</p>
+<p class="small"><b>Use in SOMA:</b> find important context, agents, services, and dependencies.</p>
+<h4>Belief Propagation</h4>
+<p>Nodes pass probability messages through a graph.</p>
+<p class="small"><b>Use in SOMA:</b> cause tracing, verifier confidence, workflow diagnosis.</p>
+<h4>Bayesian Network</h4>
+<p>A graph of causes and probabilities.</p>
+<p class="small"><b>Use in SOMA:</b> connect node latency, task timeout, agent blame, verifier uncertainty, and trust.</p>
+<h4>Information Gain <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Pick the question or check that reduces uncertainty most.</p>
+<p class="small"><b>Use in SOMA:</b> decide whether to ask human, run verifier, inspect logs, rerun task, or escalate model.</p>
+<h4>Multi-Armed Bandit <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Balance trying new options against using known good ones.</p>
+<p class="small"><b>Use in SOMA:</b> agent selection, model selection, verifier choice, route choice.</p>
+<h4>Thompson Sampling <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Pick options in proportion to how likely they are best.</p>
+<p class="small"><b>Use in SOMA:</b> Bayesian scheduler and trust-based agent routing.</p>
+<h4>Regret Minimization</h4>
+<p>Learn choices that avoid future regret.</p>
+<p class="small"><b>Use in SOMA:</b> scheduler improvement and route learning.</p>
+<h4>Simulated Annealing</h4>
+<p>Explore widely early, settle down later.</p>
+<p class="small"><b>Use in SOMA:</b> workflow optimization, agent team composition, prompt/policy tuning.</p>
+<h4>Genetic Algorithms</h4>
+<p>Mutate many solutions, keep the best, repeat.</p>
+<p class="small"><b>Use in SOMA:</b> workflow generation or optimization, with strong verifier and HumanSeat gates.</p>
+<h4>Lagrange Multipliers</h4>
+<p>Optimize something while obeying constraints.</p>
+<p class="small"><b>Use in SOMA:</b> maximize task success subject to trust, safety, timeout, cost, privacy, and HumanSeat limits.</p>
+<h4>Constraint Satisfaction <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Find any solution satisfying all rules.</p>
+<p class="small"><b>Use in SOMA:</b> scheduling prerequisites: capability, trust, node awake, tenant binding, verifier available.</p>
+<h4>Topological Sort <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Do prerequisites before dependents.</p>
+<p class="small"><b>Use in SOMA:</b> workflows, task dependencies, build order.</p>
+<h4>Critical Path Method <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Find the chain determining total completion time.</p>
+<p class="small"><b>Use in SOMA:</b> locate the workflow sequence slowing the whole run.</p>
+<h4>Backpressure <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>If downstream is overloaded, upstream slows down.</p>
+<p class="small"><b>Use in SOMA:</b> stop agents from flooding verifiers, buses, or nodes.</p>
+<h4>Circuit Breaker <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>If something keeps failing, stop calling it temporarily.</p>
+<p class="small"><b>Use in SOMA:</b> flaky nodes, bad tools, failing model endpoints, unreliable agents.</p>
+<h3>Less Common Dynamical And Causality Ideas</h3>
+<h4>Mori-Zwanzig Formalism</h4>
+<p>The past keeps pushing on the present through memory effects.</p>
+<p class="small"><b>Use in SOMA:</b> old agent history or stale context still influencing current behavior.</p>
+<h4>Fokker-Planck Equation</h4>
+<p>Tracks how probability clouds move over time.</p>
+<p class="small"><b>Use in SOMA:</b> see uncertainty spreading across workflow states instead of predicting one future.</p>
+<h4>Master Equation</h4>
+<p>Tracks jumps between many possible states.</p>
+<p class="small"><b>Use in SOMA:</b> runtime state transition probabilities.</p>
+<h4>Lotka-Volterra Equations</h4>
+<p>Predator-prey dynamics.</p>
+<p class="small"><b>Use in SOMA:</b> model task producers versus verifiers or agents versus scarce resources.</p>
+<h4>Replicator Dynamics</h4>
+<p>Successful strategies become more common.</p>
+<p class="small"><b>Use in SOMA:</b> routing policies, workflow variants, verifier strategies.</p>
+<h4>Dissipative Structures</h4>
+<p>Order can emerge from constant energy flow.</p>
+<p class="small"><b>Use in SOMA:</b> agent systems stabilizing under continuous task flow.</p>
+<h4>Synergetics / Haken Equations</h4>
+<p>Many small parts suddenly coordinate.</p>
+<p class="small"><b>Use in SOMA:</b> detect emergent agent coordination.</p>
+<h4>Catastrophe Theory</h4>
+<p>Smooth pressure causes sudden jumps.</p>
+<p class="small"><b>Use in SOMA:</b> workflow collapse, trust cliffs, node overload.</p>
+<h4>Cusp Catastrophe</h4>
+<p>Two pressures build until behavior snaps to another mode.</p>
+<p class="small"><b>Use in SOMA:</b> confidence plus difficulty causing sudden failure or escalation.</p>
+<h4>Percolation Theory <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Enough local connections suddenly create global connectivity.</p>
+<p class="small"><b>Use in SOMA:</b> mesh reachability, context propagation, failure spread.</p>
+<h4>Renormalization Group</h4>
+<p>Zoom out while preserving important behavior.</p>
+<p class="small"><b>Use in SOMA:</b> compress details into broad peripheral context summaries.</p>
+<h4>Smoluchowski Coagulation Equation</h4>
+<p>Small things merge into bigger clusters.</p>
+<p class="small"><b>Use in SOMA:</b> group bus events into incidents, narratives, or root-cause clusters.</p>
+<h4>Kramers&#x27; Escape Rate</h4>
+<p>How systems escape stable states under noise.</p>
+<p class="small"><b>Use in SOMA:</b> predict agent drift or node failure.</p>
+<h4>Onsager Reciprocal Relations</h4>
+<p>Linked flows influence each other.</p>
+<p class="small"><b>Use in SOMA:</b> task load affects trust, trust affects routing, routing affects load.</p>
+<h4>Maximum Caliber</h4>
+<p>Least-assumptive probability over paths through time.</p>
+<p class="small"><b>Use in SOMA:</b> reconstruct likely workflow histories from bus records.</p>
+<h4>Transfer Entropy</h4>
+<p>Measures directed information flow.</p>
+<p class="small"><b>Use in SOMA:</b> tell whether agent A actually influenced agent B.</p>
+<h4>Granger Causality</h4>
+<p>If knowing A improves prediction of B, A may be causally useful.</p>
+<p class="small"><b>Use in SOMA:</b> find upstream agents/events causing downstream failures.</p>
+<h4>Recurrence Quantification Analysis</h4>
+<p>Find repeated patterns in chaotic time series.</p>
+<p class="small"><b>Use in SOMA:</b> recognize recurring runtime failure shapes.</p>
+<h4>Takens&#x27; Embedding Theorem</h4>
+<p>Under the right conditions, enough delayed samples from one rich scalar signal can reconstruct important structure from a hidden dynamical system.</p>
+<p class="small"><b>Use in SOMA:</b> infer node or agent health from heartbeat or latency histories when the signal has enough variation and sampling depth; do not treat a single noisy metric as magic access to hidden state.</p>
+<h4>Conley Index Theory</h4>
+<p>Classifies stable regions, traps, and escape paths in messy systems.</p>
+<p class="small"><b>Use in SOMA:</b> identify workflow states that trap agents or lead to failure.</p>
+<h3>Biological Microorganism Ideas</h3>
+<h4>Quorum Sensing</h4>
+<p>Microbes change behavior only when enough neighbors signal.</p>
+<p class="small"><b>Use in SOMA:</b> agents escalate only when enough independent signals agree.</p>
+<h4>Biofilm Formation</h4>
+<p>Weak individuals become resilient by forming a shared structure.</p>
+<p class="small"><b>Use in SOMA:</b> nodes/agents form durable local clusters around shared context.</p>
+<h4>Horizontal Gene Transfer</h4>
+<p>Useful traits move sideways through a population.</p>
+<p class="small"><b>Use in SOMA:</b> successful adapter patterns or verifier rules propagate between deployments.</p>
+<h4>Antibiotic Resistance Selection</h4>
+<p>Bad pressure can accidentally train what you are fighting.</p>
+<p class="small"><b>Use in SOMA:</b> predictable verifiers can train bad agents to pass them.</p>
+<h4>Persister Cells</h4>
+<p>Some microbes go dormant to survive stress.</p>
+<p class="small"><b>Use in SOMA:</b> dormant fallback agents/nodes that activate under runtime stress.</p>
+<h4>Microbial Succession</h4>
+<p>Communities change in ordered stages.</p>
+<p class="small"><b>Use in SOMA:</b> workflows have natural phases: scout, builder, verifier, maintainer.</p>
+<h4>Metabolic Cross-Feeding</h4>
+<p>One organism&#x27;s waste becomes another organism&#x27;s food.</p>
+<p class="small"><b>Use in SOMA:</b> failed attempts, logs, and verifier rejections become useful context.</p>
+<h4>Red Queen Dynamics</h4>
+<p>Systems must keep adapting just to stay in place.</p>
+<p class="small"><b>Use in SOMA:</b> security and verifier systems must evolve continuously.</p>
+<h4>Kill-the-Winner Hypothesis</h4>
+<p>The most successful organism or host can become the biggest target for predators, viruses, or other limiting forces, preserving diversity.</p>
+<p class="small"><b>Use in SOMA:</b> overused agents and tools need extra scrutiny, caps, and redundancy because dominance creates systemic risk.</p>
+<h4>Syntrophy</h4>
+<p>Different organisms survive only by cooperating.</p>
+<p class="small"><b>Use in SOMA:</b> some workflows require bounded agent pairs rather than general agents.</p>
+<h3>Ecosystem Sustainability Ideas</h3>
+<h4>Resilience Theory</h4>
+<p>How much disturbance a system can absorb while keeping identity.</p>
+<p class="small"><b>Use in SOMA:</b> measure how much failure/load the primitive can absorb.</p>
+<h4>Adaptive Cycle</h4>
+<p>Systems move through growth, conservation, collapse, and renewal.</p>
+<p class="small"><b>Use in SOMA:</b> plan renewal instead of endless patching.</p>
+<h4>Panarchy</h4>
+<p>Nested systems affect each other across scales.</p>
+<p class="small"><b>Use in SOMA:</b> model agent, node, tenant, mesh, and HumanSeat layers together.</p>
+<h4>Carrying Capacity</h4>
+<p>An environment can support only so much load.</p>
+<p class="small"><b>Use in SOMA:</b> hard capacity ceilings for nodes, agents, verifiers, task queues.</p>
+<h4>Tragedy Of The Commons</h4>
+<p>Shared resources degrade when everyone optimizes for themselves.</p>
+<p class="small"><b>Use in SOMA:</b> fair scheduling, context budgets, rate limits.</p>
+<h4>Keystone Species</h4>
+<p>One species has outsized ecosystem impact.</p>
+<p class="small"><b>Use in SOMA:</b> identify critical agents, verifier services, nodes, and routes.</p>
+<h4>Trophic Cascades</h4>
+<p>One relationship change ripples through the system.</p>
+<p class="small"><b>Use in SOMA:</b> killing one node/verifier may destabilize many workflows.</p>
+<h4>Ecological Niche Theory</h4>
+<p>Species survive by occupying specific roles.</p>
+<p class="small"><b>Use in SOMA:</b> specialized agents/verifiers beat vague general roles.</p>
+<h4>Island Biogeography</h4>
+<p>Diversity depends on size, isolation, immigration, and extinction.</p>
+<p class="small"><b>Use in SOMA:</b> isolated PCs need different expectations than well-connected mesh clusters.</p>
+<h4>Safe Operating Space / Planetary Boundaries</h4>
+<p>Past some thresholds, recovery gets hard.</p>
+<p class="small"><b>Use in SOMA:</b> hard runtime boundaries: max trust, autonomy, context, retries, load, and risk.</p>
+<h3>Microbiomes, Mycelium, Fungi, And Viruses</h3>
+<h4>Priority Effects</h4>
+<p>Early arrivals shape what can join later.</p>
+<p class="small"><b>Use in SOMA:</b> onboarding order matters; the first agents, adapters, and context seeds can bias the whole runtime.</p>
+<h4>Black Queen Hypothesis</h4>
+<p>Organisms can lose costly abilities when neighbors reliably provide them.</p>
+<p class="small"><b>Use in SOMA:</b> shared specialist services make the system efficient, but they create dependency risk if the specialist disappears.</p>
+<h4>Anna Karenina Principle For Dysbiosis</h4>
+<p>Healthy microbiomes tend to resemble each other; unhealthy ones fail in many different ways.</p>
+<p class="small"><b>Use in SOMA:</b> runtime health can have a small set of stable patterns, while failure needs broader detection because it has many shapes.</p>
+<h4>Persistence Landscape</h4>
+<p>Whether a new organism survives depends on the surrounding community, resources, defenses, and timing.</p>
+<p class="small"><b>Use in SOMA:</b> predict whether a new agent, plugin, or tenant will become useful in a node instead of just checking whether it installed.</p>
+<h4>Gut Metacommunity Theory</h4>
+<p>A microbiome is shaped by selection, drift, dispersal, and local niche conditions.</p>
+<p class="small"><b>Use in SOMA:</b> treat multi-node runtime behavior as a community of local environments, not one uniform global machine.</p>
+<h4>Common Fungal Network</h4>
+<p>Different fungal guilds can create shared networks that connect plants and soil environments.</p>
+<p class="small"><b>Use in SOMA:</b> a shared bus/context substrate can connect participants without direct participant-to-participant communication.</p>
+<h4>Common Mycorrhizal Network</h4>
+<p>Plant roots can be linked through mycorrhizal hyphae, allowing indirect transfer and signaling.</p>
+<p class="small"><b>Use in SOMA:</b> agents should not directly talk; they should leave signals in a shared substrate and let routing decide who receives detail.</p>
+<h4>Mycelial Electrical Oscillation</h4>
+<p>Fungal mycelium can show rhythmic electrical behavior over long windows.</p>
+<p class="small"><b>Use in SOMA:</b> heartbeat should be more than alive/dead; rhythm, variance, and phase changes can expose stress or drift.</p>
+<h4>Foraging Network Trait Theory</h4>
+<p>Fungal strategy can be studied through network traits like branching, density, connectivity, and transport efficiency.</p>
+<p class="small"><b>Use in SOMA:</b> classify agents and nodes by measured behavioral traits instead of declared names.</p>
+<h4>Growth-Induced Mass Flow</h4>
+<p>Growing fungal networks create internal flows that move material through the network.</p>
+<p class="small"><b>Use in SOMA:</b> task and event growth should reshape context routing and resource allocation automatically.</p>
+<h4>Stress Gradient Hypothesis In Fungal Communities</h4>
+<p>Under harsher conditions, facilitation can matter more than competition.</p>
+<p class="small"><b>Use in SOMA:</b> when the runtime is stressed, route toward support, verification, and narrower scope instead of pure throughput.</p>
+<h4>Fungal Loop Hypothesis</h4>
+<p>Fungi can bridge separate moisture and resource cycles in arid ecosystems.</p>
+<p class="small"><b>Use in SOMA:</b> bridge agents or sidecars can preserve continuity across unreliable nodes, sleeping machines, or intermittent links.</p>
+<h4>Fungal Source-Sink Dynamics</h4>
+<p>Some areas produce resources while others consume or depend on them.</p>
+<p class="small"><b>Use in SOMA:</b> model nodes as source/sink roles: one machine may provide compute, another may provide tasks, another may provide verification.</p>
+<h4>Mycorrhizal Drought-Resilience Theory</h4>
+<p>Arbuscular mycorrhizal fungi support plants through water transport, osmotic adjustment, hormones, and stress buffering.</p>
+<p class="small"><b>Use in SOMA:</b> resilience should be layered: fallback routing, verifier buffering, degraded mode, cache, and human intervention.</p>
+<h4>Fungal Functional Trait Ecology</h4>
+<p>Fungi can be grouped by functional traits rather than just species identity.</p>
+<p class="small"><b>Use in SOMA:</b> define agents by verified capabilities, scope, trust, latency, and failure modes instead of broad titles.</p>
+<h4>Piggyback-The-Winner</h4>
+<p>When hosts are thriving, temperate viruses may integrate and wait instead of killing them.</p>
+<p class="small"><b>Use in SOMA:</b> stable runtime periods may favor quiet latent monitors and audit hooks over aggressive intervention.</p>
+<h4>Viral Shunt</h4>
+<p>Viruses recycle cellular material back into the microbial loop through lysis.</p>
+<p class="small"><b>Use in SOMA:</b> failed work should feed logs, verifier examples, context, and trust evidence instead of disappearing.</p>
+<h4>Viral Shuttle</h4>
+<p>Viruses can help move carbon/material toward export pathways rather than only recycling locally.</p>
+<p class="small"><b>Use in SOMA:</b> some events should be promoted from local context into durable cross-node records.</p>
+<h4>Quasispecies Theory</h4>
+<p>Viral populations behave like clouds of related variants rather than one fixed genome.</p>
+<p class="small"><b>Use in SOMA:</b> treat agent behavior and model output as a drifting distribution, with error thresholds and mutation pressure.</p>
+<h3>Soil Microbiology Ideas</h3>
+<h4>Soil Priming Effect</h4>
+<p>Adding fresh carbon can speed up or slow down decomposition of older soil organic matter.</p>
+<p class="small"><b>Use in SOMA:</b> new context can wake up old context; adding a task, plugin, or memory can accelerate useful recall or accidentally revive stale assumptions.</p>
+<h4>Rhizosphere Priming Effect</h4>
+<p>Plant roots change nearby microbial activity and decomposition through exudates and nutrient demand.</p>
+<p class="small"><b>Use in SOMA:</b> active tasks should reshape the local context aperture around them, not consume a static global context feed.</p>
+<h4>Microbial Carbon Use Efficiency</h4>
+<p>Microbes split carbon between growth and respiration.</p>
+<p class="small"><b>Use in SOMA:</b> measure how much agent work becomes durable output versus wasted heat: retries, logs, failed calls, and dead context.</p>
+<h4>Microbial Carbon Pump</h4>
+<p>Microbes transform carbon into forms that persist longer.</p>
+<p class="small"><b>Use in SOMA:</b> convert raw events into stable summaries, verified facts, trust evidence, and reusable adapters.</p>
+<h4>Microbial Necromass Continuum</h4>
+<p>Dead microbial material is not simply waste; it can become a persistent part of soil carbon.</p>
+<p class="small"><b>Use in SOMA:</b> failed tasks, rejected outputs, old plans, and abandoned branches can become training evidence and durable audit context.</p>
+<h4>Mineral-Associated Organic Matter</h4>
+<p>Organic matter can persist by binding to mineral surfaces.</p>
+<p class="small"><b>Use in SOMA:</b> important context should bind to durable anchors: task IDs, verifier signatures, node IDs, timestamps, and source evidence.</p>
+<h4>Soil Aggregate Hierarchy</h4>
+<p>Soil structure is nested: particles form microaggregates, which form larger aggregates.</p>
+<p class="small"><b>Use in SOMA:</b> build context in nested scales: event, task, workflow, agent, node, tenant, mesh.</p>
+<h4>Soil Pore Connectivity</h4>
+<p>Microbes live in tiny connected or disconnected pore spaces.</p>
+<p class="small"><b>Use in SOMA:</b> connectivity matters; two agents may be installed but effectively isolated if policy, network, trust, or subscriptions block flow.</p>
+<h4>Microsite Heterogeneity</h4>
+<p>Soil conditions vary sharply at tiny scales.</p>
+<p class="small"><b>Use in SOMA:</b> avoid global assumptions; each node, task, model, and adapter may have a different local state.</p>
+<h4>Redox Ladder</h4>
+<p>Microbial metabolism follows available electron acceptors as oxygen drops, then nitrate, manganese, iron, sulfate, and carbon dioxide.</p>
+<p class="small"><b>Use in SOMA:</b> escalation should follow ordered fallback paths instead of random retries: cheap verifier, stronger verifier, larger model, human seat.</p>
+<h4>Anaerobic Microsites In Oxic Soil</h4>
+<p>Even oxygenated soil can contain tiny oxygen-poor pockets.</p>
+<p class="small"><b>Use in SOMA:</b> a generally healthy runtime can still hide local dead zones: one adapter, queue, file lock, or node can be unhealthy.</p>
+<h4>Nitrogen Immobilization</h4>
+<p>Microbes can temporarily lock nitrogen into biomass, making it unavailable to plants.</p>
+<p class="small"><b>Use in SOMA:</b> agents can absorb scarce resources without producing user-visible progress; detect busy-but-not-useful states.</p>
+<h4>Nitrogen Mineralization</h4>
+<p>Microbes convert organic nitrogen into plant-available forms.</p>
+<p class="small"><b>Use in SOMA:</b> background processors should turn raw logs and old context into usable knowledge.</p>
+<h4>Nitrification</h4>
+<p>Microbes convert ammonium to nitrate through staged oxidation.</p>
+<p class="small"><b>Use in SOMA:</b> some workflows need staged transformation, where intermediate states are not final but are necessary.</p>
+<h4>Denitrification</h4>
+<p>Microbes reduce nitrate through steps that can release nitrogen gases under low oxygen.</p>
+<p class="small"><b>Use in SOMA:</b> bad runtime conditions can leak value: retries, timeouts, partial completions, and lost context.</p>
+<h4>Sulfur Oxidation And Reduction</h4>
+<p>Sulfur microbes switch chemical states and link sulfur, carbon, and nitrogen cycles.</p>
+<p class="small"><b>Use in SOMA:</b> one subsystem can couple several resource loops; changing one policy may affect trust, cost, latency, and context quality.</p>
+<h4>Microbial Iron Cycling</h4>
+<p>Iron oxidizers and reducers alter minerals, energy flow, and soil chemistry.</p>
+<p class="small"><b>Use in SOMA:</b> infrastructure agents can change the environment itself, not just perform tasks inside it.</p>
+<h4>Hydrogen Oxidizers As Keystone Soil Microbes</h4>
+<p>Hydrogen-oxidizing microbes can act as quiet drivers of soil biogeochemistry.</p>
+<p class="small"><b>Use in SOMA:</b> small low-visibility services like heartbeat, embedding, and lease cleanup may control system stability more than flashy agents.</p>
+<h4>Plant-Soil Feedback</h4>
+<p>Plants change soil microbes, and the changed soil microbes affect future plant growth.</p>
+<p class="small"><b>Use in SOMA:</b> every agent action changes the future runtime environment through trust, context, reputation, and side effects.</p>
+<h4>Soil Microbial Seed Bank</h4>
+<p>Dormant microbes preserve diversity and can reactivate when conditions change.</p>
+<p class="small"><b>Use in SOMA:</b> keep dormant adapters, fallback agents, and archived context available without letting them consume active attention.</p>
+<h3>Topology And Algebraic Methods</h3>
+<h4>Persistent Homology</h4>
+<p>Tracks topological features — connected components, loops, voids — that appear and disappear as you zoom across scales of a dataset.</p>
+<p class="small"><b>Use in SOMA:</b> detect structural holes and anomalies in event dependency graphs, trust evidence networks, or workflow execution histories that point-based metrics miss entirely.</p>
+<h4>Persistent Laplacian</h4>
+<p>Combines spectral graph theory with persistent topology — the eigenvalues of a sequence of Laplacian matrices reveal both the shape and the connectivity of a changing structure.</p>
+<p class="small"><b>Use in SOMA:</b> multiscale spectral analysis of the bus event graph over time to find bottlenecks, isolated clusters, and topological instabilities that form before failures are visible.</p>
+<h4>Tropical Algebra</h4>
+<p>Replaces ordinary arithmetic with min-plus or max-plus semirings — addition becomes minimum, multiplication becomes addition — turning polynomial optimization into linear problems.</p>
+<p class="small"><b>Use in SOMA:</b> schedule tasks and find optimal routing paths in min-cost networks where the operations naturally fit max/min semantics; ReLU neural network analysis also lives here.</p>
+<h4>Cellular Sheaf Theory <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Assigns data to every node and edge of a network with consistency conditions — a sheaf &quot;section&quot; is a globally consistent assignment; cohomology measures how far the network is from agreement.</p>
+<p class="small"><b>Use in SOMA:</b> detect inconsistency between what different nodes believe about shared state — trust levels, workflow status, event counts — and quantify the degree of disagreement before it causes splits.</p>
+<h4>Discrete Morse Theory</h4>
+<p>Simplifies a cell complex (graph, mesh, topology) by canceling non-critical pairs, collapsing structure down to only the essential topological features.</p>
+<p class="small"><b>Use in SOMA:</b> compress large event graphs and dependency trees down to their critical skeleton — the minimum structure needed to preserve routing, causality, and failure paths.</p>
+<h4>Formal Concept Analysis</h4>
+<p>Builds a lattice of concepts from a binary relation between objects and attributes — every concept is a maximal set of objects sharing a maximal set of attributes.</p>
+<p class="small"><b>Use in SOMA:</b> discover the minimal capability signatures that define agent classes — which precise combinations of verified capabilities predict success on which task types.</p>
+<h4>Matroid Theory</h4>
+<p>An independence system generalizing linear independence to combinatorial settings — a matroid tells you which subsets of elements are &quot;independent&quot; with consistent exchange properties.</p>
+<p class="small"><b>Use in SOMA:</b> model which combinations of agent capabilities are genuinely independent versus redundant; matroid intersection gives the maximum common independent set across two different capability constraints simultaneously.</p>
+<h3>Information, Process, And Population Theory</h3>
+<h4>Koopman Operator Theory</h4>
+<p>Nonlinear dynamical systems can be lifted into an infinite-dimensional linear operator acting on observable functions — making nonlinear dynamics globally linear in the right space.</p>
+<p class="small"><b>Use in SOMA:</b> linearize trust evolution, workflow state machines, and agent behavioral dynamics so that global long-run predictions become eigenvalue problems instead of nonlinear simulations.</p>
+<h4>Active Inference / Free Energy Principle <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Agents minimize variational free energy — a bound on surprise — by updating beliefs to match observations or by acting to make observations match beliefs.</p>
+<p class="small"><b>Use in SOMA:</b> an agent should bias action toward outcomes that reduce surprise; uncertainty-aware decisions come from minimizing expected free energy, not just maximizing expected reward.</p>
+<h4>Path Signature Transform</h4>
+<p>The signature of a path is the ordered collection of its iterated integrals — a compact, fixed-size feature vector that uniquely encodes the shape of any trajectory regardless of speed or parameterization.</p>
+<p class="small"><b>Use in SOMA:</b> fingerprint agent behavioral trajectories — sequences of trust evidence, task durations, escalation patterns — for anomaly detection, similarity search, and behavioral drift without losing order information.</p>
+<h4>Optimal Transport / Wasserstein Distance <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Measures the minimum cost to move one probability distribution into another — the Earth Mover&#x27;s Distance — giving a geometrically meaningful metric between distributions.</p>
+<p class="small"><b>Use in SOMA:</b> measure distributional drift in trust score populations, workflow output distributions, or node latency profiles over time; detect when the current distribution has shifted far from a known-good baseline.</p>
+<h4>Mean Field Games</h4>
+<p>When a population of agents is large enough, each individual optimizes against the average behavior of the population — individual game theory collapses to a fixed-point problem over the population distribution.</p>
+<p class="small"><b>Use in SOMA:</b> model large-scale agent resource allocation where per-agent coordination is infeasible; equilibrium emerges from each agent optimizing against the observed aggregate, not against every individual peer.</p>
+<h4>Causal Emergence <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>When a coarse-grained macroscale description has strictly more effective information than any microscale description, the macro level is causally emergent — more is genuinely different.</p>
+<p class="small"><b>Use in SOMA:</b> measure whether tenant-level abstractions have more predictive causal power than agent-level descriptions; if yes, policy decisions belong at the tenant level, not the agent level.</p>
+<h4>Hypergraph Dynamics</h4>
+<p>Hyperedges connect more than two nodes at once — group interactions, not just pairwise — and the dynamics of synchronization, spreading, and failure differ fundamentally from ordinary graphs.</p>
+<p class="small"><b>Use in SOMA:</b> model multi-agent task dependencies where three or more agents must coordinate simultaneously; group-level trust thresholds, quorum conditions, and cascade failures follow hypergraph topology not pairwise topology.</p>
+<h4>Ultrametric Spaces</h4>
+<p>A metric space where the triangle inequality is strengthened to: distance(A,C) ≤ max(distance(A,B), distance(B,C)) — when the data fits, it creates a clean hierarchy with strongly nested clusters.</p>
+<p class="small"><b>Use in SOMA:</b> hierarchical clustering of failure modes when nested structure is real; useful for taxonomies, routing trees, and coarse-to-fine diagnosis, but real failure signatures may only approximately fit an ultrametric.</p>
+<h4>Freidlin-Wentzell Large Deviation Theory</h4>
+<p>In a noisy dynamical system, the probability of a rare escape from a stable state is dominated by a single &quot;instanton&quot; path — the minimum-action trajectory — which can be computed as a variational problem.</p>
+<p class="small"><b>Use in SOMA:</b> calculate the most likely path to catastrophic failure — trust collapse, mesh partition, workflow deadlock — before it happens; the instanton reveals which sequence of small events leads to the rare bad outcome.</p>
+<h4>Stochastic Thermodynamics / Jarzynski Equality</h4>
+<p>The Jarzynski equality and Crooks fluctuation theorem generalize the second law to small nonequilibrium systems — free energy differences can be recovered exactly from work measurements along irreversible paths.</p>
+<p class="small"><b>Use in SOMA:</b> treat entropy production as an analogy for wasted work in agent decision sequences — repeated retries, churn, and irreversible branching can signal disorder, while calmer near-equilibrium behavior can indicate efficient control.</p>
+<h4>Process Algebra / Pi-Calculus</h4>
+<p>A formal algebra of concurrent communicating processes where channels are first-class and can be passed as messages — mobility of communication structure is native.</p>
+<p class="small"><b>Use in SOMA:</b> formally specify agent interaction protocols and mechanically verify deadlock-freedom, liveness, and absence of backchannels; the no-direct-agent-communication invariant is a process algebra safety property.</p>
+<h4>Spectral Gap</h4>
+<p>The difference between the largest and second-largest eigenvalue of a graph&#x27;s adjacency or Laplacian matrix — large spectral gap means fast mixing, high connectivity, and robustness to node removal.</p>
+<p class="small"><b>Use in SOMA:</b> measure mesh topology health — a large spectral gap means the agent/node mesh is well-connected and resilient; a shrinking gap warns of emerging partitions before they become splits.</p>
+<h4>Algorithmic Information Theory / Kolmogorov Complexity</h4>
+<p>The Kolmogorov complexity of a string is the length of the shortest program that produces it — the true irreducible information content, approximated in practice by compression ratio.</p>
+<p class="small"><b>Use in SOMA:</b> measure the genuine complexity of agent outputs, workflow traces, and context summaries — a low compression ratio signals high information density; a high ratio signals padding, repetition, or low-value work.</p>
+<h3>Combinatorics And Number Theory</h3>
+<h4>Ramsey Theory</h4>
+<p>In any large enough structure, a certain pattern is unavoidable — complete disorder cannot persist past a threshold size.</p>
+<p class="small"><b>Use in SOMA:</b> prove that any sufficiently large dataset, graph, or event log must contain some structure; set minimum sizes that guarantee useful properties appear; find noise floors below which patterns are meaningless.</p>
+<h4>Turán&#x27;s Theorem / Extremal Graph Theory</h4>
+<p>The maximum number of edges a graph can have without containing a particular forbidden subgraph is exactly calculable — above that density the forbidden pattern must exist.</p>
+<p class="small"><b>Use in SOMA:</b> find the interaction density at which certain behaviors become unavoidable in a network; set hard thresholds for when a system transitions from sparse and safe to dense and risky.</p>
+<h4>Sprague-Grundy Theory</h4>
+<p>Every finite impartial combinatorial game under normal play is equivalent to a single pile of Nim — the game position has a Grundy value.</p>
+<p class="small"><b>Use in SOMA:</b> analyze bounded adversarial or resource games when the rules fit impartial-game assumptions; independent sub-games combine by XOR of Grundy values, but computing those values can still require exploring the game structure.</p>
+<h4>P-adic Metric</h4>
+<p>An alternative distance on numbers where closeness is determined by how many times a prime p divides the difference — numbers that share a common high-power factor are close, regardless of size.</p>
+<p class="small"><b>Use in SOMA:</b> natural metric for any data with hierarchical branching structure; clustering where subtree membership matters more than linear distance; taxonomy, routing trees, and nested classification all fit better in p-adic geometry than Euclidean.</p>
+<h4>Q-Analogs / Quantum Calculus</h4>
+<p>Every standard mathematical structure has a q-deformed version parameterized by q — as q → 1 you recover the classical object, but at other q values you get weighted counting, deformed factorials, and interpolation between discrete and continuous.</p>
+<p class="small"><b>Use in SOMA:</b> build models that smoothly interpolate between counting (discrete) and measuring (continuous); weighted versions of binomial coefficients count objects with preferences; q-derivatives handle non-uniform grids without special-casing.</p>
+<h3>Geometry And Symmetry</h3>
+<h4>Power Diagrams / Weighted Voronoi Tessellation</h4>
+<p>A generalization of Voronoi diagrams where each seed has a weight — the region assigned to each seed is the set of points where the power distance (not just Euclidean) is smallest.</p>
+<p class="small"><b>Use in SOMA:</b> partition any feature or resource space into territories that reflect different influence radii or capacities; load balancing, market territory assignment, and spatial indexing where seeds have different strengths.</p>
+<h4>Winding Number / Topological Degree</h4>
+<p>Counts how many times a closed curve wraps around a point — a topological invariant that does not change under continuous deformation.</p>
+<p class="small"><b>Use in SOMA:</b> detect whether a process has completed a full cycle or is stuck in a loop; determine whether a value is inside or outside a boundary; classify the topology of feedback loops and detect sign changes without floating-point fragility.</p>
+<h4>Lie Groups / Lie Algebras</h4>
+<p>Continuous symmetry groups where group operations are smooth — every symmetry of a physical or computational system that can be continuously varied belongs here; the Lie algebra is the linearized version near the identity.</p>
+<p class="small"><b>Use in SOMA:</b> represent and compose rotations, scalings, and transformations without gimbal lock or coordinate singularities; optimize over curved parameter spaces (manifold optimization) where standard gradient descent breaks; detect symmetry in data.</p>
+<h4>Symbolic Dynamics</h4>
+<p>Encodes the trajectories of a dynamical system as infinite sequences over a finite alphabet by assigning a symbol to each region of the state space — turning continuous behavior into discrete strings.</p>
+<p class="small"><b>Use in SOMA:</b> represent any time-evolving system as a string and apply all of string theory to it — compression, search, grammar inference, entropy estimation; detect recurring patterns in agent behavior, market states, or sensor readings.</p>
+<h4>Information Geometry</h4>
+<p>Equips the space of probability distributions with a Riemannian metric derived from the Fisher information matrix — distributions are points and the geometry captures how distinguishable they are.</p>
+<p class="small"><b>Use in SOMA:</b> measure the true statistical distance between two models, not just their outputs; natural gradient descent follows this geometry and converges faster; detect when a learned model has drifted in the space of possible distributions.</p>
+<h3>Probability And Distributions</h3>
+<h4>Tsallis Non-Extensive Entropy</h4>
+<p>A generalization of Shannon entropy that uses a parameter q to handle systems with long-range correlations, fractal geometry, or power-law distributions — standard entropy is the special case q = 1.</p>
+<p class="small"><b>Use in SOMA:</b> measure disorder in any system that does not follow exponential statistics; network traffic, financial returns, and biological populations all follow power laws where Tsallis entropy captures the true information content that Shannon misses.</p>
+<h4>Lévy Flights / α-Stable Distributions</h4>
+<p>Random walks where step sizes follow a power-law distribution — occasional enormous jumps mixed with local exploration; the mathematics of optimal foraging in patchy environments.</p>
+<p class="small"><b>Use in SOMA:</b> model any search, diffusion, or exploration process with heavy tails; design search strategies that escape local optima better than Gaussian random walks; detect anomalies by identifying jumps too large for any Gaussian model.</p>
+<h4>Stochastic Dominance</h4>
+<p>Distribution A stochastically dominates distribution B if it produces better outcomes across all possible utility functions of a given class — a decision criterion that does not require knowing exact values.</p>
+<p class="small"><b>Use in SOMA:</b> compare strategies, models, or outputs robustly when exact distributions are unknown; prove one option is universally better without committing to a specific loss function; rank uncertain choices without assuming utility.</p>
+<h4>Free Probability Theory</h4>
+<p>A non-commutative probability theory for random variables that do not commute — captures the statistics of large random matrices and quantum observables where order of operations matters.</p>
+<p class="small"><b>Use in SOMA:</b> analyze the spectrum of large random matrices arising in data; model systems where AB ≠ BA naturally (sequential operations, quantum states, non-commuting transformations); predict eigenvalue distributions without full matrix computation.</p>
+<h4>Ergodic Theory</h4>
+<p>In an ergodic system the time average of any observable along a single long trajectory equals its average over the entire state space — one trajectory eventually visits everywhere.</p>
+<p class="small"><b>Use in SOMA:</b> verify that sampling a single long run gives reliable population statistics; design sampling strategies that guarantee coverage; detect non-ergodic systems (systems with traps, absorbing states, or phase separation) before drawing false conclusions from single trajectories.</p>
+<h3>Structures And Transformations</h3>
+<h4>Tensor Networks</h4>
+<p>A high-dimensional array is factored into a network of smaller tensors connected by shared indices — contraction along shared indices compresses exponential state spaces into polynomial representations.</p>
+<p class="small"><b>Use in SOMA:</b> compress and manipulate high-dimensional joint distributions, correlation structures, and feature spaces that would be intractable as full arrays; approximate any function of many variables as a network of small local functions.</p>
+<h4>Functors / Category Theory</h4>
+<p>A functor is a structure-preserving map between categories — it translates objects and arrows from one mathematical world to another while keeping all relationships intact.</p>
+<p class="small"><b>Use in SOMA:</b> formally define what it means for two systems to be the same up to relabeling; compose data pipelines that are guaranteed to preserve invariants; design interfaces between systems where the composition law is provably correct.</p>
+<h4>Rough Set Theory</h4>
+<p>Approximates any concept using only indiscernibility — objects that look identical given available attributes are in the same equivalence class, giving a lower and upper approximation of any set.</p>
+<p class="small"><b>Use in SOMA:</b> make decisions when attribute data is incomplete without assuming any probability model; discover which attributes are actually necessary for a classification; find minimal rule sets that explain observed distinctions.</p>
+<h4>Interval Arithmetic / Affine Arithmetic</h4>
+<p>Replaces scalar values with intervals and propagates guaranteed bounds through every computation — the result is always proven to contain the true value regardless of rounding or input uncertainty.</p>
+<p class="small"><b>Use in SOMA:</b> propagate uncertainty rigorously through any pipeline; prove that a computed threshold is definitely exceeded or definitely not; replace fragile floating-point comparisons with guaranteed containment checks.</p>
+<h4>Turing Reaction-Diffusion</h4>
+<p>Two chemical species — an activator and an inhibitor — react and diffuse at different rates; from a uniform initial state, spatial patterns spontaneously emerge without any external template.</p>
+<p class="small"><b>Use in SOMA:</b> generate procedural patterns, textures, or spatial zone assignments that look organic; model any two competing signals that spread at different speeds; understand why local excitation plus long-range inhibition always produces stripes or spots.</p>
+<h3>Off-The-Wall: Combinatorics And Sequences</h3>
+<h4>Abelian Sandpile / Self-Organized Criticality</h4>
+<p>Add grains to a grid one at a time — when any cell exceeds a threshold it topples, redistributing to neighbors, which may trigger further topplings; the system naturally settles at a critical state with no tuning required.</p>
+<p class="small"><b>Use in SOMA:</b> model any system where small additions cause unpredictable cascade sizes; the size distribution of avalanches follows a power law; you never need to set a &quot;critical point&quot; parameter — the system finds it itself.</p>
+<h4>De Bruijn Sequences</h4>
+<p>A cyclic string of length k^n over an alphabet of k symbols where every possible substring of length n appears exactly once — the most compact possible coverage of all n-grams.</p>
+<p class="small"><b>Use in SOMA:</b> generate minimal test sequences that touch every possible state window exactly once; brute-force PIN locks using a sliding window; produce maximally non-redundant probes, keys, or coverage patterns.</p>
+<h4>Parking Functions</h4>
+<p>An arrangement of n cars that successfully park on a one-way street with n spaces — the count is exactly (n+1)^(n-1) and they are in bijection with labeled rooted forests and spanning trees of complete graphs.</p>
+<p class="small"><b>Use in SOMA:</b> model any sequential first-come allocation where overflow fails gracefully; analyze hash table open-addressing collision behavior; the connection to spanning trees means parking function statistics directly describe random graph structure.</p>
+<h4>Lyndon Words</h4>
+<p>The lexicographically smallest rotation of its equivalence class of cyclic strings — every string factors uniquely into non-increasing Lyndon words (the Chen-Fox-Lyndon theorem).</p>
+<p class="small"><b>Use in SOMA:</b> canonical form for any cyclic or rotationally equivalent structure; efficient string indexing and suffix array construction; detecting when two configurations are rotations of each other without trying all rotations.</p>
+<h4>Umbral Calculus</h4>
+<p>A formal algebra of &quot;shadows&quot; where replacing subscripts with exponents in polynomial sequences transforms one valid identity into another — Bernoulli numbers, Euler numbers, and Stirling numbers all live here.</p>
+<p class="small"><b>Use in SOMA:</b> systematically generate and transform recurrence relations, generating functions, and combinatorial identities by substitution alone; derive new polynomial identities from old ones without separate proofs; manipulate special functions algebraically.</p>
+<h3>Off-The-Wall: Topology And Knots</h3>
+<h4>Knot Theory / Jones Polynomial</h4>
+<p>A knot is a closed loop in three-dimensional space; the Jones polynomial is an algebraic invariant that distinguishes many knots that look different but cannot be deformed into each other.</p>
+<p class="small"><b>Use in SOMA:</b> classify tangled structures when execution traces or dependencies have a meaningful embedding, braid, or loop representation; otherwise ordinary graph invariants are usually the better first tool.</p>
+<h4>Braid Theory</h4>
+<p>Braids are equivalence classes of n strands that interleave through space — they form a group under concatenation, and the word problem (are two braids equal?) is efficiently solvable.</p>
+<p class="small"><b>Use in SOMA:</b> encode concurrent process interleavings as braid words and detect when two execution schedules are equivalent. Braid groups have been explored for cryptography, but many proposed schemes have been attacked, so treat that as historical context rather than a security guarantee.</p>
+<h4>Sperner&#x27;s Lemma</h4>
+<p>If you triangulate a simplex and color each vertex with one of three colors following a boundary rule, at least one triangle must have all three colors — guaranteed by topology alone.</p>
+<p class="small"><b>Use in SOMA:</b> prove that any iterative search or negotiation procedure must produce a fixed point; any resource allocation with complementary constraints must have a balanced assignment; constructive fixed-point proofs in discrete settings.</p>
+<h4>Stone Duality</h4>
+<p>There is a perfect correspondence between topological spaces and Boolean algebras — every Boolean algebra is the algebra of clopen sets of some compact totally disconnected space, and vice versa.</p>
+<p class="small"><b>Use in SOMA:</b> translate between a logical description of a system (Boolean formulas) and its spatial/topological structure automatically; any time you have a set of propositions you implicitly have a topological space you can analyze geometrically.</p>
+<h4>Arctic Circle Phenomenon</h4>
+<p>When you randomly tile a large region with dominoes, the interior is chaotic but the corners freeze into perfect deterministic order — the boundary between order and disorder is an exact circle or ellipse.</p>
+<p class="small"><b>Use in SOMA:</b> predict where structured behavior ends and chaotic behavior begins in any large constrained system; the geometry of the frozen region reveals the global constraint structure without examining individual elements.</p>
+<h3>Off-The-Wall: Physics-Adjacent Math</h3>
+<h4>Asymmetric Simple Exclusion Process (ASEP)</h4>
+<p>Particles hop left or right on a one-dimensional lattice with hard-core exclusion — no two particles can occupy the same site — and the steady state is exactly solvable via matrix product ansatz.</p>
+<p class="small"><b>Use in SOMA:</b> model task pipelines, packet routing, or any flow where items cannot overtake each other; the exact solution gives throughput, density profiles, and jamming transitions without simulation; connected to KPZ universality and random matrix theory.</p>
+<h4>Tracy-Widom Distribution</h4>
+<p>The probability distribution of the largest eigenvalue of a large random matrix — it appears universally at the edge of phase transitions in random matrices, random permutations, interacting particle systems, and growth processes.</p>
+<p class="small"><b>Use in SOMA:</b> detect when a system is at the boundary of a phase transition; the TW distribution is to the edge of chaos what the Gaussian is to bulk averages; test whether observed extremes are consistent with a random baseline.</p>
+<h4>Wang Tiles / Aperiodic Tiling</h4>
+<p>Square tiles with colored edges tile the plane with matching constraints — some sets of Wang tiles can only tile aperiodically, never repeating; the tiling problem is undecidable in general and Turing-complete.</p>
+<p class="small"><b>Use in SOMA:</b> generate infinite non-repeating patterns from a finite rule set; seed cryptographic or test data that provably never repeats; simulate computation using only spatial tiling rules.</p>
+<h4>Lindström-Gessel-Viennot Lemma</h4>
+<p>The number of families of non-intersecting lattice paths between two sets of points is given by the determinant of a matrix of individual path counts.</p>
+<p class="small"><b>Use in SOMA:</b> count simultaneous non-interfering process executions; compute probabilities that independent agents complete their tasks without collision; any problem involving non-crossing matchings, schedules, or trajectories reduces to a determinant.</p>
+<h4>Chromatic Polynomial</h4>
+<p>For any graph, there is a polynomial in k whose value at k gives the number of proper k-colorings — the polynomial encodes deep structure of the graph, and its roots (chromatic roots) reveal phase transition behavior.</p>
+<p class="small"><b>Use in SOMA:</b> count valid constraint assignments; detect graph structure from the polynomial&#x27;s coefficients; the real and complex roots of chromatic polynomials predict where constraint satisfaction problems undergo phase transitions.</p>
+<h3>Off-The-Wall: Infinite And Structural Math</h3>
+<h4>Ordinal Arithmetic</h4>
+<p>Extends arithmetic past infinity — ω (first infinite ordinal), ω², ω^ω, ε₀ (fixed point of exponentiation) — forming a well-ordered hierarchy used to prove program termination.</p>
+<p class="small"><b>Use in SOMA:</b> assign a proof-theoretic ordinal to any recursive algorithm to guarantee it terminates; Goodstein sequences grow faster than any computable function but always reach zero — this is only provable by descending through ordinals; industrial theorem provers at AMD and IBM use ordinals to verify hardware.</p>
+<h4>Non-Standard Analysis / Hyperreals</h4>
+<p>Abraham Robinson&#x27;s construction gives a rigorous number system with actual infinitesimals ε and infinite numbers H that satisfy every first-order property of the reals — not just limits but real computable objects.</p>
+<p class="small"><b>Use in SOMA:</b> compute derivatives as literal ratios ε/ε instead of limits; implement automatic differentiation using dual numbers (a special case); prove continuity and differentiability algorithmically by checking infinitesimal conditions rather than epsilon-delta arguments.</p>
+<h4>Combinatorial Species</h4>
+<p>A species is a functor from finite sets to finite sets — it assigns to every finite set of labels the set of structures of that type on those labels, and generates a formal power series automatically.</p>
+<p class="small"><b>Use in SOMA:</b> any recursive data structure — trees, lists, graphs, permutations — is a species, and its generating function drops out automatically from the structural definition without separate counting arguments; derive enumeration formulas from code by reading the type definition.</p>
+<h4>Ramanujan Graphs</h4>
+<p>Explicitly constructed sparse graphs that achieve the theoretical maximum spectral gap for their degree — named after the Ramanujan conjecture on modular forms that underpins their construction.</p>
+<p class="small"><b>Use in SOMA:</b> design maximally robust sparse network topologies that are as hard to partition as theoretically possible; any mesh, p2p overlay, or routing graph can be benchmarked against Ramanujan optimality; the construction uses deep number theory but the output is just a graph.</p>
+<h4>Finite Geometry / Projective Planes Over Finite Fields</h4>
+<p>Geometry over a finite field GF(q) — projective planes where every two lines meet in exactly one point and every two points determine exactly one line; perfectly balanced combinatorial designs.</p>
+<p class="small"><b>Use in SOMA:</b> construct round-robin tournament schedules where every pair meets exactly once; design error-correcting codes with optimal parameters; build hash functions and random access structures with provable uniformity; the 7-point Fano plane is the smallest example.</p>
+<h3>Geology</h3>
+<h4>Gutenberg-Richter Law</h4>
+<p>Earthquake frequency and magnitude follow a power law: for every unit increase in magnitude there are roughly ten times fewer earthquakes — a universal scaling relationship observed across every tectonic setting on earth.</p>
+<p class="small"><b>Use in SOMA:</b> estimate the probability of rare large events from the observed rate of small ones; any system that produces events of varying magnitude — errors, outages, transactions, security incidents — can be fit to this law and used to predict the tail.</p>
+<h4>Omori-Utsu Law</h4>
+<p>After a mainshock, aftershock rate decays as 1/(c+t)^p — a power law in time, where p is typically close to 1 and c is a small delay constant.</p>
+<p class="small"><b>Use in SOMA:</b> model any burst of activity that decays after a trigger event; incident responses, social media cascades, request storms, and error floods all decay with this shape; fit p and c from early observations to predict when the burst will subside.</p>
+<h4>Hurst Exponent</h4>
+<p>Measures long-range memory in a time series using rescaled range analysis — H &gt; 0.5 means the series trends persistently, H &lt; 0.5 means it mean-reverts, and H = 0.5 is a pure random walk.</p>
+<p class="small"><b>Use in SOMA:</b> compute from any time series to determine whether past values predict future direction; detect if a metric is drifting, oscillating, or wandering; distinguish genuine trends from noise before committing to a response.</p>
+<h4>Mohr-Coulomb Failure Criterion</h4>
+<p>A material fails by shear when stress on a plane exceeds a linear function of the normal stress acting across it — failure is defined not by a single threshold but by the relationship between two coupled stress components.</p>
+<p class="small"><b>Use in SOMA:</b> model any system where failure depends on two interacting pressures rather than one; a queue fails not just from load but from the combination of load and available headroom; trust fails not just from bad outcomes but from bad outcomes under high stakes.</p>
+<h4>Horton-Strahler Stream Order</h4>
+<p>Assigns an integer to every branch of a tree: leaf nodes are order 1, when two branches of equal order n merge the result is order n+1, otherwise the result takes the higher order of the two inputs.</p>
+<p class="small"><b>Use in SOMA:</b> classify the structural complexity of any branching hierarchy with a single number; compute it for dependency trees, call graphs, workflow DAGs, or org structures; two trees with the same Strahler number have equivalent structural complexity regardless of size.</p>
+<h3>Weather</h3>
+<h4>Kolmogorov Energy Cascade / Richardson -5/3 Law</h4>
+<p>Turbulent energy is injected at large scales and cascades through a hierarchy of smaller and smaller eddies until it dissipates at the molecular scale — the power spectrum of turbulence follows a -5/3 power law over the inertial range.</p>
+<p class="small"><b>Use in SOMA:</b> model any system where work or information is injected at a coarse scale and flows down through finer levels; the -5/3 spectrum tells you how much activity to expect at each scale; detect anomalies where energy piles up at a scale instead of flowing through.</p>
+<h4>Ensemble Forecasting / Forecast Spread</h4>
+<p>Run many simulations from slightly different initial conditions — the spread of the ensemble directly measures forecast uncertainty; a tight ensemble means confident prediction, a wide spread means high uncertainty.</p>
+<p class="small"><b>Use in SOMA:</b> explicitly quantify uncertainty by running multiple versions of any process with perturbed inputs; the variance of outcomes IS the error bar; use spread to decide when to act and when to wait for more information.</p>
+<h4>Stochastic Resonance</h4>
+<p>A weak periodic signal that is undetectable in a quiet system becomes detectable when a specific amount of noise is added — the signal-to-noise ratio has a maximum at an optimal non-zero noise level.</p>
+<p class="small"><b>Use in SOMA:</b> adding the right amount of randomness can make a buried pattern visible; dithering in signal processing, epsilon-greedy exploration, and thermal annealing all exploit this; when a signal is too weak to trigger a threshold, tuned noise can help it through.</p>
+<h4>Potential Vorticity Conservation</h4>
+<p>In a rotating stratified fluid, the quantity combining vorticity and stratification is conserved along fluid parcel trajectories under adiabatic conditions — it is the atmosphere&#x27;s version of angular momentum that nothing can create or destroy.</p>
+<p class="small"><b>Use in SOMA:</b> any conserved invariant in a physical system can be tracked as parcels move; find the conserved quantities in your system and track their flow instead of tracking state directly; conservation laws constrain what changes are possible even when you cannot predict the details.</p>
+<h4>Atmospheric Blocking</h4>
+<p>A quasi-stationary high-pressure system that reverses the normal potential vorticity gradient and deflects the jet stream — the pattern self-reinforces and resists displacement for days to weeks despite continuous atmospheric flow around it.</p>
+<p class="small"><b>Use in SOMA:</b> model persistent metastable states that actively resist perturbation; some system states are not just stable but self-reinforcing against the normal flow; detecting a blocking pattern early allows prediction of prolonged stuck behavior before the disruption becomes visible.</p>
+<h3>Space</h3>
+<h4>Orbital Resonances</h4>
+<p>When two orbiting bodies have periods in a small integer ratio, gravitational tugs at repeated geometry either lock them into a stable configuration or systematically eject them — the same ratio can be attractor or repeller depending on the phase.</p>
+<p class="small"><b>Use in SOMA:</b> detect and exploit integer-ratio synchronization in any coupled periodic system; resonances are not always destructive — they create the Trojan asteroids, the Moon&#x27;s tidal lock, and the regular structure of Saturn&#x27;s rings; predict which frequency ratios will stabilize and which will clear out.</p>
+<h4>Jeans Instability</h4>
+<p>A gas cloud collapses under its own gravity when its mass exceeds the Jeans mass — the point where self-gravity overcomes thermal pressure; below Jeans mass, pressure wins and the cloud oscillates; above it, gravitational collapse is inevitable.</p>
+<p class="small"><b>Use in SOMA:</b> find the threshold mass or density above which a distributed system spontaneously centralizes; any distributed population of interacting agents has a Jeans-like threshold above which coordination becomes self-reinforcing rather than requiring external pressure.</p>
+<h4>Pulsar Glitches</h4>
+<p>Pulsars are the most stable natural clocks known — but they occasionally glitch, spinning up suddenly by a tiny fraction and then relaxing back toward the previous rate over weeks; the glitch is thought to result from angular momentum transfer from a superfluid interior.</p>
+<p class="small"><b>Use in SOMA:</b> model ultra-regular processes with rare discrete discontinuities followed by exponential relaxation; any monitoring system that expects a smooth signal needs a separate model for rare sudden jumps; the post-glitch relaxation curve is its own diagnostic signature.</p>
+<h4>Stellar Initial Mass Function</h4>
+<p>The distribution of masses of newly formed stars follows a power law — most stars are small, and the number of stars above any mass threshold decreases as a power of that mass (Salpeter slope ~-2.35).</p>
+<p class="small"><b>Use in SOMA:</b> model any generative process where output size follows a power law; predict the full distribution of object sizes from the measured slope; the IMF tells you that observing many small outputs does not mean large outputs do not exist — it tells you exactly how rare they are.</p>
+<h4>Kozai-Lidov Mechanism</h4>
+<p>A distant third body on an inclined orbit causes the inner binary&#x27;s eccentricity and inclination to oscillate in a coupled cycle — the orbit flips between near-circular and highly eccentric on a timescale set by the mass ratio and separations.</p>
+<p class="small"><b>Use in SOMA:</b> model any three-component system where a distant third element drives long-period coupled oscillations in the inner pair; a third party that rarely interacts can still dominate the long-run dynamics of a tightly coupled pair through slow periodic forcing.</p>
+<h3>Marine Life</h3>
+<h4>Von Bertalanffy Growth Model</h4>
+<p>Fish grow rapidly when young and slow predictably as they approach an asymptotic maximum size — the growth rate is proportional to the difference between current size and the theoretical maximum: dL/dt = k(L∞ − L).</p>
+<p class="small"><b>Use in SOMA:</b> model any resource, capability, or metric that grows fast early and saturates predictably; the three parameters (growth rate k, asymptote L∞, starting offset) fit a wide range of S-shaped curves with a mechanistic interpretation; predict when growth will effectively stop.</p>
+<h4>Vicsek Flocking Model</h4>
+<p>Agents move at constant speed and update their direction to match the average heading of neighbors within a fixed radius — with no central coordinator, global order (a polarized flock) emerges when density and alignment radius exceed a threshold.</p>
+<p class="small"><b>Use in SOMA:</b> model emergence of consensus in any agent population from local alignment rules alone; predict whether a group will polarize or stay disordered from just two parameters; detect the onset of coordinated behavior before it becomes visible at the global level.</p>
+<h4>Sequential Hermaphroditism</h4>
+<p>Some fish — wrasses, clownfish, groupers — change sex based on social context; in protandrous species the dominant male becomes female, in protogynous species the largest female becomes male; the switch is triggered by relative social rank, not age or fixed biology.</p>
+<p class="small"><b>Use in SOMA:</b> model adaptive role reassignment where the agent best suited by circumstance takes a new role regardless of its history; the optimal allocation of roles in a group changes when composition changes; hard-coded role assignment is worse than context-triggered reassignment.</p>
+<h4>Martin Curve / Biological Pump</h4>
+<p>Dead organic particles sink from the sunlit surface ocean into the deep — the carbon flux decreases with depth following a power law: F(z) = F₁₀₀(z/100)^−b, where b ≈ 0.86; most material is remineralized before reaching the seafloor.</p>
+<p class="small"><b>Use in SOMA:</b> model how any signal, resource, or information attenuates predictably with distance from its source; the power law means most is lost near the top, not uniformly; fit b from measurements at a few depths to predict flux at any depth; the exponent encodes the system&#x27;s remineralization efficiency.</p>
+<h4>Whale Song Hierarchical Grammar</h4>
+<p>Humpback whale songs are organized in a strict four-level hierarchy: units → phrases → themes → songs; all males in a population sing the same song, and the song evolves culturally over years as new phrases spread through the population while the hierarchical structure is preserved.</p>
+<p class="small"><b>Use in SOMA:</b> model any evolving hierarchical pattern language where content changes but grammar persists; the structure is conserved even as tokens are replaced; distinguish structural stability from content stability; detect when a system is evolving vs when its underlying grammar is changing.</p>
+<h3>Distributed Systems, Verification, And Runtime Integrity</h3>
+<h4>Merkle Trees <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>A Merkle tree hashes records into leaves and combines them upward until one root hash commits to the whole set.</p>
+<p class="small"><b>Use in SOMA:</b> tamper-evident trust stores, audit roots, reproducible snapshots, efficient proof that one record belongs to a committed state, and O(log n) update paths instead of rehashing every record.</p>
+<h4>Hash Chains <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Each record includes the previous record&#x27;s hash, creating an append-only chain where rewriting history breaks every later hash.</p>
+<p class="small"><b>Use in SOMA:</b> audit logs, event streams, command histories, and trust evidence trails where order and immutability matter.</p>
+<h4>Vector Clocks <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Each node keeps a counter for every participant, allowing distributed systems to tell whether events are ordered, concurrent, or conflicting.</p>
+<p class="small"><b>Use in SOMA:</b> detect concurrent edits, causality gaps, stale node views, and conflicting local-first state without trusting wall-clock time.</p>
+<h4>Lamport Clocks <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>A logical counter gives a partial ordering of distributed events even when physical clocks disagree.</p>
+<p class="small"><b>Use in SOMA:</b> impose deterministic event ordering for logs, conflict resolution, bus delivery, and replay when wall-clock timestamps are not authoritative.</p>
+<h4>CRDTs <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Conflict-free replicated data types are data structures designed so independently edited replicas can merge without coordination and converge to the same result.</p>
+<p class="small"><b>Use in SOMA:</b> local-first task state, counters, sets, summaries, and node-local caches that must survive partitions and later merge safely.</p>
+<h4>Petri Nets</h4>
+<p>Petri nets model systems with places, transitions, and tokens; they capture concurrency, resource availability, and deadlock conditions.</p>
+<p class="small"><b>Use in SOMA:</b> model workflow execution, lease ownership, verifier capacity, task prerequisites, and resource starvation before implementing runtime logic.</p>
+<h4>Temporal Logic / Model Checking</h4>
+<p>Temporal logic expresses what must always hold, eventually happen, or never happen across state transitions; model checkers search all reachable states for violations.</p>
+<p class="small"><b>Use in SOMA:</b> verify invariants like killed agents cannot act, audit sequence never skips, HumanSeat gates are respected, and direct agent-to-agent communication remains impossible.</p>
+<h4>TLA+</h4>
+<p>TLA+ is a specification language for concurrent and distributed systems that describes state machines and checks safety/liveness properties.</p>
+<p class="small"><b>Use in SOMA:</b> design critical runtime protocols before code: leases, audit append, task claiming, trust kill/restore, quorum decisions, and crash recovery.</p>
+<h4>Fault Tree Analysis</h4>
+<p>A top-down failure model decomposes a bad event into combinations of lower-level causes using AND/OR logic.</p>
+<p class="small"><b>Use in SOMA:</b> explain how outages, unsafe actions, trust collapse, or data loss can happen, then map each leaf cause to detection and prevention.</p>
+<h4>FMEA</h4>
+<p>Failure Mode and Effects Analysis lists components, possible failure modes, effects, severity, likelihood, detectability, and mitigation.</p>
+<p class="small"><b>Use in SOMA:</b> prioritize hardening work for agents, verifiers, buses, locks, state files, adapters, and node recovery paths.</p>
+<h4>Little&#x27;s Law <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>In a stable queue, average work in progress equals arrival rate times average latency.</p>
+<p class="small"><b>Use in SOMA:</b> sanity-check task queues, verifier pools, model calls, and bus backlogs; if arrivals or latency rise, queued work must grow unless capacity changes.</p>
+<h4>Conformal Prediction <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Conformal prediction wraps model outputs with calibrated uncertainty sets under weak assumptions, using held-out calibration errors.</p>
+<p class="small"><b>Use in SOMA:</b> put operational error bars around verifier scores, routing predictions, task duration estimates, and anomaly detectors instead of trusting a bare confidence number.</p>
+<h4>Causal DAGs / Structural Causal Models</h4>
+<p>Causal graphs distinguish correlation from intervention: what changes if the system actively sets X instead of merely observing X?</p>
+<p class="small"><b>Use in SOMA:</b> decide whether reassigning an agent, killing a node, changing a verifier, or widening context would actually improve outcomes rather than just correlate with them.</p>
+<h4>Do-Calculus</h4>
+<p>Do-calculus gives formal rules for when causal effects can be identified from observational and interventional data.</p>
+<p class="small"><b>Use in SOMA:</b> determine which runtime questions need experiments, which can be answered from logs, and which are not identifiable from available evidence.</p>
+<h4>Viability Theory <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Viability theory studies controls that keep a system trajectory inside an acceptable safe set over time.</p>
+<p class="small"><b>Use in SOMA:</b> maintain runtime health within boundaries for trust, autonomy, load, latency, context exposure, and retry pressure instead of only optimizing a reward.</p>
+<h4>Portfolio Theory / Diversification</h4>
+<p>Risk is reduced by mixing assets whose failures are not perfectly correlated.</p>
+<p class="small"><b>Use in SOMA:</b> keep diverse agents, models, routes, and verifiers so the system is not optimized around one brittle best performer.</p>
+<h4>Bet-Hedging</h4>
+<p>Organisms sacrifice maximum short-term growth to survive uncertain future conditions through diversified strategies.</p>
+<p class="small"><b>Use in SOMA:</b> preserve fallback agents, redundant verifiers, and conservative routing even when the current best path looks faster.</p>
+<h3>Immune System Ideas</h3>
+<h4>Negative Selection <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>The immune system removes cells that react strongly to self before they can cause damage.</p>
+<p class="small"><b>Use in SOMA:</b> reject agents, tools, prompts, or policies that attack local invariants, private state, or trusted system boundaries before giving them authority.</p>
+<h4>Clonal Selection</h4>
+<p>Immune cells that recognize a threat expand rapidly, then contract after the threat is controlled.</p>
+<p class="small"><b>Use in SOMA:</b> temporarily scale specialized verifiers, monitors, or remediation agents during an incident, then reduce them after the risk drops.</p>
+<h4>Immune Memory</h4>
+<p>After exposure, the immune system retains memory cells that respond faster to future encounters.</p>
+<p class="small"><b>Use in SOMA:</b> turn past failures, exploit attempts, verifier rejections, and recovery actions into durable rules, tests, and trust evidence.</p>
+<h4>Immune Tolerance</h4>
+<p>The immune system must avoid attacking harmless or self signals.</p>
+<p class="small"><b>Use in SOMA:</b> prevent over-quarantine, false-positive verifier storms, and excessive HumanSeat escalation by distinguishing dangerous anomalies from normal local variation.</p>
+<h4>Cytokine Storm</h4>
+<p>An excessive immune response can damage the host more than the original trigger.</p>
+<p class="small"><b>Use in SOMA:</b> cap automated remediation, alert floods, retries, and trust penalties so the safety system does not destabilize the runtime.</p>
+<h4>Innate And Adaptive Immunity</h4>
+<p>Innate immunity is fast and general; adaptive immunity is slower, specific, and learned.</p>
+<p class="small"><b>Use in SOMA:</b> combine cheap fixed guards like schema checks and capability boundaries with learned, specific defenses like verifier policies and incident-derived tests.</p>
+<h4>Danger Model <span style="color:#1f7a44;font-weight:bold">&#9733; load-bearing</span></h4>
+<p>Immune response is driven by signals of damage or stress, not merely by foreignness.</p>
+<p class="small"><b>Use in SOMA:</b> prioritize interventions based on harm signals: data loss risk, authority boundary pressure, repeated verifier failures, escalating latency, or audit inconsistency.</p>
+<h3>Best Fit For Context Primitive</h3>
+<pre class="diagram">Trust:
+Bayes, Thompson sampling, survival analysis, Merkle roots, immune memory
+
+Context:
+entropy, information gain, PageRank, belief propagation, renormalization,
+causal DAGs, vector clocks
+
+Scheduling:
+constraint satisfaction, queueing theory, critical path, bandits,
+Petri nets, Little&#x27;s Law
+
+Safety:
+hysteresis, circuit breakers, drift detection, Bayesian networks,
+temporal logic, model checking, FMEA, negative selection, immune tolerance
+
+Runtime control:
+PID, backpressure, Kalman filters, hazard functions,
+viability theory, conformal prediction
+
+Chaos:
+Lyapunov exponents, Monte Carlo, cellular automata, catastrophe theory
+
+Mesh:
+percolation, shortest path, safe operating space,
+CRDTs, Lamport clocks, hash chains
+
+Biological inspiration:
+quorum sensing, biofilm, persister cells, cross-feeding, Red Queen dynamics,
+priority effects, persistence landscapes, common fungal networks, quasispecies,
+bet-hedging, portfolio diversification
+
+Ecosystem inspiration:
+carrying capacity, keystone species, niche theory, panarchy, planetary boundaries
+
+Soil runtime inspiration:
+priming, rhizosphere priming, carbon use efficiency, microbial carbon pump,
+necromass, aggregate hierarchy, pore connectivity, redox ladder, plant-soil feedback
+
+Topology and algebra:
+persistent homology, persistent Laplacian, cellular sheaf theory, discrete Morse theory,
+tropical algebra, formal concept analysis, matroid theory
+
+Information and process:
+Koopman operator, active inference, path signature transform, optimal transport,
+mean field games, causal emergence, hypergraph dynamics, ultrametric spaces,
+Freidlin-Wentzell large deviations, stochastic thermodynamics, process algebra,
+spectral gap, Kolmogorov complexity
+
+Combinatorics and number theory:
+Ramsey theory, Turán / extremal graph theory, Sprague-Grundy theory,
+p-adic metric, q-analogs
+
+Geometry and symmetry:
+power diagrams / weighted Voronoi, winding number / topological degree,
+Lie groups, symbolic dynamics, information geometry
+
+Probability and distributions:
+Tsallis entropy, Lévy flights, stochastic dominance, free probability, ergodic theory
+
+Structures and transformations:
+tensor networks, functors / category theory, rough set theory,
+interval arithmetic, Turing reaction-diffusion
+
+Off-the-wall combinatorics and sequences:
+abelian sandpile, de Bruijn sequences, parking functions,
+Lyndon words, umbral calculus
+
+Off-the-wall topology and knots:
+knot invariants / Jones polynomial, braid theory, Sperner&#x27;s lemma,
+Stone duality, arctic circle phenomenon
+
+Off-the-wall physics-adjacent:
+ASEP, Tracy-Widom distribution, Wang tiles, Lindström-Gessel-Viennot lemma,
+chromatic polynomial
+
+Off-the-wall infinite and structural:
+ordinal arithmetic, non-standard analysis / hyperreals,
+combinatorial species, Ramanujan graphs, finite geometry / projective planes
+
+Geology:
+Gutenberg-Richter law, Omori-Utsu law, Hurst exponent,
+Mohr-Coulomb failure criterion, Horton-Strahler stream order
+
+Weather:
+Kolmogorov energy cascade, ensemble forecasting / spread,
+stochastic resonance, potential vorticity conservation, atmospheric blocking
+
+Space:
+orbital resonances, Jeans instability, pulsar glitches,
+stellar initial mass function, Kozai-Lidov mechanism
+
+Marine life:
+von Bertalanffy growth, Vicsek flocking model,
+sequential hermaphroditism, Martin curve / biological pump,
+whale song hierarchical grammar
+
+Distributed systems and verification:
+Merkle trees, hash chains, vector clocks, Lamport clocks, CRDTs,
+Petri nets, temporal logic, TLA+, fault tree analysis, FMEA,
+Little&#x27;s Law, conformal prediction, causal DAGs, do-calculus,
+viability theory, portfolio theory, bet-hedging
+
+Immune system:
+negative selection, clonal selection, immune memory, immune tolerance,
+cytokine storm, innate/adaptive immunity, danger model</pre>
