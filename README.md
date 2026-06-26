@@ -1,10 +1,15 @@
 # SOMA Codex
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+![Architecture Spec](https://img.shields.io/badge/Artifact-Architecture%20Spec-blue)
+
 **Architecture codex for a governed local-first agent runtime.**
 
 SOMA is a systems-design project, not a finished runtime. It defines the theory,
 invariants, crate map, governance model, and implementation contracts for a future
 Rust-based agent organism.
+
+![SOMA Codex portfolio card](docs/portfolio-card.svg)
 
 The core idea: an agent system should behave less like a platform hosting unrelated
 agents and more like one governed body. Participants coordinate through one shared
@@ -12,6 +17,12 @@ workspace, authority is leased, completion is verified rather than self-claimed,
 high-risk actions remain under HumanSeat authority.
 
 ---
+
+## Why This Matters
+
+SOMA is the architecture/spec counterpart to the runnable prototypes. It shows how a larger
+agent runtime would be bounded: invariants, authority rules, verification gates, crate
+responsibilities, threat boundaries, and explicit non-goals before implementation begins.
 
 ## Status
 
